@@ -17,6 +17,12 @@
 set -e
 export LC_ALL=en_US.UTF-8
 
+# Cross-platform sed in-place
+case "$(uname -s)" in
+  Darwin*) sed_inplace() { sed -i '' "$@"; } ;;
+  *)       sed_inplace() { sed -i "$@"; } ;;
+esac
+
 if [ $# -lt 1 ]; then
   echo "Erro: Indica pelo menos o título do artigo."
   echo "Uso: $0 \"Título\" [\"Categoria\"] [\"Autor\"] [\"Ficheiro\"]"
@@ -167,7 +173,7 @@ if [ -f "$BLOG_ARCHIVE" ]; then
   NEW_CARD+="\n            </article>"
 
   # Insert after first blog-grid div opening
-  sed -i '' "s|<div class=\"blog-grid\">|<div class=\"blog-grid\">\n${NEW_CARD}|" "$BLOG_ARCHIVE"
+  sed_inplace "s|<div class=\"blog-grid\">|<div class=\"blog-grid\">\n${NEW_CARD}|" "$BLOG_ARCHIVE"
 fi
 
 # Also update homepage
@@ -183,11 +189,21 @@ if [ -f "$HOME_ARCHIVE" ]; then
   NEW_CARD_HOME+="\n              </div>"
   NEW_CARD_HOME+="\n            </article>"
 
-  sed -i '' "s|<div class=\"blog-grid\">|<div class=\"blog-grid\">\n${NEW_CARD_HOME}|" "$BLOG_ARCHIVE"
+  sed_inplace "s|<div class=\"blog-grid\">|<div class=\"blog-grid\">\n${NEW_CARD_HOME}|" "$BLOG_ARCHIVE"
 fi
 
 # Auto-commit and push
 cd "$(dirname "$0")/.."
+
+# Configure git (works in both local and GitHub Actions)
+git config user.name "MARC-Jarvis 🤖"
+git config user.email "marctechja@gmail.com"
+
+# Use GITHUB_TOKEN if in Actions, otherwise use default credentials
+if [ -n "$GITHUB_TOKEN" ]; then
+  git remote set-url origin "https://x-access-token:${GITHUB_TOKEN}@github.com/Jorgeacus/marctechja-blog.git"
+fi
+
 git add -A
 git commit -m "Novo artigo: ${TITLE} [MARC-Jarvis]" 2>/dev/null || echo "Nada novo para commitar"
 git push 2>/dev/null && echo "✅ Publicado!" || echo "⚠️ Falha no push. Faz git push manualmente."
