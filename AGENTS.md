@@ -78,6 +78,11 @@ Gerador de conteúdo via Gemini API:
 3. **Chave API restrita**: A partir de 19 Junho 2026, Gemini API rejeita chaves não restritas (devolve 404). Gerar nova chave em AI Studio.
 
 ## Pendente
-- ⬜ HTTPS ativo em `https://marcusja77.com` (SSL GitHub em provisionamento)
+- ⬜ HTTPS ativo em `https://marcusja77.com` (SSL GitHub em provisionamento — aguardar até 24h)
 - ⬜ Google AdSense — aguardar revisão (1-7 dias)
 - ⬜ Google Analytics (opcional)
+
+## Notas
+- MEO (Portugal) bloqueia HTTP — o site só ficará acessível a todos quando o SSL estiver ativo
+- MARC-Jarvis publica automaticamente 1 artigo/dia às 9:00 UTC via GitHub Actions
+- Workflow: `.github/workflows/marc.yml`
