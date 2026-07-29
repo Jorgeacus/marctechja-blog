@@ -15,6 +15,7 @@
 # =============================================================================
 
 set -e
+export LC_ALL=en_US.UTF-8
 
 if [ $# -lt 1 ]; then
   echo "Erro: Indica pelo menos o título do artigo."
