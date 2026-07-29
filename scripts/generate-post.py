@@ -88,10 +88,9 @@ def load_reference():
         return f.read()
 
 GEMINI_MODELS = [
-    "gemini-2.0-flash",
-    "gemini-1.5-flash",
-    "gemini-1.5-flash-001",
-    "gemini-1.5-pro",
+    "gemini-2.5-flash-latest",
+    "gemini-2.5-pro-latest",
+    "gemini-3.1-flash-latest",
 ]
 
 def call_gemini_api(prompt, api_key):
@@ -115,8 +114,10 @@ def call_gemini_api(prompt, api_key):
                 if "candidates" not in result or not result["candidates"]:
                     error_reason = result.get("promptFeedback", {}).get("blockReason", "unknown")
                     raise Exception(f"Gemini {version}/{model}: sem resposta (blockReason: {error_reason})")
+                print(f"  ✅ {version}/{model} OK")
                 return result["candidates"][0]["content"]["parts"][0]["text"]
             except urllib.error.HTTPError as e:
+                print(f"  ⚠️ {version}/{model}: {e.code}")
                 last_error = e
                 continue
     raise last_error
