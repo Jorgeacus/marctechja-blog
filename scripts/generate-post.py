@@ -89,7 +89,7 @@ def call_gemini_api(prompt, api_key):
     import urllib.request
     import urllib.parse
 
-    url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={api_key}"
+    url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={api_key}"
     data = json.dumps({
         "contents": [{"parts": [{"text": prompt}]}],
         "generationConfig": {
@@ -178,8 +178,11 @@ def main():
     provider = os.environ.get("AI_PROVIDER", "gemini").lower()
     api_key = os.environ.get("GEMINI_API_KEY" if provider == "gemini" else "OPENAI_API_KEY")
 
+    print(f"📋 Provider: {provider}")
+    print(f"📋 API Key set: {'✅ Sim' if api_key else '❌ Não'}")
+
     if not api_key:
-        print("ERRO: Define a variável de ambiente", "GEMINI_API_KEY" if provider == "gemini" else "OPENAI_API_KEY")
+        print("❌ ERRO: Define a variável de ambiente", "GEMINI_API_KEY" if provider == "gemini" else "OPENAI_API_KEY")
         sys.exit(1)
 
     reference_content = load_reference()
@@ -193,8 +196,9 @@ def main():
 
     try:
         content_html = generate_article(topic, reference_content, provider, api_key)
+        print(f"✅ Conteúdo gerado ({len(content_html)} chars)")
     except Exception as e:
-        print(f"❌ Erro ao gerar conteúdo: {e}")
+        print(f"❌ Erro ao gerar conteúdo: {type(e).__name__}: {e}")
         sys.exit(1)
 
     # Clean up the response - extract only the HTML content
