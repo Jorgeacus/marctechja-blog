@@ -22,22 +22,9 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Debug — verificar ambiente
-        run: |
-          echo "Python: $(python3 --version 2>&1)"
-          echo "Workdir: $(pwd)"
-          echo "Files:"
-          ls -la scripts/ 2>/dev/null || echo "No scripts/ dir"
-          echo "Secret length: ${#GEMINI_API_KEY} chars"
-        env:
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-
       - name: Gerar e publicar artigo
         env:
           AI_PROVIDER: ${{ vars.AI_PROVIDER || 'gemini' }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-        run: |
-          set +e
-          python3 -u scripts/generate-post.py 2>&1
-          echo "Exit code: $?"
+        run: python3 scripts/generate-post.py
