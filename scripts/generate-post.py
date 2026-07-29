@@ -88,16 +88,17 @@ def load_reference():
         return f.read()
 
 GEMINI_MODELS = [
+    "gemini-3.6-flash",
     "gemini-2.5-flash-latest",
     "gemini-2.5-pro-latest",
-    "gemini-3.1-flash-latest",
+    "gemini-3.5-flash",
 ]
 
 def call_gemini_api(prompt, api_key):
     last_error = None
-    for version in ["v1", "v1beta"]:
+    for version in ["v1beta", "v1"]:
         for model in GEMINI_MODELS:
-            url = f"https://generativelanguage.googleapis.com/{version}/models/{model}:generateContent?key={api_key}"
+            url = f"https://generativelanguage.googleapis.com/{version}/models/{model}:generateContent"
             data = json.dumps({
                 "contents": [{"parts": [{"text": prompt}]}],
                 "generationConfig": {
@@ -108,7 +109,10 @@ def call_gemini_api(prompt, api_key):
                 }
             }).encode("utf-8")
             try:
-                req = urllib.request.Request(url, data=data, headers={"Content-Type": "application/json"})
+                req = urllib.request.Request(url, data=data, headers={
+                    "Content-Type": "application/json",
+                    "x-goog-api-key": api_key
+                })
                 resp = urllib.request.urlopen(req)
                 result = json.loads(resp.read().decode("utf-8"))
                 if "candidates" not in result or not result["candidates"]:
