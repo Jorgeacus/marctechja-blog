@@ -1,5 +1,6 @@
 name: Diagnostic
-on: workflow_dispatch
+on:
+  workflow_dispatch:
 jobs:
   diag:
     runs-on: ubuntu-latest
