@@ -29,7 +29,7 @@ CONTENT_FILE="$4"
 DATE=$(date +%d\ %b\ %Y)
 SLUG=$(echo "$TITLE" \
   | tr '[:upper:]' '[:lower:]' \
-  | sed 's/[àáâãäå]/a/g; s/[èéêë]/e/g; s/[ìíîï]/i/g; s/[òóôõö]/o/g; s/[ùúûü]/u/g; s/[ç]/c/g; s/[^a-z0-9]\+/-/g; s/^-//; s/-$//')
+  | sed -E 's/[àáâãäå]/a/g; s/[èéêë]/e/g; s/[ìíîï]/i/g; s/[òóôõö]/o/g; s/[ùúûü]/u/g; s/[ç]/c/g; s/[^a-z0-9]+/-/g; s/^-//; s/-$//')
 POST_DIR="blog/$SLUG"
 
 mkdir -p "$POST_DIR"
