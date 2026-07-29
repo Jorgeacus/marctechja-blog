@@ -1,19 +1,19 @@
-name: MARC-Jarvis Publicacao Diaria
+name: MARC-Jarvis Diario
 on:
+  workflow_dispatch:
   schedule:
     - cron: '0 9 * * *'
-  workflow_dispatch:
 permissions:
   contents: write
 jobs:
-  generate-and-publish:
+  run:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - name: Gerar e publicar artigo
+      - name: Publicar
         env:
           AI_PROVIDER: gemini
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
