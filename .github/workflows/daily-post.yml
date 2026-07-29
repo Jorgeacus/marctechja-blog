@@ -24,7 +24,6 @@ jobs:
 
       - name: Gerar e publicar artigo
         env:
-          AI_PROVIDER: ${{ vars.AI_PROVIDER || 'gemini' }}
+          AI_PROVIDER: gemini
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-        run: python3 scripts/generate-post.py
+        run: python3 scripts/generate-post.py 2>&1 || echo "SCRIPT EXIT CODE: $?"
