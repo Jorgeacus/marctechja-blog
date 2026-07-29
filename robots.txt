@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://jorgeacus.github.io/marctechja-blog/sitemap.xml
+Sitemap: https://marcusja777.com/sitemap.xml
