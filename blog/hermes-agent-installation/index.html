@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Como Instalar o Hermes Agent — MarctechJA</title>
+  <meta name="description" content="Guia completo de instalação do Hermes Agent em macOS, Linux e Windows. Configuração de providers, primeiros comandos e resolução de problemas.">
+  <meta property="og:title" content="Como Instalar o Hermes Agent">
+  <meta property="og:description" content="Guia completo de instalação do Hermes Agent em macOS, Linux e Windows.">
+  <link rel="canonical" href="https://jorgeacus.github.io/marctechja-blog/blog/hermes-agent-installation/">
+  <link rel="stylesheet" href="/marctechja-blog/assets/css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/marctechja-blog/" class="logo">Marc<span class="gold">tech</span>JA</a>
+      <button class="menu-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+      <ul class="nav-links"><li><a href="/marctechja-blog/">Home</a></li><li><a href="/marctechja-blog/blog/">Blog</a></li><li><a href="/marctechja-blog/livro/">Livro</a></li><li><a href="/marctechja-blog/sobre/">Sobre</a></li></ul>
+    </div>
+  </header>
+  <section class="article-page">
+    <div class="container layout-with-sidebar">
+      <div>
+        <div class="article-header">
+          <div class="breadcrumb"><a href="/marctechja-blog/">Home</a> / <a href="/marctechja-blog/blog/">Blog</a> / Como Instalar o Hermes Agent</div>
+          <h1>Como Instalar o Hermes Agent no macOS, Linux e Windows</h1>
+          <div class="meta"><span>📅 28 Jul 2026</span> <span>📖 8 min de leitura</span> <span>🏷️ Tutorial</span></div>
+        </div>
+        <div class="article-content">
+          <p>Este guia cobre a instalação do Hermes Agent nos três principais sistemas operativos. Ao final, terás o Hermes Agent a funcionar com o teu provider de IA preferido.</p>
+
+          <h2>Pré-requisitos</h2>
+          <ul>
+            <li>Python 3.10 ou superior</li>
+            <li>Git</li>
+            <li>Uma chave de API de um provider de IA (ou vontade de usar modelos locais)</li>
+          </ul>
+
+          <h2>Instalação no macOS</h2>
+          <p>No macOS, tens duas opções: Homebrew ou instalação manual com pip.</p>
+          <p><strong>Opção 1 — Homebrew (recomendado):</strong></p>
+          <pre><code>brew tap hermes-agent/tap
+brew install hermes-agent</code></pre>
+          <p><strong>Opção 2 — Pip:</strong></p>
+          <pre><code>git clone https://github.com/HermesAgent/hermes-agent.git
+cd hermes-agent
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+pip install -e .</code></pre>
+
+          <h2>Instalação no Linux</h2>
+          <pre><code>git clone https://github.com/HermesAgent/hermes-agent.git
+cd hermes-agent
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+pip install -e .</code></pre>
+          <p>Para distribuições baseadas em Debian/Ubuntu, certifica-te de que tens o Python 3.10+ instalado:</p>
+          <pre><code>sudo apt update
+sudo apt install python3 python3-pip python3-venv git</code></pre>
+
+          <h2>Instalação no Windows</h2>
+          <ol>
+            <li>Instala o Python 3.10+ a partir do <a href="https://python.org">python.org</a> (marca "Add to PATH")</li>
+            <li>Instala o Git a partir do <a href="https://git-scm.com">git-scm.com</a></li>
+            <li>Abre o PowerShell como administrador e executa:</li>
+          </ol>
+          <pre><code>git clone https://github.com/HermesAgent/hermes-agent.git
+cd hermes-agent
+python -m venv venv
+.\venv\Scripts\activate
+pip install -r requirements.txt
+pip install -e .</code></pre>
+
+          <h2>Configuração de Providers</h2>
+          <p>Após a instalação, cria um ficheiro <code>.env</code> na raiz do projeto com as tuas chaves de API:</p>
+          <pre><code>OPENAI_API_KEY=sk-...
+ANTHROPIC_API_KEY=sk-ant-...
+GOOGLE_API_KEY=...
+DEEPSEEK_API_KEY=...</code></pre>
+          <p>Se quiseres usar modelos locais com Ollama:</p>
+          <pre><code>brew install ollama  # macOS
+# ou: curl -fsSL https://ollama.ai/install.sh | sh  # Linux
+ollama pull llama3.1
+ollama pull hermes-agent  # modelo otimizado</code></pre>
+
+          <h2>Verificar a Instalação</h2>
+          <p>Executa o comando de teste:</p>
+          <pre><code>hermes --version
+hermes --help</code></pre>
+          <p>Se vires a informação de versão e ajuda, a instalação está concluída.</p>
+
+          <h2>Resolução de Problemas Comuns</h2>
+          <h3>"Comando não encontrado"</h3>
+          <p>Certifica-te de que o ambiente virtual está ativo (<code>source venv/bin/activate</code> no macOS/Linux, <code>venv\Scripts\activate</code> no Windows).</p>
+          <h3>Erro de dependências</h3>
+          <p>Algumas dependências podem exigir compilação. No macOS, instala as ferramentas de linha de comandos do Xcode: <code>xcode-select --install</code>. No Linux, <code>sudo apt install build-essential</code>.</p>
+
+          <div class="article-cta">
+            <h3>Queres ir mais longe?</h3>
+            <p>O Guia Completo do Hermes Agent cobre configuração avançada, skills, automações e muito mais.</p>
+            <a href="/marctechja-blog/livro/" class="btn btn-gold">Saber Mais Sobre o Livro</a>
+          </div>
+        </div>
+      </div>
+      <aside class="sidebar">
+        <div class="sidebar-widget">
+          <h3>📘 Livro do Hermes Agent</h3>
+          <p>10 partes, 42 capítulos. PDF + EPUB.</p>
+          <a href="/marctechja-blog/livro/" class="btn btn-gold">Saber Mais</a>
+        </div>
+        <div class="sidebar-widget">
+          <h3>Artigos Relacionados</h3>
+          <ul style="list-style:none;font-size:14px;">
+            <li style="margin-bottom:10px;">→ <a href="/marctechja-blog/blog/hermes-agent-introduction/">O que é o Hermes Agent?</a></li>
+            <li style="margin-bottom:10px;">→ <a href="/marctechja-blog/blog/hermes-agent-skills/">Skills no Hermes Agent</a></li>
+          </ul>
+        </div>
+        <div class="sidebar-widget ad-placeholder">Anúncio Google AdSense</div>
+      </aside>
+    </div>
+  </section>
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand"><a href="/marctechja-blog/" class="logo">Marc<span class="gold">tech</span>JA</a><p>Tecnologia, automação e IA.</p></div>
+        <div class="footer-col"><h4>Navegação</h4><ul><li><a href="/marctechja-blog/">Home</a></li><li><a href="/marctechja-blog/blog/">Blog</a></li><li><a href="/marctechja-blog/livro/">Livro</a></li><li><a href="/marctechja-blog/sobre/">Sobre</a></li></ul></div>
+        <div class="footer-col"><h4>Contacto</h4><ul><li><a href="mailto:marctechja@gmail.com">marctechja@gmail.com</a></li><li><a href="https://github.com/Jorgeacus">GitHub</a></li></ul></div>
+      </div>
+      <div class="footer-bottom"><p>&copy; 2026 MarctechJA. Todos os direitos reservados.</p></div>
+    </div>
+  </footer>
+  <script src="/marctechja-blog/assets/js/main.js"></script>
+</body>
+</html>
