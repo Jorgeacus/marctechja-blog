@@ -21,6 +21,8 @@ import sys
 import json
 import random
 import subprocess
+import urllib.error
+import urllib.request
 from datetime import datetime
 
 # --- Tópicos para os artigos ---
@@ -85,30 +87,39 @@ def load_reference():
     with open(REFERENCE_FILE, "r", encoding="utf-8") as f:
         return f.read()
 
+GEMINI_MODELS = [
+    "gemini-2.0-flash",
+    "gemini-1.5-flash",
+    "gemini-1.5-flash-001",
+    "gemini-1.5-pro",
+]
+
 def call_gemini_api(prompt, api_key):
-    import urllib.request
-    import urllib.parse
-
-    url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={api_key}"
-    data = json.dumps({
-        "contents": [{"parts": [{"text": prompt}]}],
-        "generationConfig": {
-            "temperature": 0.8,
-            "maxOutputTokens": 4096,
-            "topK": 40,
-            "topP": 0.95
-        }
-    }).encode("utf-8")
-
-    req = urllib.request.Request(url, data=data, headers={"Content-Type": "application/json"})
-    resp = urllib.request.urlopen(req)
-    result = json.loads(resp.read().decode("utf-8"))
-
-    if "candidates" not in result or not result["candidates"]:
-        error_reason = result.get("promptFeedback", {}).get("blockReason", "unknown")
-        raise Exception(f"Gemini API: sem resposta (blockReason: {error_reason})")
-
-    return result["candidates"][0]["content"]["parts"][0]["text"]
+    last_error = None
+    for version in ["v1", "v1beta"]:
+        for model in GEMINI_MODELS:
+            url = f"https://generativelanguage.googleapis.com/{version}/models/{model}:generateContent?key={api_key}"
+            data = json.dumps({
+                "contents": [{"parts": [{"text": prompt}]}],
+                "generationConfig": {
+                    "temperature": 0.8,
+                    "maxOutputTokens": 4096,
+                    "topK": 40,
+                    "topP": 0.95
+                }
+            }).encode("utf-8")
+            try:
+                req = urllib.request.Request(url, data=data, headers={"Content-Type": "application/json"})
+                resp = urllib.request.urlopen(req)
+                result = json.loads(resp.read().decode("utf-8"))
+                if "candidates" not in result or not result["candidates"]:
+                    error_reason = result.get("promptFeedback", {}).get("blockReason", "unknown")
+                    raise Exception(f"Gemini {version}/{model}: sem resposta (blockReason: {error_reason})")
+                return result["candidates"][0]["content"]["parts"][0]["text"]
+            except urllib.error.HTTPError as e:
+                last_error = e
+                continue
+    raise last_error
 
 def call_openai_api(prompt, api_key):
     import urllib.request

@@ -1,6 +1,8 @@
-name: JA
+name: MARC-Jarvis
 on:
-  workflow_dispatch: null
+  schedule:
+    - cron: '0 9 * * *'
+  workflow_dispatch:
 permissions:
   contents: write
 jobs:
