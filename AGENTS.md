@@ -50,6 +50,20 @@ Gerador de conteúdo via Gemini API:
 - Invoca `post.sh` após gerar conteúdo
 - Fallback: tenta `v1` → `v1beta`, vários modelos Gemini
 
+### `scripts/gmail_monitor.py`
+Assistente de Gmail via API Google (ler + responder):
+- `auth` — Autenticação OAuth 2.0 (primeira vez)
+- `search --query "palavra"` — Pesquisar emails
+- `read --id <msg_id>` — Ler conteúdo completo do email
+- `reply --id <msg_id> --body "..."` — Cria rascunho, **mostra no ecrã, NÃO envia**
+- `send --to "x" --subject "y" --body "z"` — Enviar email (só após aprovação)
+- `send-draft --id <draft_id>` — Enviar rascunho existente
+- `unread` — Ver não lidas
+- `run` — Relatório JSON completo
+- **Fluxo seguro**: `reply` só cria draft + mostra; utilizador aprova antes de `send`
+- Requer OAuth 2.0 com scopes `gmail.readonly + gmail.send + gmail.compose + gmail.modify`
+- Automação: definir `GMAIL_CLIENT_ID`, `GMAIL_CLIENT_SECRET`, `GMAIL_REFRESH_TOKEN`
+
 ## Workflow GitHub Actions
 
 **Ficheiro:** `.github/workflows/marc.yml`  
