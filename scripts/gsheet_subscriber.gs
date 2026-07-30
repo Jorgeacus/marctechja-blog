@@ -1,38 +1,32 @@
 /**
  * Google Apps Script — Subscritores MarctechJA
- * 
- * Como usar:
- * 1. Cria uma Google Sheet em https://sheets.google.com
- * 2. Nomeia a primeira folha como "Subscritores"
- * 3. Vai a Extensões > Apps Script
- * 4. Cola este código e grava (Ctrl+S)
- * 5. Clica em "Implementar" > "Nova implementação" > "Aplicação Web"
- * 6. Executar como: "Eu" | Quem tem acesso: "Qualquer pessoa"
- * 7. Clica em "Implementar" e copia o URL da aplicação web
- * 8. Escreve esse URL em blog/index.html no form action
- *    (substituir a linha do form action)
+ *
+ * COMO USAR:
+ * 1. https://sheets.google.com — cria uma folha nova
+ * 2. Nomeia a primeira folha (baixo) como "Subscritores"
+ * 3. Extensões > Apps Script
+ * 4. Cola este codigo, grava (CTRL+S)
+ * 5. Implementar > Nova implementacao > Aplicacao Web
+ *    Executar como: Eu   |   Quem tem acesso: Qualquer pessoa
+ * 6. Clica "Implementar" — avanca se aparecer aviso
+ * 7. Copia o URL (https://script.google.com/macros/s/.../exec)
+ * 8. Diz-me o URL que eu atualizo o site
  */
 
 function doPost(e) {
   try {
-    const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Subscritores");
-
-    // Ensure header row exists
+    var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Subscritores");
     if (sheet.getLastRow() === 0) {
       sheet.appendRow(["Data", "Nome", "WhatsApp", "Email", "Canal Preferido"]);
     }
-
-    const params = e.parameter;
-    const data = [
+    var params = e.parameter;
+    sheet.appendRow([
       new Date().toISOString(),
       params.nome || "",
       params.whatsapp || "",
       params.email || "",
       params.canal || ""
-    ];
-
-    sheet.appendRow(data);
-
+    ]);
     return ContentService
       .createTextOutput(JSON.stringify({ success: true }))
       .setMimeType(ContentService.MimeType.JSON);
