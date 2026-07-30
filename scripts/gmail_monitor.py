@@ -151,19 +151,12 @@ def cmd_auth(args):
         print("2. Criar 'OAuth 2.0 Client ID' → Desktop app")
         print("3. Download JSON →", path)
         sys.exit(1)
+    print("⚠️  Antes de continuar, certifica-te que já adicionaste o teu email")
+    print("   como 'Test user' em https://console.cloud.google.com/apis/credentials/consent")
+    print("   Se não, faz isso primeiro e depois volta aqui.\n")
+    input("Prima Enter quando estiver pronto...")
     flow = InstalledAppFlow.from_client_secrets_file(path, SCOPES)
-    flow.redirect_uri = "http://localhost"
-    auth_url, _ = flow.authorization_url(access_type="offline", include_granted_scopes="true")
-    print("🔗 Abre este link no browser e autoriza:")
-    print(auth_url)
-    print("\n⚠️  IMPORTANTE: Antes de autorizar, certifica-te que já adicionaste")
-    print("   o teu email como 'Test user' em:")
-    print("   https://console.cloud.google.com/apis/credentials/consent")
-    print("\nDepois de autorizares, o browser vai mostrar uma página de erro.")
-    print("Copia o URL COMPLETO da barra de endereço e cola abaixo:")
-    redirect_url = input("URL: ").strip()
-    flow.fetch_token(authorization_response=redirect_url)
-    creds = flow.credentials
+    creds = flow.run_local_server(port=0, open_browser=True)
     data = {"client_id": creds.client_id, "client_secret": creds.client_secret, "refresh_token": creds.refresh_token}
     with open(TOKEN_FILE, "w") as f:
         json.dump(data, f, indent=2)
