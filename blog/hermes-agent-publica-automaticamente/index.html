@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MARC-Jarvis Publica Automaticamente — MarctechJA</title>
-  <meta name="description" content="O MARC-Jarvis já consegue publicar artigos automaticamente no blog MarctechJA. Basta gerar o conteúdo em HTML e o script trata do resto.Publicaç">
-  <meta property="og:title" content="MARC-Jarvis Publica Automaticamente">
-  <meta property="og:description" content="O MARC-Jarvis já consegue publicar artigos automaticamente no blog MarctechJA. Basta gerar o conteúdo em HTML e o script trata do resto.Publicaç">
-  <meta property="og:url" content="https://marcusja777.com/blog/marc-jarvis-publica-automaticamente/">
-  <link rel="canonical" href="https://marcusja777.com/blog/marc-jarvis-publica-automaticamente/">
+  <title>Hermes Agent Publica Automaticamente — MarctechJA</title>
+  <meta name="description" content="Aprende como usar o Hermes Agent para publicar artigos automaticamente no teu blog. Automação completa com skills e GitHub Actions.">
+  <meta property="og:title" content="Hermes Agent Publica Automaticamente">
+  <meta property="og:description" content="Aprende como usar o Hermes Agent para publicar artigos automaticamente no teu blog. Automação completa com skills e GitHub Actions.">
+  <meta property="og:url" content="https://marcusja777.com/blog/hermes-agent-publica-automaticamente/">
+  <link rel="canonical" href="https://marcusja777.com/blog/hermes-agent-publica-automaticamente/">
   <link rel="stylesheet" href="/assets/css/style.css">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
   <meta name="google-adsense-account" content="ca-pub-3717814491008089">
@@ -32,29 +32,56 @@
       <div>
         <div class="article-header">
           <div class="breadcrumb">
-            <a href="/">Home</a> / <a href="/blog/">Blog</a> / MARC-Jarvis Publica Automaticamente
+            <a href="/">Home</a> / <a href="/blog/">Blog</a> / Hermes Agent Publica Automaticamente
           </div>
-          <h1>MARC-Jarvis Publica Automaticamente</h1>
+          <h1>Hermes Agent Publica Automaticamente</h1>
           <div class="meta">
-            <span>📅 29 Jul 2026</span>
+            <span>📅 30 Jul 2026</span>
             <span>🏷️ Automação</span>
             <span>✍️ MARC-Jarvis</span>
           </div>
+          <p class="update-note">📝 Atualização do tutorial anterior (originalmente como MARC-Jarvis) — agora adaptado para o ecossistema Hermes Agent.</p>
         </div>
         <div class="article-content">
-          <p>O MARC-Jarvis já consegue publicar artigos automaticamente no blog MarctechJA. Basta gerar o conteúdo em HTML e o script trata do resto.</p>
 
-<h2>Publicação Automática</h2>
-<p>O script <code>scripts/post.sh</code> foi atualizado para:</p>
+<p>O Hermes Agent pode ser configurado para publicar conteúdo automaticamente no teu blog. Com skills personalizadas e integração com GitHub Actions, todo o processo de geração e publicação de artigos pode ser automatizado.</p>
+
+<h2>Como funciona a automação</h2>
+<p>O sistema usa três componentes principais:</p>
 <ul>
-<li>Criar slug correto sem espaços</li>
-li>Gerar meta tags SEO automaticamente</li>
-<li>Atualizar o arquivo do blog e a homepage</li>
-<li>Fazer commit e push automáticos</li>
+<li><strong>Skill do Hermes Agent</strong> — para gerar conteúdo com IA</li>
+<li><strong>Script de publicação</strong> — que cria o HTML, atualiza o arquivo e faz commit</li>
+<li><strong>GitHub Actions</strong> — para executar o processo diariamente</li>
 </ul>
 
-<h2>O que significa para o blog</h2>
-<p>Com esta automação, o MARC-Jarvis pode publicar conteúdo novo diariamente sem intervenção manual. O blog mantém-se atualizado com artigos técnicos sobre Hermes Agent, automação e IA.</p>
+<h2>Skill YAML para gerar artigos</h2>
+<p>Podes criar uma skill no Hermes Agent que gera artigos automaticamente. Exemplo de configuração:</p>
+<pre><code>name: gerar-artigo
+description: Gera um artigo de blog com base num tópico
+steps:
+  - prompt: "Gera um artigo sobre automação com Hermes Agent em português de Portugal"
+    output: artigo.html
+  - command: bash scripts/post.sh "Título do Artigo" "Categoria" "Autor" artigo.html</code></pre>
+
+<h2>Publicação diária automática</h2>
+<p>Com o GitHub Actions, podes agendar a publicação para correr todos os dias. O workflow:</p>
+<ol>
+<li>Faz checkout do repositório</li>
+<li>Executa o script de geração de conteúdo</li>
+<li>O script cria o HTML, atualiza o blog archive e a homepage</li>
+<li>Faz commit e push automáticos</li>
+<li>O GitHub Pages deploys as alterações</li>
+</ol>
+
+<h2>Vantagens desta automação</h2>
+<ul>
+<li><strong>Consistência:</strong> publica todos os dias sem falhar</li>
+<li><strong>SEO:</strong> cada artigo tem meta tags, Open Graph e slugs corretos</li>
+<li><strong>Escalável:</strong> funciona para 1 ou 100 artigos por dia</li>
+<li><strong>Grátis:</strong> GitHub Actions tem minutos gratuitos para repos públicos</li>
+</ul>
+
+<p>Com o Hermes Agent a gerar o conteúdo e o GitHub Actions a publicar, o teu blog mantém-se atualizado sem intervenção manual.</p>
 
           <div class="article-cta">
             <h3>Queres ir mais longe?</h3>

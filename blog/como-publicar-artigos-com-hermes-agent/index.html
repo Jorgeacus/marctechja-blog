@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Como Publicar Artigos com Hermes Agent — MarctechJA</title>
+  <meta name="description" content="Tutorial passo-a-passo para publicar artigos no blog usando o Hermes Agent. Da skill YAML ao deploy com GitHub Pages.">
+  <meta property="og:title" content="Como Publicar Artigos com Hermes Agent">
+  <meta property="og:description" content="Tutorial passo-a-passo para publicar artigos no blog usando o Hermes Agent. Da skill YAML ao deploy com GitHub Pages.">
+  <meta property="og:url" content="https://marcusja777.com/blog/como-publicar-artigos-com-hermes-agent/">
+  <link rel="canonical" href="https://marcusja777.com/blog/como-publicar-artigos-com-hermes-agent/">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+  <meta name="google-adsense-account" content="ca-pub-3717814491008089">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="logo">Marc<span class="gold">tech</span>JA</a>
+      <button class="menu-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/blog/">Blog</a></li>
+        <li><a href="/livro/">Livro</a></li>
+        <li><a href="/sobre/">Sobre</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <section class="article-page">
+    <div class="container layout-with-sidebar">
+      <div>
+        <div class="article-header">
+          <div class="breadcrumb">
+            <a href="/">Home</a> / <a href="/blog/">Blog</a> / Como Publicar Artigos com Hermes Agent
+          </div>
+          <h1>Como Publicar Artigos com Hermes Agent</h1>
+          <div class="meta">
+            <span>📅 30 Jul 2026</span>
+            <span>🏷️ Tutorial</span>
+            <span>✍️ MARC-Jarvis</span>
+          </div>
+          <p class="update-note">📝 Atualização do tutorial anterior (originalmente como MARC-Jarvis) — agora adaptado para o ecossistema Hermes Agent.</p>
+        </div>
+        <div class="article-content">
+
+<p>O Hermes Agent é a ferramenta ideal para automatizar a publicação de conteúdo no teu blog. Neste tutorial, vais aprender o processo completo: desde a criação de uma skill YAML até ao deploy automático com GitHub Pages.</p>
+
+<h2>O que vais precisar</h2>
+<ul>
+<li>Hermes Agent instalado (ou acesso CLI)</li>
+<li>Um repositório GitHub para o blog</li>
+<li>GitHub Pages ativo no repositório</li>
+<li>Modelo de IA configurado (Gemini, Claude, etc.)</li>
+</ul>
+
+<h2>Passo 1: Criar a skill de geração</h2>
+<p>No diretório <code>~/.hermes/skills/</code>, cria o ficheiro <code>gerar-post.yaml</code>:</p>
+<pre><code>name: gerar-post
+description: Gera um post para o blog
+steps:
+  - prompt: "Escreve um artigo sobre {{topic}} em português de Portugal."
+    output: /tmp/artigo.html</code></pre>
+
+<h2>Passo 2: Script de publicação</h2>
+<p>Cria um script que recebe o HTML gerado e trata de:</p>
+<ol>
+<li>Criar o diretório com o slug correto</li>
+<li>Gerar meta tags SEO automaticamente</li>
+<li>Atualizar o arquivo do blog (<code>blog/index.html</code>)</li>
+<li>Fazer commit e push para o GitHub</li>
+</ol>
+
+<h2>Passo 3: Automatizar com GitHub Actions</h2>
+<p>Adiciona um workflow <code>.github/workflows/publicar.yml</code>:</p>
+<pre><code>name: Publicação Automática
+on:
+  schedule:
+    - cron: '0 9 * * *'
+  workflow_dispatch:
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Gerar e publicar
+        run: |
+          pip install -r requirements.txt
+          python scripts/generate-post.py
+          bash scripts/post.sh "Título" "Categoria" "Autor" /tmp/artigo.html</code></pre>
+
+<h2>Passo 4: Executar manualmente</h2>
+<p>No GitHub, vai a Actions > Publicação Automática > Run workflow. O script gera o conteúdo e faz o deploy.</p>
+
+<h2>Dicas para conteúdos de qualidade</h2>
+<ul>
+<li><strong>Prompt bem definido:</strong> instrui o modelo sobre o tom, público-alvo e estrutura</li>
+<li><strong>Revisão automática:</strong> adiciona um passo extra na skill para verificar ortografia e SEO</li>
+<li><strong>Rotação de tópicos:</strong> mantém uma lista de temas para variar o conteúdo</li>
+</ul>
+
+<p>Com este sistema, o teu blog pode ter conteúdo novo todos os dias sem trabalho manual. O Hermes Agent trata da criatividade, o GitHub Actions trata da consistência.</p>
+
+          <div class="article-cta">
+            <h3>Queres ir mais longe?</h3>
+            <p>O Guia Completo do Hermes Agent leva-te do zero às automações avançadas com 10 partes e 42 capítulos.</p>
+            <a href="/livro/" class="btn btn-gold">Saber Mais Sobre o Livro</a>
+          </div>
+        </div>
+      </div>
+      <aside class="sidebar">
+        <div class="sidebar-widget">
+          <h3>📘 Livro do Hermes Agent</h3>
+          <p>10 partes, 42 capítulos. PDF + EPUB.</p>
+          <a href="/livro/" class="btn btn-gold">Saber Mais</a>
+        </div>
+        <div class="sidebar-widget ad-placeholder">Anúncio Google AdSense</div>
+      </aside>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <a href="/" class="logo">Marc<span class="gold">tech</span>JA</a>
+          <p>Tecnologia, automação e IA para transformar a produtividade.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Navegação</h4>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/blog/">Blog</a></li>
+            <li><a href="/livro/">Livro</a></li>
+            <li><a href="/sobre/">Sobre</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contacto</h4>
+          <ul>
+            <li><a href="mailto:marctechja@gmail.com">marctechja@gmail.com</a></li>
+            <li><a href="https://github.com/Jorgeacus">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 MarctechJA. Todos os direitos reservados.</p>
+      </div>
+    </div>
+  </footer>
+  <script src="/assets/js/main.js"></script>
+</body>
+</html>
