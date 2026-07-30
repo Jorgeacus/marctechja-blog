@@ -152,10 +152,15 @@ def cmd_auth(args):
         print("3. Download JSON →", path)
         sys.exit(1)
     flow = InstalledAppFlow.from_client_secrets_file(path, SCOPES)
+    flow.redirect_uri = "http://localhost"
+    auth_url, _ = flow.authorization_url(access_type="offline", include_granted_scopes="true")
     print("🔗 Abre este link no browser e autoriza:")
-    print(flow.authorization_url(access_type="offline", include_granted_scopes="true")[0])
-    print("\nDepois de autorizar, o browser vai mostrar um erro (localhost).")
-    print("Copia o URL completo da barra de endereço do Safari/Chrome e cola aqui:")
+    print(auth_url)
+    print("\n⚠️  IMPORTANTE: Antes de autorizar, certifica-te que já adicionaste")
+    print("   o teu email como 'Test user' em:")
+    print("   https://console.cloud.google.com/apis/credentials/consent")
+    print("\nDepois de autorizares, o browser vai mostrar uma página de erro.")
+    print("Copia o URL COMPLETO da barra de endereço e cola abaixo:")
     redirect_url = input("URL: ").strip()
     flow.fetch_token(authorization_response=redirect_url)
     creds = flow.credentials
