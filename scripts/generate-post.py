@@ -27,55 +27,58 @@ from datetime import datetime
 
 # --- Tópicos para os artigos ---
 TOPICS = [
+    # Hermes Agent — tutoriais e guias
     {
-        "audience": "Universitários",
-        "title": "Como usar o Hermes Agent para criar resumos de artigos científicos",
-        "focus": "Explicar como estudantes universitários podem usar o Hermes Agent para ler PDFs de artigos, extrair pontos principais, gerar resumos e criar fichas de estudo automaticamente."
+        "audience": "Geral",
+        "title": "O que é o Hermes Agent e como pode transformar as tuas automações",
+        "focus": "Introdução ao Hermes Agent: o que é, como funciona, casos de uso e porque é diferente de outras ferramentas de IA."
     },
     {
-        "audience": "Ensino Médio",
-        "title": "Cria o teu primeiro assistente de estudo com Hermes Agent",
-        "focus": "Tutorial simples para alunos do ensino médio criarem um assistente que tira dúvidas de matemática, ciências e história usando o Hermes Agent."
-    },
-    {
-        "audience": "Professores",
-        "title": "Automatizar a correção de trabalhos com Hermes Agent",
-        "focus": "Como professores podem usar skills do Hermes Agent para corrigir redações, dar feedback personalizado e acompanhar o progresso dos alunos."
-    },
-    {
-        "audience": "Criadores de Conteúdo",
-        "title": "Agenda e publica nas redes sociais com Hermes Agent",
-        "focus": "Automatizar a criação e agendamento de posts para Instagram, YouTube e Telegram usando skills do Hermes Agent."
-    },
-    {
-        "audience": "WhatsApp",
-        "title": "Cria um assistente de WhatsApp com Hermes Agent",
-        "focus": "Como configurar o Hermes Agent para responder automaticamente a mensagens no WhatsApp, agendar lembretes e enviar respostas inteligentes."
-    },
-    {
-        "audience": "Email",
-        "title": "Ler e responder emails automaticamente com Hermes Agent",
-        "focus": "Automatizar a gestão de email: ler, categorizar, responder e arquivar mensagens usando skills do Hermes Agent."
-    },
-    {
-        "audience": "Universitários",
-        "title": "Hermes Agent para programar trabalhos em grupo",
-        "focus": "Como equipas de estudantes podem usar o Hermes Agent para organizar tarefas, gerir prazos e colaborar em projetos académicos."
-    },
-    {
-        "audience": "Criadores de Conteúdo",
-        "title": "Gerar legendas e descrições para YouTube com IA",
-        "focus": "Usar o Hermes Agent para gerar títulos, descrições SEO, tags e legendas para vídeos do YouTube automaticamente."
-    },
-    {
-        "audience": "Professores",
-        "title": "Criar planos de aula com Hermes Agent em segundos",
-        "focus": "Como professores podem usar o Hermes Agent para gerar planos de aula completos, com objetivos, atividades e avaliações."
+        "audience": "Programadores",
+        "title": "Criar skills personalizadas no Hermes Agent — guia passo a passo",
+        "focus": "Tutorial prático de como criar skills YAML no Hermes Agent, desde a estrutura básica até exemplos complexos com múltiplos passos."
     },
     {
         "audience": "Geral",
-        "title": "5 automações que todo estudante devia conhecer no Hermes Agent",
-        "focus": "Lista de 5 automações práticas para estudantes: resumos, pesquisa, organização, lembretes e tradução."
+        "title": "Hermes Agent vs outros agentes de IA: comparação completa",
+        "focus": "Comparar Hermes Agent com Claude Code, Codex CLI, OpenAI Agents, destacando vantagens e desvantagens de cada um."
+    },
+    {
+        "audience": "Programadores",
+        "title": "Integrar Hermes Agent com APIs externas",
+        "focus": "Ensinar como configurar skills do Hermes Agent para chamar APIs REST, processar JSON e automatizar fluxos com serviços externos."
+    },
+    {
+        "audience": "Geral",
+        "title": "5 automações do dia a dia com Hermes Agent que vais querer usar",
+        "focus": "Lista de 5 automações práticas: organizar ficheiros, responder emails, gerar relatórios, pesquisar web e agendar tarefas."
+    },
+    # Python para automações
+    {
+        "audience": "Programadores",
+        "title": "Automatizar tarefas repetitivas com Python e Hermes Agent",
+        "focus": "Como usar scripts Python em conjunto com o Hermes Agent para automatizar tarefas como processamento de ficheiros, scraping e geração de relatórios."
+    },
+    {
+        "audience": "Programadores",
+        "title": "Python para automação de email: ler, filtrar e responder com IA",
+        "focus": "Tutorial de Python com Gmail API para ler, categorizar e responder emails automaticamente, com sugestões geradas por IA."
+    },
+    {
+        "audience": "Programadores",
+        "title": "Automatizar o teu workflow de GitHub com Python",
+        "focus": "Usar Python + PyGithub para automatizar PRs, issues, releases e CI/CD, integrado com skills do Hermes Agent."
+    },
+    # Agentes e IA
+    {
+        "audience": "Geral",
+        "title": "O que são agentes de IA e como funcionam na prática",
+        "focus": "Explicação simples sobre agentes de IA: o que são, como tomam decisões, usam ferramentas e executam tarefas autonomamente."
+    },
+    {
+        "audience": "Programadores",
+        "title": "Construir o teu próprio agente de IA com Python",
+        "focus": "Guia para criar um agente de IA simples em Python que usa ferramentas (API calls, ficheiros, shell) e pode ser integrado com Hermes Agent."
     },
 ]
 
