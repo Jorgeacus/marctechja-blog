@@ -102,9 +102,7 @@
           <div class="sidebar-widget" id="subscrever">
             <h3>📬 Subscrição Grátis</h3>
             <p>Recebe notificações diárias dos novos artigos, resumos e novidades do livro.</p>
-            <form action="https://formsubmit.co/marctechja@gmail.com" method="POST" class="subscribe-form">
-              <input type="hidden" name="_next" value="http://marcusja777.com/blog/?subscribed=true">
-              <input type="hidden" name="_captcha" value="false">
+            <form id="subscribe-form" class="subscribe-form">
               <input type="text" name="nome" placeholder="Nome Completo" required>
               <input type="tel" name="whatsapp" placeholder="WhatsApp" required>
               <input type="email" name="email" placeholder="Email" required>
@@ -113,6 +111,7 @@
                 <label class="radio-label"><input type="radio" name="canal" value="SMS"> SMS</label>
                 <label class="radio-label"><input type="radio" name="canal" value="Email"> Email</label>
               </div>
+              <div id="subscribe-feedback" class="subscribe-success" style="display:none;"></div>
               <button type="submit" class="btn btn-gold subscribe-btn">Subscrever Grátis</button>
             </form>
           </div>
