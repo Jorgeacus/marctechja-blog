@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-MARC-Jarvis — Gerador Automático de Artigos
+Hermes Agent — Gerador Automático de Artigos
 Gera artigos sobre Hermes Agent usando APIs de IA.
 
 Providers suportados (via env var AI_PROVIDER):
@@ -137,7 +137,7 @@ def call_openai_api(prompt, api_key):
     data = json.dumps({
         "model": "gpt-4o-mini",
         "messages": [
-            {"role": "system", "content": "És o MARC-Jarvis, um assistente especialista em Hermes Agent e automação com IA. Geras artigos em português de Portugal, bem escritos e práticos."},
+            {"role": "system", "content": "És um assistente especialista em Hermes Agent e automação com IA. Geras artigos em português de Portugal, bem escritos e práticos."},
             {"role": "user", "content": prompt}
         ],
         "temperature": 0.8,
@@ -165,7 +165,7 @@ def generate_article(topic, reference_content, provider, api_key):
     }
     audience_pt = audiences_pt.get(topic["audience"], "todos")
 
-    prompt = f"""És o MARC-Jarvis, especialista em Hermes Agent e automação com IA.
+    prompt = f"""És um especialista em Hermes Agent e automação com IA.
 
 Gera um artigo de blog completo em português de Portugal (pt-PT) sobre o tema abaixo.
 
@@ -242,7 +242,7 @@ def main():
 
     # Call the post.sh script
     category = topic["audience"]
-    author = "MARC-Jarvis 🤖"
+    author = "Hermes Agent"
     title = topic["title"]
 
     print(f"📰 A publicar artigo...")

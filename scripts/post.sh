@@ -1,12 +1,12 @@
 #!/bin/bash
 # =============================================================================
-# MARC-Jarvis — Publicador Automático de Artigos
+# Hermes Agent — Publicador Automático de Artigos
 # =============================================================================
 # Uso:
 #   ./scripts/post.sh "Título do Artigo" "Categoria" "Autor" "Ficheiro com conteúdo HTML"
 #
 # Exemplo:
-#   ./scripts/post.sh "Como Criar Skills" "Tutorial" "MARC-Jarvis" conteudo.html
+#   ./scripts/post.sh "Como Criar Skills" "Tutorial" "Hermes Agent" conteudo.html
 #
 # Se omitir o 4º argumento, lê o conteúdo da linha de comandos (stdin)
 #
@@ -31,7 +31,7 @@ fi
 
 TITLE="$1"
 CATEGORY="${2:-Geral}"
-AUTHOR="${3:-MARC-Jarvis}"
+AUTHOR="${3:-Hermes Agent}"
 CONTENT_FILE="$4"
 DATE=$(date +%d\ %b\ %Y)
 SLUG=$(echo "$TITLE" \
@@ -196,7 +196,7 @@ fi
 cd "$(dirname "$0")/.."
 
 # Configure git (works in both local and GitHub Actions)
-git config user.name "MARC-Jarvis 🤖"
+git config user.name "Hermes Agent"
 git config user.email "marctechja@gmail.com"
 
 # Use GITHUB_TOKEN if in Actions, otherwise use default credentials
@@ -205,7 +205,7 @@ if [ -n "$GITHUB_TOKEN" ]; then
 fi
 
 git add -A
-git commit -m "Novo artigo: ${TITLE} [MARC-Jarvis]" 2>/dev/null || echo "Nada novo para commitar"
+git commit -m "Novo artigo: ${TITLE} [Hermes Agent]" 2>/dev/null || echo "Nada novo para commitar"
 git push 2>/dev/null && echo "✅ Publicado!" || echo "⚠️ Falha no push. Faz git push manualmente."
 
 echo ""

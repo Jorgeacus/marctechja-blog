@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-MARC-Jarvis — Gmail Monitor & Assistant
+Hermes Agent — Gmail Monitor & Assistant
 Ler, pesquisar, responder a emails via Gmail API.
 Suporta múltiplas contas com nomes distintos.
 
@@ -294,7 +294,7 @@ def cmd_list(args):
 
 def main():
     def make_parser():
-        p = argparse.ArgumentParser(description="MARC-Jarvis Gmail Assistant")
+        p = argparse.ArgumentParser(description="Hermes Agent Gmail Assistant")
         p.add_argument("--account", default=None, help=f"Nome da conta (defeito: {DEFAULT_ACCOUNT})")
         sub = p.add_subparsers(dest="command")
 
