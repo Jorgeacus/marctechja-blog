@@ -152,7 +152,12 @@ def cmd_auth(args):
         print("3. Download JSON →", path)
         sys.exit(1)
     flow = InstalledAppFlow.from_client_secrets_file(path, SCOPES)
-    flow.run_local_server(port=0, open_browser=False)
+    print("🔗 Abre este link no browser e autoriza:")
+    print(flow.authorization_url(access_type="offline", include_granted_scopes="true")[0])
+    print("\nDepois de autorizar, o browser vai mostrar um erro (localhost).")
+    print("Copia o URL completo da barra de endereço do Safari/Chrome e cola aqui:")
+    redirect_url = input("URL: ").strip()
+    flow.fetch_token(authorization_response=redirect_url)
     creds = flow.credentials
     data = {"client_id": creds.client_id, "client_secret": creds.client_secret, "refresh_token": creds.refresh_token}
     with open(TOKEN_FILE, "w") as f:
