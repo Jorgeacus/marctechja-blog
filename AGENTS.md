@@ -1,34 +1,41 @@
-# MarctechJA — Blog MARC-Jarvis
+# MarctechJA — Blog de Hermes Agent
 
-**Domínio:** https://marcusja777.com  
+**Domínio:** http://marcusja777.com (HTTPS pendente)  
 **GitHub:** Jorgeacus/marctechja-blog (branch `main`)  
-**GitHub Pages:** https://jorgeacus.github.io/marctechja-blog/  
+**GitHub Pages:** https://jorgeacus.github.io/marctechja-blog/ (redireciona para o domínio)  
+**Email:** marctechja@gmail.com
+
+## Como aceder (importante!)
+- O site **HTTPS ainda NÃO funciona** (`https://marcusja777.com` dá erro / página em branco). Usar **HTTP**.
+- O blog live: `http://marcusja777.com/blog/`
+- O GitHub: https://github.com/Jorgeacus/marctechja-blog
+- O agente (Hermes Agent / MARC-Jarvis) deve usar `curl http://marcusja777.com/...` para ver o site, não HTTPS.
 
 ## Design
-- Cores Hermes: petróleo `#031522`, navy `#061B2B`, dourado `#D9A83E`, ciano `#008FBE`
+- Cores: petróleo `#031522`, navy `#061B2B`, dourado `#D9A83E`, ciano `#008FBE`
 - CSS: `assets/css/style.css`
-- Fonte: system-ui sans-serif
 
 ## Páginas
 | Página | URL |
 |---|---|
-| Home | `/` |
-| Blog archive | `/blog/` |
-| Página do Livro | `/livro/` (com capa + link Hotmart) |
-| Artigos | `/blog/<slug>/` |
+| Home (com CTA subscrição) | `/` |
+| Blog archive (com formulário subscrição) | `/blog/` |
+| Página do Livro | `/livro/` (capa + link Hotmart) |
+| Sobre | `/sobre/` |
 
-## Estrutura de artigos publicados
-1. `hermes-agent-introducao/` — Introdução ao Hermes Agent
-2. `hermes-agent-book-launch/` — Lançamento do ebook
-3. `instalar-hermes-agent/` — Instalação
-4. `primeiras-automacoes/` — Primeiras automações
-5. `criar-skills-hermes-agent/` — Criar skills
-6. `cria-o-teu-primeiro-assistente-de-estudo-com-hermes-agent/` — (GERADO PELO MARC-JARVIS em 2026-07-29)
+## Artigos publicados (8)
+1. `hermes-agent-skills/` — Skills no Hermes Agent (25 Jul)
+2. `hermes-agent-introduction/` — O que é o Hermes Agent (26 Jul)
+3. `hermes-agent-automations/` — 5 Automações Diárias (27 Jul)
+4. `hermes-agent-installation/` — Como Instalar (28 Jul)
+5. `hermes-agent-book-launch/` — Lançamento do ebook (29 Jul)
+6. `cria-o-teu-primeiro-assistente-de-estudo-com-hermes-agent/` — Assistente de estudo (29 Jul)
+7. `hermes-agent-publica-automaticamente/` — Hermes Agent publica automaticamente (30 Jul)
+8. `como-publicar-artigos-com-hermes-agent/` — Como publicar artigos com Hermes Agent (30 Jul)
 
 ## SEO
-- `sitemap.xml` com 9+ URLs
+- `sitemap.xml` (PRECISA de ser atualizado — não inclui artigos 6, 7, 8)
 - `robots.txt` ativo
-- Open Graph + meta tags em todas as páginas
 - Google AdSense `ca-pub-3717814491008089` (pendente revisão)
 - Google Search Console verificado
 - `ads.txt` configurado
@@ -36,67 +43,43 @@
 ## Hotmart
 - Link: https://hotm.io/jFUussV9 (redireciona para pay.hotmart.com/G106933522A)
 - Preço: R$29,90
-- Botões: página do livro (2x) + artigo de lançamento (1x)
+
+## Subscrição de leitores
+- **Formulário Google Forms** embutido no blog (`/blog/`) via iframe
+- Dados (nome, WhatsApp, país, email, canal) vão para a Google Sheet do `marctechja@gmail.com`
+- Exportar CSV: Sheet > Ficheiro > Descarregar > CSV
+- Link do formulário: https://docs.google.com/forms/d/e/1FAIpQLSfds5NO8081MuTFPXsORTIERAv8WtunDRdgiNdZIq7NKdQalA/viewform
+- Homepage tem CTA "Subscrever Grátis" que leva ao formulário
 
 ## Scripts de Automação
 
 ### `scripts/post.sh`
-Publicador automático de artigos. Cria HTML, slug, atualiza blog archive e homepage, faz git commit+push.
+Publicador automático. Cria HTML, slug (sem espaços), meta tags, atualiza blog archive e homepage, commit+push.
 
 ### `scripts/generate-post.py`
-Gerador de conteúdo via Gemini API:
-- 10 tópicos pré-definidos (universitários, ensino médio, professores, criadores, WhatsApp, email)
-- Referência: `assets/reference/ebook-summary.md` (para a IA)
-- Invoca `post.sh` após gerar conteúdo
-- Fallback: tenta `v1` → `v1beta`, vários modelos Gemini
+Gerador via Gemini API. 10 tópicos rotativos (Hermes Agent, Python/automação, agentes IA). Invoca `post.sh`.
 
 ### `scripts/gmail_monitor.py`
-Assistente de Gmail via API Google (ler + responder):
-- `auth` — Autenticação OAuth 2.0 (primeira vez)
-- `search --query "palavra"` — Pesquisar emails
-- `read --id <msg_id>` — Ler conteúdo completo do email
-- `reply --id <msg_id> --body "..."` — Cria rascunho, **mostra no ecrã, NÃO envia**
-- `send --to "x" --subject "y" --body "z"` — Enviar email (só após aprovação)
-- `send-draft --id <draft_id>` — Enviar rascunho existente
-- `unread` — Ver não lidas
-- `run` — Relatório JSON completo
-- **Fluxo seguro**: `reply` só cria draft + mostra; utilizador aprova antes de `send`
-- Requer OAuth 2.0 com scopes `gmail.readonly + gmail.send + gmail.compose + gmail.modify`
-- Automação: definir `GMAIL_CLIENT_ID`, `GMAIL_CLIENT_SECRET`, `GMAIL_REFRESH_TOKEN`
+Gmail API (ler + responder): `auth`, `search`, `read`, `reply` (draft, NÃO envia), `send`, `unread`, `run`. Duas contas: `radiestesia`, `techja`.
 
 ## Workflow GitHub Actions
-
-**Ficheiro:** `.github/workflows/marc.yml`  
-**Nome:** MARC-Jarvis  
-**Trigger:** `schedule: 0 9 * * *` + `workflow_dispatch`  
-**Permissão:** `contents: write`  
-**Secret:** `GEMINI_API_KEY` (Google Gemini API key, restrita ao Gemini API)
-
-### Pipeline
-1. `actions/checkout@v4`
-2. `actions/setup-python@v5` (3.11)
-3. `python3 scripts/generate-post.py`
+- **Ficheiro:** `.github/workflows/marc.yml` — **Nome:** "Hermes Agent"
+- **Trigger:** `schedule: 0 9 * * *` (09:00 UTC diário) + `workflow_dispatch`
+- **Secret:** `GEMINI_API_KEY`
+- Pipeline: checkout → setup-python 3.11 → `python3 scripts/generate-post.py`
 
 ## API Gemini (2026)
-
-**Endpoint:** `https://generativelanguage.googleapis.com/{version}/models/{model}:generateContent`  
-**Autenticação:** Header `x-goog-api-key` (não query param `?key=`)  
-**Modelos atuais:** `gemini-3.6-flash`, `gemini-2.5-pro-latest`, `gemini-2.5-flash-latest`  
-**Modelos deprecated/removidos (2026):** `gemini-1.5-*`, `gemini-1.0-pro`, `gemini-2.0-*`  
-**Nota:** Desde Junho 2026, chaves não restritas devolvem 404. Criar chave em `https://aistudio.google.com/app/apikey`
-
-## Lições Aprendidas (2026-07-29)
-
-1. **Workflow dispatch 422**: Sucede a renomear ficheiros workflow. Solução: apagar `.github/` inteiro e recriar de raiz.
-2. **Gemini API 404**: Modelos `gemini-1.5-*` foram removidos em 2026. Usar `gemini-3.6-flash` + header `x-goog-api-key`.
-3. **Chave API restrita**: A partir de 19 Junho 2026, Gemini API rejeita chaves não restritas (devolve 404). Gerar nova chave em AI Studio.
+- Endpoint: `https://generativelanguage.googleapis.com/{version}/models/{model}:generateContent`
+- Header `x-goog-api-key` (não `?key=`)
+- Modelos: `gemini-3.6-flash` (principal), `gemini-2.5-flash-latest`, `gemini-2.5-pro-latest`
+- Desde Jun/2026: chaves não restritas devolvem 404.
 
 ## Pendente
-- ⬜ HTTPS ativo em `https://marcusja77.com` (SSL GitHub em provisionamento — aguardar até 24h)
-- ⬜ Google AdSense — aguardar revisão (1-7 dias)
-- ⬜ Google Analytics (opcional)
+- ⬜ **HTTPS** — GitHub não emitiu certificado Let's Encrypt para `marcusja777.com`. DNS está correto (4 A records GitHub). Ação: em Settings > Pages, remover e re-adicionar o domínio personalizado.
+- ⬜ **Workflow diário** — a execução de 2026-07-30 falhou; a de hoje ainda não correu. Verificar em Actions e acionar manualmente (Run workflow).
+- ⬜ **Sitemap** desatualizado (falta artigos 6-8)
+- ⬜ Google AdSense — aguardar revisão
 
 ## Notas
-- MEO (Portugal) bloqueia HTTP — o site só ficará acessível a todos quando o SSL estiver ativo
-- MARC-Jarvis publica automaticamente 1 artigo/dia às 9:00 UTC via GitHub Actions
-- Workflow: `.github/workflows/marc.yml`
+- MEO (Portugal) bloqueia HTTP — HTTPS resolve.
+- Publicação diária: 1 artigo às 09:00 UTC via GitHub Actions (workflow "Hermes Agent").

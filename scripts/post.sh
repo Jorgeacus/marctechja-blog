@@ -189,7 +189,14 @@ if [ -f "$HOME_ARCHIVE" ]; then
   NEW_CARD_HOME+="\n              </div>"
   NEW_CARD_HOME+="\n            </article>"
 
-  sed_inplace "s|<div class=\"blog-grid\">|<div class=\"blog-grid\">\n${NEW_CARD_HOME}|" "$BLOG_ARCHIVE"
+  sed_inplace "s|<div class=\"blog-grid\">|<div class=\"blog-grid\">\n${NEW_CARD_HOME}|" "$HOME_ARCHIVE"
+fi
+
+# Update sitemap
+SITEMAP="sitemap.xml"
+if [ -f "$SITEMAP" ]; then
+  NEW_URL="  <url><loc>https://marcusja777.com/${POST_DIR}/</loc><priority>0.7</priority></url>"
+  sed_inplace "s|</urlset>|${NEW_URL}\n</urlset>|" "$SITEMAP"
 fi
 
 # Auto-commit and push
