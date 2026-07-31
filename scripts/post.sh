@@ -53,12 +53,16 @@ if [ -z "$ARTICLE_CONTENT" ]; then
   ARTICLE_CONTENT="<p>Conteúdo do artigo em breve.</p>"
 fi
 
-# Generate SEO description (first 150 chars of content, strip HTML)
-SEO_DESC=$(echo "$ARTICLE_CONTENT" \
-  | sed 's/<[^>]*>//g; s/&amp;/\&/g; s/&lt;/</g; s/&gt;/>/g; s/&quot;/\"/g; s/&#39;/\x27/g' \
-  | head -c 150 \
-  | tr -d '\n' \
-  | sed 's/[[:space:]]*$//')
+# Generate SEO description (first 150 chars of content, strip HTML comments + tags)
+SEO_DESC=$(python3 -c '
+import re, html, sys
+raw = sys.stdin.read()
+raw = re.sub(r"<!--.*?-->", "", raw, flags=re.DOTALL)
+raw = re.sub(r"<[^>]+>", "", raw)
+raw = html.unescape(raw)
+text = " ".join(raw.split())
+print(text[:150].rstrip())
+' <<< "$ARTICLE_CONTENT")
 
 cat > "$POST_DIR/index.html" << HTMLEOF
 <!DOCTYPE html>
@@ -162,7 +166,15 @@ HTMLEOF
 # Add blog post to blog archive index
 BLOG_ARCHIVE="blog/index.html"
 if [ -f "$BLOG_ARCHIVE" ]; then
-  EXCERPT=$(echo "$ARTICLE_CONTENT" | sed 's/<[^>]*>//g' | head -c 120 | tr -d '\n')
+  EXCERPT=$(python3 -c '
+import re, html, sys
+raw = sys.stdin.read()
+raw = re.sub(r"<!--.*?-->", "", raw, flags=re.DOTALL)
+raw = re.sub(r"<[^>]+>", "", raw)
+raw = html.unescape(raw)
+text = " ".join(raw.split())
+print(text[:120].rstrip())
+' <<< "$ARTICLE_CONTENT")
   NEW_CARD="            <article class=\"blog-card\">"
   NEW_CARD+="\n              <div class=\"blog-card-content\">"
   NEW_CARD+="\n                <div class=\"blog-card-tag\">${CATEGORY}</div>"
@@ -192,7 +204,15 @@ fi
 # Also update homepage
 HOME_ARCHIVE="index.html"
 if [ -f "$HOME_ARCHIVE" ]; then
-  EXCERPT_HOME=$(echo "$ARTICLE_CONTENT" | sed 's/<[^>]*>//g' | head -c 100 | tr -d '\n')
+  EXCERPT_HOME=$(python3 -c '
+import re, html, sys
+raw = sys.stdin.read()
+raw = re.sub(r"<!--.*?-->", "", raw, flags=re.DOTALL)
+raw = re.sub(r"<[^>]+>", "", raw)
+raw = html.unescape(raw)
+text = " ".join(raw.split())
+print(text[:100].rstrip())
+' <<< "$ARTICLE_CONTENT")
   NEW_CARD_HOME="            <article class=\"blog-card\">"
   NEW_CARD_HOME+="\n              <div class=\"blog-card-content\">"
   NEW_CARD_HOME+="\n                <div class=\"blog-card-tag\">${CATEGORY}</div>"
