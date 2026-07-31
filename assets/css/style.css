@@ -99,6 +99,7 @@ img { max-width: 100%; height: auto; display: block; }
   content: '';
   position: absolute;
   inset: 0;
+  pointer-events: none;
   background: radial-gradient(circle at 20% 50%, rgba(217,168,62,0.08) 0%, transparent 60%);
 }
 .hero h1 { font-size: 40px; font-weight: 800; line-height: 1.2; margin-bottom: 16px; }
