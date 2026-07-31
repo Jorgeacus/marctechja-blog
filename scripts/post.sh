@@ -199,6 +199,9 @@ content = content[:idx] + "\n" + card + content[idx:]
 with open(path, "w", encoding="utf-8") as f:
     f.write(content)
 PYEOF
+
+  # Reorder cards by date (newest first) to keep consistent ordering
+  python3 "scripts/reorder-cards.py" "$BLOG_ARCHIVE"
 fi
 
 # Also update homepage
@@ -233,6 +236,17 @@ if idx == -1:
     sys.exit(0)
 idx += len(marker)
 content = content[:idx] + "\n" + card + content[idx:]
+
+# Homepage keeps only 6 cards (5 essential + most recent): if we grew past 6,
+# drop the last (oldest) card so the essential set stays intact.
+import re
+cards = re.findall(r'<article class="blog-card">.*?</article>', content, re.DOTALL)
+if len(cards) > 6:
+    extra = cards[-1]
+    # Remove the last card and any trailing whitespace before the grid close
+    last_start = content.rfind(extra)
+    content = content[:last_start].rstrip() + "\n" + content[last_start + len(extra):]
+
 with open(path, "w", encoding="utf-8") as f:
     f.write(content)
 PYEOF

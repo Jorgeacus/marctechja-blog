@@ -1,0 +1,48 @@
+name: Health Check Blog
+
+on:
+  schedule:
+    - cron: '30 9 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  health-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Run health check
+        id: health
+        run: python3 scripts/health-check.py || echo "health_failed=true" >> "$GITHUB_ENV"
+      - name: Create issue on failure
+        if: env.health_failed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          REPORT=$(python3 scripts/health-check.py 2>&1 || true)
+          echo "REPORT<<EOF" >> "$GITHUB_ENV"
+          echo "$REPORT" >> "$GITHUB_ENV"
+          echo "EOF" >> "$GITHUB_ENV"
+      - name: Open GitHub Issue
+        if: env.health_failed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Avoid duplicate open issues with the same title
+          EXISTING=$(gh issue list --state open --search "health-check" --json number -q '.[0].number' 2>/dev/null || echo "")
+          if [ -z "$EXISTING" ]; then
+            gh issue create \
+              --title "🚨 Health Check falhou: site com quebras" \
+              --body "O health check automático detetou problemas no site **marcusja777.com** ($(date -u '+%Y-%m-%d %H:%M UTC')). Consulta a skill de manutenção (\`.hermes/skills/devops/marctechja-blog-maintenance/SKILL.md\`) para o playbook de correção. Corre \`python3 scripts/health-check.py\` para reavaliar depois de corrigir." 
+          else
+            echo "Issue já existe (#$EXISTING) — saltar criação."
+          fi
+      - name: Fail the job
+        if: env.health_failed == 'true'
+        run: exit 1

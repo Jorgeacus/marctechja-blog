@@ -99,35 +99,40 @@ GEMINI_MODELS = [
 
 def call_gemini_api(prompt, api_key):
     last_error = None
-    for version in ["v1beta", "v1"]:
-        for model in GEMINI_MODELS:
-            url = f"https://generativelanguage.googleapis.com/{version}/models/{model}:generateContent"
-            data = json.dumps({
-                "contents": [{"parts": [{"text": prompt}]}],
-                "generationConfig": {
-                    "temperature": 0.8,
-                    "maxOutputTokens": 4096,
-                    "topK": 40,
-                    "topP": 0.95
-                }
-            }).encode("utf-8")
-            try:
-                req = urllib.request.Request(url, data=data, headers={
-                    "Content-Type": "application/json",
-                    "x-goog-api-key": api_key
-                })
-                resp = urllib.request.urlopen(req)
-                result = json.loads(resp.read().decode("utf-8"))
-                if "candidates" not in result or not result["candidates"]:
-                    error_reason = result.get("promptFeedback", {}).get("blockReason", "unknown")
-                    raise Exception(f"Gemini {version}/{model}: sem resposta (blockReason: {error_reason})")
-                print(f"  ✅ {version}/{model} OK")
-                return result["candidates"][0]["content"]["parts"][0]["text"]
-            except urllib.error.HTTPError as e:
-                print(f"  ⚠️ {version}/{model}: {e.code}")
-                last_error = e
-                continue
-    raise last_error
+    for attempt in range(2):
+        for version in ["v1beta", "v1"]:
+            for model in GEMINI_MODELS:
+                url = f"https://generativelanguage.googleapis.com/{version}/models/{model}:generateContent"
+                data = json.dumps({
+                    "contents": [{"parts": [{"text": prompt}]}],
+                    "generationConfig": {
+                        "temperature": 0.8,
+                        "maxOutputTokens": 4096,
+                        "topK": 40,
+                        "topP": 0.95
+                    }
+                }).encode("utf-8")
+                try:
+                    req = urllib.request.Request(url, data=data, headers={
+                        "Content-Type": "application/json",
+                        "x-goog-api-key": api_key
+                    })
+                    resp = urllib.request.urlopen(req, timeout=60)
+                    result = json.loads(resp.read().decode("utf-8"))
+                    if "candidates" not in result or not result["candidates"]:
+                        error_reason = result.get("promptFeedback", {}).get("blockReason", "unknown")
+                        raise Exception(f"Gemini {version}/{model}: sem resposta (blockReason: {error_reason})")
+                    print(f"  ✅ {version}/{model} OK")
+                    return result["candidates"][0]["content"]["parts"][0]["text"]
+                except urllib.error.HTTPError as e:
+                    print(f"  ⚠️ {version}/{model}: HTTP {e.code}")
+                    last_error = e
+                    continue
+                except (urllib.error.URLError, TimeoutError, ConnectionResetError, OSError) as e:
+                    print(f"  ⚠️ {version}/{model}: {type(e).__name__}: {e}")
+                    last_error = e
+                    continue
+    raise RuntimeError(f"Falha ao contactar a API Gemini após várias tentativas: {last_error}") from last_error
 
 def call_openai_api(prompt, api_key):
     import urllib.request
