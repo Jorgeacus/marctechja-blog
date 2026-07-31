@@ -57,7 +57,11 @@
 Publicador automático. Cria HTML, slug (sem espaços), meta tags, atualiza blog archive e homepage, commit+push.
 
 ### `scripts/generate-post.py`
-Gerador via Gemini API. 10 tópicos rotativos (Hermes Agent, Python/automação, agentes IA). Invoca `post.sh`.
+Gerador via Gemini API. 10 tópicos rotativos (Hermes Agent, Python/automação, agentes IA). Invoca `post.sh`. Prompt instrui a NÃO gerar comentários HTML.
+
+## Lições aprendidas (2026-07-31)
+- **BUG CRÍTICO**: O Gemini gerou `<!-- SEO Metadata ... -->` no início do conteúdo. O `post.sh` cortava o excerpt com `head -c` deixando `<!--` sem fecho `-->`, o que fazia o navegador tratar TODO o resto da página como comentário → só aparecia 1 artigo. **Correção**: post.sh agora usa Python `re.sub(r"<!--.*?-->", "", raw, DOTALL)` para remover comentários ANTES de truncar. Prompt do gerador também proíbe comentários HTML.
+- O repo local fica em `~/MARCS_Blog` (NÃO em /tmp — é apagado ao reiniciar o Mac).
 
 ### `scripts/gmail_monitor.py`
 Gmail API (ler + responder): `auth`, `search`, `read`, `reply` (draft, NÃO envia), `send`, `unread`, `run`. Duas contas: `radiestesia`, `techja`.
