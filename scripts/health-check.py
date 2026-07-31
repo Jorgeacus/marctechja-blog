@@ -92,7 +92,9 @@ def check_section(name, fn):
 def check_live():
     check_section("Páginas base (HTTP 200)", lambda: [
         check(get(url)[0] == 200, f"{url} responde 200")
-        for url in [f"{BASE}/", f"{BASE}/blog/", f"{BASE}/livro/", f"{BASE}/sobre/"]
+        for url in [f"{BASE}/", f"{BASE}/blog/", f"{BASE}/livro/", f"{BASE}/sobre/",
+                    f"{BASE}/politica-de-privacidade/", f"{BASE}/politica-de-cookies/",
+                    f"{BASE}/termos/", f"{BASE}/contactos/"]
     ])
 
     print()
@@ -148,6 +150,10 @@ def check_local():
         check((REPO_ROOT / "robots.txt").exists(), "robots.txt existe"),
         check((REPO_ROOT / "ads.txt").exists(), "ads.txt existe"),
         check((REPO_ROOT / "CNAME").exists(), "CNAME existe (marcusja777.com)"),
+        check((REPO_ROOT / "politica-de-privacidade" / "index.html").exists(), "politica-de-privacidade/ existe"),
+        check((REPO_ROOT / "politica-de-cookies" / "index.html").exists(), "politica-de-cookies/ existe"),
+        check((REPO_ROOT / "termos" / "index.html").exists(), "termos/ existe"),
+        check((REPO_ROOT / "contactos" / "index.html").exists(), "contactos/ existe"),
     ])
 
     blog_path = REPO_ROOT / "blog" / "index.html"

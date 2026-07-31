@@ -26,7 +26,7 @@ Sou o agente responsável por manter o blog MarctechJA **sempre funcional**, seg
 - **Repo local permanente:** `~/MARCS_Blog` (NUNCA `/tmp` — é apagado ao reiniciar o Mac)
 - **Email:** marctechja@gmail.com
 - **Design:** cores Hermes — petróleo `#031522`, navy `#061B2B`, dourado `#D9A83E`, ciano `#008FBE`
-- **Páginas:** `/` (home, 6 cards), `/blog/` (todos os artigos + formulário Google Forms na sidebar), `/livro/`, `/sobre/`
+- **Páginas:** `/` (home, 6 cards), `/blog/` (todos os artigos + formulário Google Forms na sidebar), `/livro/`, `/sobre/`, `/politica-de-privacidade/`, `/politica-de-cookies/`, `/termos/`, `/contactos/` (obrigatórias para o Google AdSense)
 - **Ordem dos artigos:** do **mais recente para o mais antigo** (no blog archive)
 - **Publicação diária:** workflow GitHub Actions "Hermes Agent" (`.github/workflows/marc.yml`), 09:00 UTC + `workflow_dispatch`
 

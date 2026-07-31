@@ -24,6 +24,12 @@
 | Blog archive (todos os artigos + formulário subscrição) | `/blog/` |
 | Página do Livro | `/livro/` (capa + link Hotmart) |
 | Sobre | `/sobre/` |
+| Política de Privacidade | `/politica-de-privacidade/` |
+| Política de Cookies | `/politica-de-cookies/` |
+| Termos de Uso | `/termos/` |
+| Contactos | `/contactos/` |
+
+**Páginas legais (Privacidade, Cookies, Termos, Contactos) são OBRIGATÓRIAS para a aprovação do Google AdSense** — não remover.
 
 ## Artigos publicados (9)
 1. `hermes-agent-skills/` — Skills no Hermes Agent (25 Jul)
@@ -95,8 +101,7 @@ Gmail API (ler + responder): `auth`, `search`, `read`, `reply` (draft, NÃO envi
 - **Repo local em `~/MARCS_Blog`** (NUNCA /tmp — é apagado ao reiniciar). Fazer `git pull` antes de editar.
 
 ## Pendente
-- ⬜ HTTP→HTTPS: sugerir "Enforce HTTPS" em Settings > Pages (o HTTP ainda não redireciona)
-- ⬜ Google AdSense — aguardar revisão
+- ⬜ **AdSense** — primeira revisão reprovada. Corrigido: adicionadas páginas Privacidade, Cookies, Termos e Contactos + links no footer de todas as páginas + sitemap atualizado. Pedir nova revisão quando publicado.
 - ⬜ Exportar subscritores da Sheet para `subscribers.csv` quando houver dados
 
 ## Notas
