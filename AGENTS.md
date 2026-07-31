@@ -68,7 +68,7 @@
 Publicador automático. Cria HTML, slug, meta tags, atualiza blog archive (ordenado por data) e homepage (máx. 6 cards), sitemap, commit+push.
 
 ### `scripts/generate-post.py`
-Gerador via Gemini API. 10 tópicos rotativos. Invoca `post.sh`. **Robustez:** tenta 4 modelos × 2 versões da API com retry; captura HTTPError, URLError e timeouts.
+Gerador via Gemini API. 23 tópicos rotativos (do mais simples ao mais complexo): WhatsApp, landing pages, Python, Telegram, Instagram, gestão de tráfego e redes sociais, análise de mercado/produtos, micro e grandes empresas, etc. **Rotação sequencial por dia** (1 tema/dia, por ordem, começando a 1 Ago 2026) — não aleatória. Sem repetição de artigos já publicados. Invoca `post.sh`. **Robustez:** tenta 4 modelos × 2 versões da API com retry; captura HTTPError, URLError e timeouts. Autor: "Hermes Agent" (nunca MARC-Jarvis).
 
 ### `scripts/reorder-cards.py`
 Reordena os cards do blog archive do mais recente ao mais antigo (invocado pelo post.sh).
@@ -102,3 +102,4 @@ Gmail API (ler + responder): `auth`, `search`, `read`, `reply` (draft, NÃO envi
 ## Notas
 - A automação do blog vive 100% no GitHub Actions (runner efémero) — não há dependência de /tmp local.
 - Publicação diária: 1 artigo às 09:00 UTC via workflow "Hermes Agent".
+- Temas: Hermes Agent + Python + criação de sites/landing pages + automação (WhatsApp, Telegram, Instagram) + gestão de tráfego e redes sociais + análise de mercado/produtos + micro e grandes empresas, em rotação sequencial diária (sem repetir publicados).

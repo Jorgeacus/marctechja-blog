@@ -83,4 +83,6 @@ Sincronizar sempre antes de editar: `git -C ~/MARCS_Blog pull origin main`. Se o
 - Homepage: só 6 cards (5 essenciais + mais recente) + CTA "Explorar Blog Completo →".
 - Blog archive: todos os artigos + formulário Google Forms (iframe) na sidebar.
 - Slug: minúsculas, sem acentos, hífens para espaços.
-- Autor default: "Hermes Agent".
+- Autor default: "Hermes Agent" (nunca "MARC-Jarvis").
+- **1 artigo por dia**, às 09:00 UTC (workflow "Hermes Agent").
+- **Temas:** mistura de Hermes Agent, Python, criação de sites/landing pages, automação (WhatsApp, Telegram, Instagram), gestão de tráfego e redes sociais, análise de mercado/produtos, e conteúdo para micro e grandes empresas. Rotação sequencial em `scripts/generate-post.py` (23 tópicos, do mais simples ao mais complexo) — 1 tema por dia por ordem, reinicia quando chega ao fim. **Não repetir temas/artigos já publicados** — só atualizar ou aprofundar.

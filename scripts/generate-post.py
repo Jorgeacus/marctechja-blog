@@ -19,62 +19,149 @@ Variáveis de ambiente:
 import os
 import sys
 import json
-import random
 import subprocess
 import urllib.error
 import urllib.request
 from datetime import datetime
 
 # --- Tópicos para os artigos ---
+# Ordenados do mais simples/rápido de automatizar para o mais complexo.
+# A rotação é sequencial (1 tema por dia, por ordem) — ver main().
+# NOTA: não repetir temas/artigos já publicados; só atualizar ou aprofundar.
 TOPICS = [
-    # Hermes Agent — tutoriais e guias
+    # 1 — WhatsApp: mensagens (o mais simples de começar)
     {
         "audience": "Geral",
-        "title": "O que é o Hermes Agent e como pode transformar as tuas automações",
-        "focus": "Introdução ao Hermes Agent: o que é, como funciona, casos de uso e porque é diferente de outras ferramentas de IA."
+        "title": "Automatizar mensagens no WhatsApp com Hermes Agent",
+        "focus": "Guia simples para configurar o Hermes Agent e automatizar o envio de mensagens no WhatsApp: respostas automáticas, lembretes e mensagens agendadas."
     },
+    # 2 — Criação de sites: landing page simples
+    {
+        "audience": "Criadores de Conteúdo",
+        "title": "Criar uma landing page simples com HTML e CSS em 30 minutos",
+        "focus": "Tutorial passo a passo para criar uma landing page básica em HTML e CSS, pronta para publicar, sem precisar de programação avançada."
+    },
+    # 3 — Python para automação: começar
     {
         "audience": "Programadores",
-        "title": "Criar skills personalizadas no Hermes Agent — guia passo a passo",
-        "focus": "Tutorial prático de como criar skills YAML no Hermes Agent, desde a estrutura básica até exemplos complexos com múltiplos passos."
+        "title": "Python para automação: por onde começar",
+        "focus": "Guia de introdução à automação com Python: instalar, primeiros scripts, bibliotecas essenciais (os, requests, schedule) e exemplos simples."
     },
+    # 4 — Telegram
     {
         "audience": "Geral",
-        "title": "Hermes Agent vs outros agentes de IA: comparação completa",
-        "focus": "Comparar Hermes Agent com Claude Code, Codex CLI, OpenAI Agents, destacando vantagens e desvantagens de cada um."
+        "title": "Automatizar o Telegram com Hermes Agent: respostas e agendamentos",
+        "focus": "Como automatizar um grupo ou canal no Telegram com o Hermes Agent: responder a mensagens, publicar atualizações e agendar posts."
     },
+    # 5 — Empresas: WhatsApp Business (novo, fácil)
     {
-        "audience": "Programadores",
-        "title": "Integrar Hermes Agent com APIs externas",
-        "focus": "Ensinar como configurar skills do Hermes Agent para chamar APIs REST, processar JSON e automatizar fluxos com serviços externos."
+        "audience": "Empresas",
+        "title": "Automatizar o atendimento no WhatsApp Business com Hermes Agent",
+        "focus": "Como micro e grandes empresas podem automatizar respostas a clientes no WhatsApp Business: mensagens de boas-vindas, FAQs, lembretes e catálogo, usando o Hermes Agent."
     },
+    # 6 — Landing page para produto
+    {
+        "audience": "Criadores de Conteúdo",
+        "title": "Criar uma landing page para o teu produto com HTML e CSS",
+        "focus": "Como estruturar uma landing page de produto: título, benefícios, prova social, chamada para ação e formulário de captura, com HTML e CSS."
+    },
+    # 7 — WhatsApp: áudio e imagens
     {
         "audience": "Geral",
-        "title": "5 automações do dia a dia com Hermes Agent que vais querer usar",
-        "focus": "Lista de 5 automações práticas: organizar ficheiros, responder emails, gerar relatórios, pesquisar web e agendar tarefas."
+        "title": "Enviar áudio e imagens automáticos no WhatsApp com Hermes Agent",
+        "focus": "Automatizar o envio de mensagens de áudio (geradas por IA) e imagens no WhatsApp com o Hermes Agent: casos práticos e configuração."
     },
-    # Python para automações
+    # 8 — Combinação Python + Hermes Agent
     {
         "audience": "Programadores",
         "title": "Automatizar tarefas repetitivas com Python e Hermes Agent",
         "focus": "Como usar scripts Python em conjunto com o Hermes Agent para automatizar tarefas como processamento de ficheiros, scraping e geração de relatórios."
     },
+    # 9 — Instagram
+    {
+        "audience": "Criadores de Conteúdo",
+        "title": "Automatizar o Instagram com Hermes Agent: agendar e publicar",
+        "focus": "Planeamento e publicação automática de conteúdo no Instagram com o Hermes Agent: ideias de posts, legendas, hashtags e agendamento."
+    },
+    # 10 — Landing page para afiliados
+    {
+        "audience": "Afiliados",
+        "title": "Landing pages para afiliados: estrutura que converte",
+        "focus": "Como criar landing pages de afiliados com HTML e CSS: secções que convertem, links de afiliado, prova social e chamada para ação eficaz."
+    },
+    # 11 — Empresas: análise de mercado
+    {
+        "audience": "Empresários",
+        "title": "Análise de mercado com Hermes Agent: relatórios automáticos",
+        "focus": "Como empresários de micro e grandes empresas podem usar o Hermes Agent para gerar relatórios de análise de mercado: concorrentes, tendências, preços e oportunidades, recolhendo dados da web automaticamente."
+    },
+    # 12 — Criação de sites com Python
+    {
+        "audience": "Programadores",
+        "title": "Criar um site com Python e publicar de graça",
+        "focus": "Como construir um site simples em Python (Flask ou páginas estáticas) e publicá-lo gratuitamente em plataformas como GitHub Pages."
+    },
+    # 13 — Empresas: análise de produtos (lojas online e físicas)
+    {
+        "audience": "Empresas",
+        "title": "Análise de produtos com Hermes Agent para lojas online e físicas",
+        "focus": "Como lojas online e físicas, de micro a grandes empresas, podem usar o Hermes Agent para analisar produtos: acompanhar preços, stock, reviews e concorrência, e gerar relatórios de desempenho automaticamente."
+    },
+    # 14 — Python para email
     {
         "audience": "Programadores",
         "title": "Python para automação de email: ler, filtrar e responder com IA",
         "focus": "Tutorial de Python com Gmail API para ler, categorizar e responder emails automaticamente, com sugestões geradas por IA."
     },
+    # 15 — Empresas: landing pages para captar clientes
+    {
+        "audience": "Empresários",
+        "title": "Landing pages para captar clientes: guia para empresários",
+        "focus": "Como empresários de micro e grandes empresas podem criar landing pages eficazes para captar clientes: oferta, benefícios, prova social, formulário e chamada para ação, com HTML e CSS simples."
+    },
+    # 16 — Empresas: gestão de tráfego (orgânico e pago)
+    {
+        "audience": "Empresários",
+        "title": "Gestão de tráfego orgânico e pago para empreendedores com Hermes Agent",
+        "focus": "Como empreendedores de micro e grandes empresas podem usar o Hermes Agent para gerir tráfego: planear SEO e conteúdo orgânico, acompanhar campanhas pagas, monitorizar anúncios e gerar relatórios de desempenho automaticamente."
+    },
+    # 17 — Hermes Agent: APIs externas
+    {
+        "audience": "Programadores",
+        "title": "Integrar Hermes Agent com APIs externas",
+        "focus": "Ensinar como configurar skills do Hermes Agent para chamar APIs REST, processar JSON e automatizar fluxos com serviços externos."
+    },
+    # 18 — Empresas: Instagram para negócios
+    {
+        "audience": "Empresas",
+        "title": "Automatizar o Instagram de uma empresa com Hermes Agent",
+        "focus": "Como micro e grandes empresas podem automatizar a presença no Instagram: agendar posts de produtos, gerar legendas e hashtags e responder a mensagens, tudo com o Hermes Agent."
+    },
+    # 19 — GitHub com Python
     {
         "audience": "Programadores",
         "title": "Automatizar o teu workflow de GitHub com Python",
         "focus": "Usar Python + PyGithub para automatizar PRs, issues, releases e CI/CD, integrado com skills do Hermes Agent."
     },
-    # Agentes e IA
+    # 20 — Empresas: gestão de redes sociais
+    {
+        "audience": "Empresários",
+        "title": "Gestão de redes sociais para empreendedores com Hermes Agent",
+        "focus": "Como empreendedores de micro e grandes empresas podem usar o Hermes Agent para gerir as redes sociais: planear calendários de conteúdo, gerar posts e legendas, agendar publicações e analisar resultados em várias plataformas automaticamente."
+    },
+    # 21 — Empresas: Telegram para empresas
+    {
+        "audience": "Empresas",
+        "title": "Automatizar o Telegram de uma empresa com Hermes Agent",
+        "focus": "Como micro e grandes empresas podem usar o Hermes Agent para automatizar canais e grupos no Telegram: comunicados, novidades, atendimento e integrações internas."
+    },
+    # 22 — Comparação de agentes
     {
         "audience": "Geral",
-        "title": "O que são agentes de IA e como funcionam na prática",
-        "focus": "Explicação simples sobre agentes de IA: o que são, como tomam decisões, usam ferramentas e executam tarefas autonomamente."
+        "title": "Hermes Agent vs outros agentes de IA: comparação completa",
+        "focus": "Comparar Hermes Agent com Claude Code, Codex CLI, OpenAI Agents, destacando vantagens e desvantagens de cada um."
     },
+    # 22 — Construir o próprio agente com Python
     {
         "audience": "Programadores",
         "title": "Construir o teu próprio agente de IA com Python",
@@ -166,6 +253,9 @@ def generate_article(topic, reference_content, provider, api_key):
         "Criadores de Conteúdo": "criadores de conteúdo",
         "WhatsApp": "utilizadores do WhatsApp",
         "Email": "profissionais",
+        "Afiliados": "afiliados e criadores de ofertas",
+        "Empresas": "micro e grandes empresas e lojas",
+        "Empresários": "empresários e donos de negócio de micro e grandes empresas",
         "Geral": "todos"
     }
     audience_pt = audiences_pt.get(topic["audience"], "todos")
@@ -217,8 +307,10 @@ def main():
 
     reference_content = load_reference()
 
-    # Pick random topic
-    topic = random.choice(TOPICS)
+    # Pick today's topic: sequential rotation, one per day, starting with the simplest.
+    # Uses a stable index so each calendar day maps to one topic (dois dias = dois temas).
+    today_index = (datetime.now() - datetime(2026, 8, 1)).days
+    topic = TOPICS[today_index % len(TOPICS)]
 
     print(f"📝 A gerar artigo: {topic['title']}")
     print(f"   Público: {topic['audience']}")
