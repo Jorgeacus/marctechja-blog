@@ -172,8 +172,21 @@ if [ -f "$BLOG_ARCHIVE" ]; then
   NEW_CARD+="\n              </div>"
   NEW_CARD+="\n            </article>"
 
-  # Insert after first blog-grid div opening
-  sed_inplace "s|<div class=\"blog-grid\">|<div class=\"blog-grid\">\n${NEW_CARD}|" "$BLOG_ARCHIVE"
+  # Insert after first blog-grid div opening (only once)
+  python3 - "$BLOG_ARCHIVE" "$NEW_CARD" << 'PYEOF'
+import sys
+path, card = sys.argv[1], sys.argv[2]
+with open(path, encoding="utf-8") as f:
+    content = f.read()
+marker = '<div class="blog-grid">'
+idx = content.find(marker)
+if idx == -1:
+    sys.exit(0)
+idx += len(marker)
+content = content[:idx] + "\n" + card + content[idx:]
+with open(path, "w", encoding="utf-8") as f:
+    f.write(content)
+PYEOF
 fi
 
 # Also update homepage
@@ -189,7 +202,20 @@ if [ -f "$HOME_ARCHIVE" ]; then
   NEW_CARD_HOME+="\n              </div>"
   NEW_CARD_HOME+="\n            </article>"
 
-  sed_inplace "s|<div class=\"blog-grid\">|<div class=\"blog-grid\">\n${NEW_CARD_HOME}|" "$HOME_ARCHIVE"
+  python3 - "$HOME_ARCHIVE" "$NEW_CARD_HOME" << 'PYEOF'
+import sys
+path, card = sys.argv[1], sys.argv[2]
+with open(path, encoding="utf-8") as f:
+    content = f.read()
+marker = '<div class="blog-grid">'
+idx = content.find(marker)
+if idx == -1:
+    sys.exit(0)
+idx += len(marker)
+content = content[:idx] + "\n" + card + content[idx:]
+with open(path, "w", encoding="utf-8") as f:
+    f.write(content)
+PYEOF
 fi
 
 # Update sitemap
