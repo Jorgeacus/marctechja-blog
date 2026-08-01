@@ -179,19 +179,27 @@ if [ -f "$BLOG_ARCHIVE" ]; then
 import re, html, sys
 raw = sys.stdin.read()
 raw = re.sub(r"<!--.*?-->", "", raw, flags=re.DOTALL)
+# Ignora o primeiro heading (<h1>/<h2>) se repetir o título do artigo
+title = sys.argv[1]
+first = re.search(r"<h[12][^>]*>(.*?)</h[12]>", raw, flags=re.DOTALL)
+if first:
+    t = re.sub(r"<[^>]+>", "", first.group(1))
+    t = re.sub(r"\s+", " ", t).strip()
+    if title and (t == title or t.startswith(title + ":")):
+        raw = raw[:first.start()] + raw[first.end():]
 raw = re.sub(r"<[^>]+>", "", raw)
 raw = html.unescape(raw)
 text = " ".join(raw.split())
 print(text[:120].rstrip())
-' <<< "$ARTICLE_CONTENT")
+' "$TITLE" <<< "$ARTICLE_CONTENT")
   NEW_CARD="            <article class=\"blog-card\">"
-  NEW_CARD+="\n              <div class=\"blog-card-content\">"
-  NEW_CARD+="\n                <div class=\"blog-card-tag\">${CATEGORY}</div>"
-  NEW_CARD+="\n                <h2><a href=\"/${POST_DIR}/\">${TITLE}</a></h2>"
-  NEW_CARD+="\n                <p>${EXCERPT}...</p>"
-  NEW_CARD+="\n                <div class=\"meta\"><span class=\"date\">$(date +%d\ %b\ %Y)</span></div>"
-  NEW_CARD+="\n              </div>"
-  NEW_CARD+="\n            </article>"
+  NEW_CARD+=$'\n              <div class="blog-card-content">'
+  NEW_CARD+=$'\n                <div class="blog-card-tag">'"${CATEGORY}"$'</div>'
+  NEW_CARD+=$'\n                <h2><a href="/'"${POST_DIR}"$'/">'"${TITLE}"$'</a></h2>'
+  NEW_CARD+=$'\n                <p>'"${EXCERPT}"$'...</p>'
+  NEW_CARD+=$'\n                <div class="meta"><span class="date">'"$(date +%d\ %b\ %Y)"$'</span></div>'
+  NEW_CARD+=$'\n              </div>'
+  NEW_CARD+=$'\n            </article>'
 
   # Insert after first blog-grid div opening (only once)
   python3 - "$BLOG_ARCHIVE" "$NEW_CARD" << 'PYEOF'
@@ -220,19 +228,27 @@ if [ -f "$HOME_ARCHIVE" ]; then
 import re, html, sys
 raw = sys.stdin.read()
 raw = re.sub(r"<!--.*?-->", "", raw, flags=re.DOTALL)
+# Ignora o primeiro heading (<h1>/<h2>) se repetir o título do artigo
+title = sys.argv[1]
+first = re.search(r"<h[12][^>]*>(.*?)</h[12]>", raw, flags=re.DOTALL)
+if first:
+    t = re.sub(r"<[^>]+>", "", first.group(1))
+    t = re.sub(r"\s+", " ", t).strip()
+    if title and (t == title or t.startswith(title + ":")):
+        raw = raw[:first.start()] + raw[first.end():]
 raw = re.sub(r"<[^>]+>", "", raw)
 raw = html.unescape(raw)
 text = " ".join(raw.split())
 print(text[:100].rstrip())
-' <<< "$ARTICLE_CONTENT")
+' "$TITLE" <<< "$ARTICLE_CONTENT")
   NEW_CARD_HOME="            <article class=\"blog-card\">"
-  NEW_CARD_HOME+="\n              <div class=\"blog-card-content\">"
-  NEW_CARD_HOME+="\n                <div class=\"blog-card-tag\">${CATEGORY}</div>"
-  NEW_CARD_HOME+="\n                <h2><a href=\"/${POST_DIR}/\">${TITLE}</a></h2>"
-  NEW_CARD_HOME+="\n                <p>${EXCERPT_HOME}...</p>"
-  NEW_CARD_HOME+="\n                <div class=\"meta\"><span class=\"date\">$(date +%d\ %b\ %Y)</span> · novo</div>"
-  NEW_CARD_HOME+="\n              </div>"
-  NEW_CARD_HOME+="\n            </article>"
+  NEW_CARD_HOME+=$'\n              <div class="blog-card-content">'
+  NEW_CARD_HOME+=$'\n                <div class="blog-card-tag">'"${CATEGORY}"$'</div>'
+  NEW_CARD_HOME+=$'\n                <h2><a href="/'"${POST_DIR}"$'/">'"${TITLE}"$'</a></h2>'
+  NEW_CARD_HOME+=$'\n                <p>'"${EXCERPT_HOME}"$'...</p>'
+  NEW_CARD_HOME+=$'\n                <div class="meta"><span class="date">'"$(date +%d\ %b\ %Y)"$'</span> · novo</div>'
+  NEW_CARD_HOME+=$'\n              </div>'
+  NEW_CARD_HOME+=$'\n            </article>'
 
   python3 - "$HOME_ARCHIVE" "$NEW_CARD_HOME" << 'PYEOF'
 import sys

@@ -286,6 +286,7 @@ O artigo HTML deve ter:
 IMPORTANTE: Gera APENAS o HTML do conteúdo (o que vai dentro da div <div class="article-content">).
 NÃO incluis <!DOCTYPE>, <html>, <head>, <body> ou tags de estrutura da página.
 NÃO incluis comentários HTML (nem <!-- -->), nem blocos "SEO Metadata". Começa diretamente com o <h2> ou <p>.
+NÃO repitas o título como primeiro heading do corpo (o título já é mostrado no topo da página) — começa diretamente com o primeiro tópico.
 Apenas o conteúdo interno: parágrafos, headings, listas, código e CTA.
 """
 

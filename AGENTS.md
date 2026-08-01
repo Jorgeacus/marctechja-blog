@@ -31,7 +31,7 @@
 
 **Páginas legais (Privacidade, Cookies, Termos, Contactos) são OBRIGATÓRIAS para a aprovação do Google AdSense** — não remover.
 
-## Artigos publicados (9)
+## Artigos publicados (10)
 1. `hermes-agent-skills/` — Skills no Hermes Agent (25 Jul)
 2. `hermes-agent-introduction/` — O que é o Hermes Agent (26 Jul)
 3. `hermes-agent-automations/` — 5 Automações Diárias (27 Jul)
@@ -41,6 +41,7 @@
 7. `hermes-agent-publica-automaticamente/` — Hermes Agent publica automaticamente (30 Jul)
 8. `como-publicar-artigos-com-hermes-agent/` — Como publicar artigos com Hermes Agent (30 Jul)
 9. `o-que-sao-agentes-de-ia-e-como-funcionam-na-pratica/` — O que são agentes de IA (31 Jul)
+10. `automatizar-mensagens-no-whatsapp-com-hermes-agent/` — Automatizar mensagens no WhatsApp (1 Ago)
 
 **Ordem:** do mais recente para o mais antigo no blog archive. Homepage: 6 cards (5 essenciais + mais recente).
 
@@ -98,11 +99,21 @@ Gmail API (ler + responder): `auth`, `search`, `read`, `reply` (draft, NÃO envi
 - **Botões do hero**: `.hero::before` (overlay `inset:0`) interceptava cliques → `pointer-events: none`.
 - **Cache CDN**: GitHub Pages usa `max-age=600` + `x-cache: HIT` → forçar `?v=...` nas URLs e cache-busting no CSS.
 - **Falha da API**: o script só capturava `HTTPError`; timeouts/URLError falhavam sem retry → agora captura tudo e tenta 4 modelos com retry.
+- **BUG `\n` literal nos cards**: `NEW_CARD+="\n..."` em bash com aspas duplas produz os caracteres literais `\`+`n` (não quebra de linha). **Correção:** usar `$'\n'` (ANSI-C quoting) nas construções de NEW_CARD/NEW_CARD_HOME. Sintomas: `\n` visível no card da homepage/blog. Verificado com `od -c`.
+- **Título duplicado**: o Gemini às vezes repete o título como primeiro `<h2>` do corpo → meta description e card ficam com o título 2×. **Correção:** prompt do generate-post.py proíbe repetir o título; EXCERPT/EXCERPT_HOME no post.sh ignoram o primeiro heading se for igual ao título.
 - **Repo local em `~/MARCS_Blog`** (NUNCA /tmp — é apagado ao reiniciar). Fazer `git pull` antes de editar.
 
 ## Pendente
 - ⬜ **AdSense** — primeira revisão reprovada. Corrigido: adicionadas páginas Privacidade, Cookies, Termos e Contactos + links no footer de todas as páginas + sitemap atualizado. Pedir nova revisão quando publicado.
 - ⬜ Exportar subscritores da Sheet para `subscribers.csv` quando houver dados
+
+## MARC-Jarvis (agente local) — papel no blog
+- **Papel:** Editor/Consultor/Administrador (NUNCA autor — autor é sempre "Hermes Agent").
+- **Regras gravadas em:** `memory/long_term.json` (Mark-XLVII) + `core/prompt.txt` (protocolo).
+- **Regras:** 1 artigo/dia ao ligar o Mac; nunca assumir "novo dia" só por reinício; consultar `notes.blog_artigos_publicados` antes de gerar (não repetir temas); formato/cores Hermes intocáveis; CTAs ebook + subscrição; páginas legais; AdSense `ca-pub-3717814491008089`.
+- **Ebook (PDF):** `/Volumes/MacWinGamer/Hermes-Ebook-MYRA/Hermes_Agent_Ebook_MarcTechJA.pdf`.
+- **Aviso:** o MARC-Jarvis local NÃO tem ferramenta de git/push — a publicação diária vive no GitHub Actions. Ele edita/reve/administra localmente e atualiza a lista de publicados na memória.
+- **Arranque:** `com.marc.jarvis` (launchd, RunAtLoad) + `ai.hermes.gateway` (Hermes, RunAtLoad). Epic Games desabilitado (`com.epicgames.launcher.plist.disabled`).
 
 ## Notas
 - A automação do blog vive 100% no GitHub Actions (runner efémero) — não há dependência de /tmp local.
