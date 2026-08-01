@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Automatizar mensagens no WhatsApp com Hermes Agent — MarctechJA</title>
+  <meta name="description" content="Automatizar mensagens no WhatsApp com Hermes Agent: Guia Prático O WhatsApp tornou-se o canal principal de comunicação para tudo: negócios, lembretes">
+  <meta property="og:title" content="Automatizar mensagens no WhatsApp com Hermes Agent">
+  <meta property="og:description" content="Automatizar mensagens no WhatsApp com Hermes Agent: Guia Prático O WhatsApp tornou-se o canal principal de comunicação para tudo: negócios, lembretes">
+  <meta property="og:url" content="https://marcusja777.com/blog/automatizar-mensagens-no-whatsapp-com-hermes-agent/">
+  <link rel="canonical" href="https://marcusja777.com/blog/automatizar-mensagens-no-whatsapp-com-hermes-agent/">
+  <link rel="stylesheet" href="/assets/css/style.css?v=20260731">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+  <meta name="google-adsense-account" content="ca-pub-3717814491008089">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="logo">Marc<span class="gold">tech</span>JA</a>
+      <button class="menu-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/blog/">Blog</a></li>
+        <li><a href="/livro/">Livro</a></li>
+        <li><a href="/sobre/">Sobre</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <section class="article-page">
+    <div class="container layout-with-sidebar">
+      <div>
+        <div class="article-header">
+          <div class="breadcrumb">
+            <a href="/">Home</a> / <a href="/blog/">Blog</a> / Automatizar mensagens no WhatsApp com Hermes Agent
+          </div>
+          <h1>Automatizar mensagens no WhatsApp com Hermes Agent</h1>
+          <div class="meta">
+            <span>📅 01 Aug 2026</span>
+            <span>🏷️ Geral</span>
+            <span>✍️ Hermes Agent</span>
+          </div>
+        </div>
+        <div class="article-content">
+          <h2>Automatizar mensagens no WhatsApp com Hermes Agent: Guia Prático</h2>
+
+<p>O WhatsApp tornou-se o canal principal de comunicação para tudo: negócios, lembretes pessoais, apoio ao cliente e gestão de equipas. No entanto, responder manualmente às mesmas perguntas ou enviar lembretes um a um consome imenso tempo precioso do seu dia.</p>
+
+<p>É aqui que entra o <strong>Hermes Agent</strong>. Graças à sua arquitetura flexível baseada em <em>skills</em> (competências) e integração com modelos de Inteligência Artificial, o Hermes Agent permite criar automações inteligentes no WhatsApp de forma rápida e sem complicações. Neste guia, vai aprender a configurar o Hermes Agent para gerir respostas automáticas, lembretes de compromissos e mensagens agendadas.</p>
+
+<hr>
+
+<h2>Porquê utilizar o Hermes Agent para o WhatsApp?</h2>
+
+<p>Diferente dos robôs tradicionais rígidos, o Hermes Agent combina a execução de comandos práticos com o poder dos LLMs (como GPT-4o, Claude ou modelos locais via Ollama). Isto traz várias vantagens:</p>
+
+<ul>
+  <li><strong>Respostas contextuais:</strong> Em vez de mensagens robóticas, o agent compreende a dúvida do cliente e responde de forma natural.</li>
+  <li><strong>Total controlo de agendamento:</strong> Programe avisos, lembretes e sequências de mensagens no horário exato.</li>
+  <li><strong>Privacidade e flexibilidade:</strong> Pode usar o fornecedor de IA que preferir, incluindo modelos locais para proteger dados sensíveis.</li>
+</ul>
+
+<hr>
+
+<h2>Como Funciona a Estrutura de uma Skill no Hermes Agent</h2>
+
+<p>No Hermes Agent, as automações são organizadas em ficheiros de <em>skills</em> (geralmente guardados na pasta <code>~/.hermes/skills/</code>). Uma <em>skill</em> define os parâmetros de entrada, a lógica de execução e a ação final.</p>
+
+<p>Abaixo encontra um exemplo prático de uma <em>skill</em> YAML criada para enviar notificações e lembretes através do WhatsApp:</p>
+
+<pre><code>name: whatsapp_automation
+description: Envia mensagens automáticas, lembretes e respostas no WhatsApp
+author: MarcTechJA
+version: 1.0.0
+
+inputs:
+  recipient:
+    type: string
+    description: "Número de telemóvel do destinatário com código do país (ex: +351912345678)"
+    required: true
+  message_type:
+    type: string
+    description: "Tipo de ação: resposta_automatica, lembrete ou agendada"
+    required: true
+  content:
+    type: string
+    description: "Conteúdo base da mensagem ou instrução para a IA"
+    required: true
+  schedule_time:
+    type: string
+    description: "Data e hora de envio (opcional, formato YYYY-MM-DD HH:MM)"
+    required: false
+
+steps:
+  - name: process_message_with_ai
+    action: llm.generate
+    params:
+      provider: default
+      prompt: |
+        Ajusta o texto abaixo para uma mensagem de WhatsApp amigável e profissional em português de Portugal.
+        Tipo: {{ inputs.message_type }}
+        Conteúdo: {{ inputs.content }}
+
+  - name: send_whatsapp
+    action: tools.whatsapp.send
+    params:
+      to: "{{ inputs.recipient }}"
+      message: "{{ steps.process_message_with_ai.output }}"
+      delay_until: "{{ inputs.schedule_time }}"
+
+outputs:
+  status: "Mensagem processada e enviada com sucesso para {{ inputs.recipient }}"
+</code></pre>
+
+<hr>
+
+<h2>3 Casos Práticos de Automação no WhatsApp</h2>
+
+<h3>1. Respostas Automáticas para Perguntas Frequentes (FAQ)</h3>
+
+<p>Se recebe frequentemente mensagens a perguntar sobre horários de funcionamento, morada ou preços, pode configurar o Hermes Agent para analisar a mensagem recebida e gerar a resposta adequada instantaneamente.</p>
+
+<p>Basta executar o comando no terminal do Hermes Agent:</p>
+
+<pre><code>hermes run whatsapp_automation --recipient "+351912345678" --message_type "resposta_automatica" --content "Qual é o vosso horário no fim de semana?"</code></pre>
+
+<p>O agente processa o pedido, personaliza a resposta com tom profissional e envia-a diretamente pelo WhatsApp.</p>
+
+<h3>2. Lembretes Automáticos de Consultas ou Reuniões</h3>
+
+<p>A taxa de não comparência a reuniões e consultas diminui drasticamente quando é enviado um lembrete no próprio dia ou na véspera. O Hermes Agent permite definir um horário e enviar um lembrete personalizado de forma totalmente autónoma.</p>
+
+<ul>
+  <li><strong>Exemplo de utilização:</strong> "Lembrete: A sua reunião está agendada para amanhã às 14:30."</li>
+  <li><strong>Vantagem:</strong> O agente adapta a linguagem conforme o perfil do cliente ou contexto da empresa.</li>
+</ul>
+
+<h3>3. Agendamento de Mensagens e Comunicações em Massa</h3>
+
+<p>Precisa de enviar uma novidade à sua equipa ou clientes na próxima segunda-feira às 09:00, mas não estará disponível nesse momento? Configure o parâmetro <code>schedule_time</code> no Hermes Agent para programar o envio prévio.</p>
+
+<pre><code>hermes run whatsapp_automation --recipient "+351961234567" --message_type "agendada" --content "Aviso: A nossa plataforma estará em manutenção às 22:00." --schedule_time "2026-08-05 09:00"</code></pre>
+
+<hr>
+
+<h2>Boas Práticas para Evitar Bloqueios no WhatsApp</h2>
+
+<p>Quando automatiza mensagens no WhatsApp, é crucial manter comportamentos humanos para evitar suspensões de conta:</p>
+
+<ol>
+  <li><strong>Evite envios massivos simultâneos:</strong> Adicione pequenos intervalos (delays) entre as mensagens.</li>
+  <li><strong>Utilize a IA para variar o texto:</strong> Garanta que a IA reformula ligeiramente cada mensagem para evitar que o WhatsApp identifique o texto como <em>spam</em> repetitivo.</li>
+  <li><strong>Respeite a privacidade:</strong> Obtenha o consentimento dos destinatários antes de iniciar o contacto comercial.</li>
+</ol>
+
+<hr>
+
+<h2>Quer Dominar o Hermes Agent do Zero ao Avançado?</h2>
+
+<p>Automatizar o WhatsApp é apenas uma fração do que o Hermes Agent é capaz de fazer. Se quer aprender a instalar, configurar múltiplos fornecedores de IA, criar <em>skills</em> complexas e aplicar automações em negócios, redes sociais e desenvolvimento, temos o guia ideal para si.</p>
+
+<div style="border: 2px solid #0073aa; border-radius: 8px; padding: 20px; background-color: #f4f9fc; margin: 30px 0;">
+  <h3 style="margin-top: 0; color: #0073aa;">Ebook: Guia Completo do Hermes Agent</h3>
+  <p>Aprenda a construir ecossistemas completos de automação com Inteligência Artificial num guia prático com 42 capítulos detalhados e exemplos prontos a usar.</p>
+  <ul>
+    <li><strong>Autor:</strong> MarcTechJA</li>
+    <li><strong>Conteúdo:</strong> 10 Partes, 42 Capítulos (124 páginas)</li>
+    <li><strong>Tópicos:</strong> Instalação, Skills em Python/YAML, Integrações empresariais, Equipas de Agentes e Deploy em Produção.</li>
+  </ul>
+  <p style="margin-bottom: 0;"><strong>👉 <a href="https://hotm.io/jFUussV9" target="_blank" rel="noopener noreferrer">Clique aqui para adquirir o Guia Completo do Hermes Agent</a></strong></p>
+</div>
+
+          <div class="article-cta">
+            <h3>Queres ir mais longe?</h3>
+            <p>O Guia Completo do Hermes Agent leva-te do zero às automações avançadas com 10 partes e 42 capítulos.</p>
+            <a href="/livro/" class="btn btn-gold">Saber Mais Sobre o Livro</a>
+          </div>
+        </div>
+      </div>
+      <aside class="sidebar">
+        <div class="sidebar-widget">
+          <h3>📘 Livro do Hermes Agent</h3>
+          <p>10 partes, 42 capítulos. PDF + EPUB.</p>
+          <a href="/livro/" class="btn btn-gold">Saber Mais</a>
+        </div>
+        <div class="sidebar-widget ad-placeholder">Anúncio Google AdSense</div>
+      </aside>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <a href="/" class="logo">Marc<span class="gold">tech</span>JA</a>
+          <p>Tecnologia, automação e IA para transformar a produtividade.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Navegação</h4>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/blog/">Blog</a></li>
+            <li><a href="/livro/">Livro</a></li>
+            <li><a href="/sobre/">Sobre</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="/politica-de-privacidade/">Privacidade</a></li>
+            <li><a href="/politica-de-cookies/">Cookies</a></li>
+            <li><a href="/termos/">Termos</a></li>
+            <li><a href="/contactos/">Contactos</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contacto</h4>
+          <ul>
+            <li><a href="mailto:marctechja@gmail.com">marctechja@gmail.com</a></li>
+            <li><a href="https://github.com/Jorgeacus">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 MarctechJA. Todos os direitos reservados.</p>
+      </div>
+    </div>
+  </footer>
+  <script src="/assets/js/main.js"></script>
+</body>
+</html>
