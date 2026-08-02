@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Criar uma landing page simples com HTML e CSS em 30 minutos — MarctechJA</title>
-  <meta name="description" content="Como criador de conteúdo, depende imenso das redes sociais para atrair e envolver a sua audiência. No entanto, depender exclusivamente do "link na bio">
+  <meta name="description" content="Como criador de conteúdo, depende imenso das redes sociais para atrair e envolver a sua audiência. No entanto, depender exclusivamente do link na bio limita o controlo sobre a sua marca e contactos. Neste tutorial prático, aprenda a criar e publicar uma landing page responsiva com HTML e CSS em menos de 30 minutos.">
   <meta property="og:title" content="Criar uma landing page simples com HTML e CSS em 30 minutos">
-  <meta property="og:description" content="Como criador de conteúdo, depende imenso das redes sociais para atrair e envolver a sua audiência. No entanto, depender exclusivamente do "link na bio">
+  <meta property="og:description" content="Como criador de conteúdo, depende imenso das redes sociais para atrair e envolver a sua audiência. No entanto, depender exclusivamente do link na bio limita o controlo sobre a sua marca e contactos. Neste tutorial prático, aprenda a criar e publicar uma landing page responsiva com HTML e CSS em menos de 30 minutos.">
   <meta property="og:url" content="https://marcusja777.com/blog/criar-uma-landing-page-simples-com-html-e-css-em-30-minutos/">
   <link rel="canonical" href="https://marcusja777.com/blog/criar-uma-landing-page-simples-com-html-e-css-em-30-minutos/">
   <link rel="stylesheet" href="/assets/css/style.css?v=20260731">
@@ -92,7 +92,144 @@
 
 <h2>Passo 2: Estilizar com CSS limpo e moderno</h2>
 
-<p>Agora crie um ficheiro chamado <code>style.css</code> na mesma pasta. Vamos dar um estilo visual atrativo, limpo e totalmente adaptado a
+          <p>Agora crie um ficheiro chamado <code>style.css</code> na mesma pasta. Vamos dar um estilo visual atrativo, limpo e totalmente adaptado a qualquer ecrã, do telemóvel ao computador.</p>
+
+<pre><code>/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    line-height: 1.6;
+    color: #1a1a1a;
+    background: #f7f9fc;
+}
+
+/* Hero (cabeçalho principal) */
+.hero {
+    text-align: center;
+    padding: 80px 20px;
+    background: linear-gradient(135deg, #0b3d5c, #14507a);
+    color: #ffffff;
+}
+
+.profile-img {
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    border: 4px solid #ffd700;
+    object-fit: cover;
+    margin-bottom: 20px;
+}
+
+.hero h1 {
+    font-size: 2.2rem;
+    margin-bottom: 10px;
+}
+
+.hero p {
+    font-size: 1.1rem;
+    max-width: 600px;
+    margin: 0 auto 30px;
+    opacity: 0.92;
+}
+
+/* Botões */
+.btn {
+    display: inline-block;
+    background: #ffd700;
+    color: #0b3d5c;
+    font-weight: 700;
+    padding: 14px 32px;
+    border-radius: 50px;
+    text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+}
+
+/* Secção do formulário */
+.form-section {
+    max-width: 520px;
+    margin: 50px auto;
+    padding: 0 20px;
+    text-align: center;
+}
+
+.form-section h2 {
+    font-size: 1.6rem;
+    margin-bottom: 10px;
+}
+
+.form-section p {
+    color: #555555;
+    margin-bottom: 24px;
+}
+
+.form-section input {
+    width: 100%;
+    padding: 14px 18px;
+    border: 1px solid #cccccc;
+    border-radius: 8px;
+    font-size: 1rem;
+    margin-bottom: 14px;
+}
+
+.form-section button {
+    width: 100%;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+/* Responsividade */
+@media (max-width: 480px) {
+    .hero { padding: 50px 16px; }
+    .hero h1 { font-size: 1.7rem; }
+}</code></pre>
+
+<p>Este CSS cobre os três elementos essenciais da sua página: o <code>hero</code> com o seu nome e foto, os <strong>botões</strong> de conversão com um toque dourado que atrai o olhar, e o <strong>formulário</strong> de captura de email centralizado. O <code>@media</code> no final garante que, em ecrãs pequenos, a página continua elegante e legível — algo crucial, porque a maioria do tráfego de redes sociais vem de telemóveis.</p>
+
+<h2>Passo 3: Testar e publicar gratuitamente</h2>
+
+<p>Com os dois ficheiros criados (<code>index.html</code> e <code>style.css</code>), pode testar localmente: basta abrir o <code>index.html</code> no navegador. Se tudo estiver certo, está na hora de colocar a página no ar — e não precisa de pagar por isso.</p>
+
+<ul>
+    <li><strong>GitHub Pages:</strong> crie um repositório, carregue os ficheiros e ative o Pages em <em>Settings → Pages</em>. A página fica disponível em minutos em <code>https://seuusuario.github.io/landing/</code>.</li>
+    <li><strong>Netlify Drop:</strong> arraste a pasta para <code>app.netlify.com/drop</code> e tenha um link de produção imediato, com HTTPS incluído.</li>
+    <li><strong>Vercel:</strong> ideal se quiser evoluir a página mais tarde para uma aplicação com formulários funcionais.</li>
+</ul>
+
+<p>Para transformar o formulário numa captação de leads real (em vez de um botão de demonstração), pode usar serviços gratuitos como <strong>Formspree</strong> ou o <strong>Google Forms</strong> embutido — assim os emails dos visitantes chegam-lhe diretamente, prontos a serem adicionados à sua lista.</p>
+
+<h2>Passo 4: Acelerar tudo com o Hermes Agent</h2>
+
+<p>Este tutorial foi feito à mão para o ajudar a entender a lógica de HTML e CSS. Mas, quando quiser produzir várias landing pages rapidamente — uma por campanha, por produto ou por promoção — fazer tudo manualmente torna-se lento e repetitivo. É aqui que o <strong>Hermes Agent</strong> entra.</p>
+
+<p>Com um simples prompt como <em>“cria uma landing page responsiva para captação de emails do meu novo ebook, com hero, secção de benefícios e formulário”</em>, o Hermes Agent gera o HTML e o CSS completos num instante. Pode depois pedir ajustes de cor, textos e secções sem reescrever nada do zero, e até automatizar a publicação do conteúdo no seu site ou blog.</p>
+
+<div style="border: 2px solid #0073aa; border-radius: 8px; padding: 20px; background-color: #f4f9fc; margin: 30px 0;">
+  <h3 style="margin-top: 0; color: #0073aa;">Ebook: Guia Completo do Hermes Agent</h3>
+  <p>Aprenda a construir ecossistemas completos de automação com Inteligência Artificial num guia prático com 42 capítulos detalhados e exemplos prontos a usar.</p>
+  <ul>
+    <li><strong>Autor:</strong> MarcTechJA</li>
+    <li><strong>Conteúdo:</strong> 10 Partes, 42 Capítulos (124 páginas)</li>
+    <li><strong>Tópicos:</strong> Instalação, Skills em Python/YAML, Integrações empresariais, Equipas de Agentes e Deploy em Produção.</li>
+  </ul>
+  <p style="margin-bottom: 0;"><strong>👉 <a href="https://hotm.io/jFUussV9" target="_blank" rel="noopener noreferrer">Clique aqui para adquirir o Guia Completo do Hermes Agent</a></strong></p>
+</div>
+
+<h2>Conclusão</h2>
+
+<p>Em menos de 30 minutos criou uma landing page profissional, responsiva e publicada gratuitamente — sem templates caros nem complicações. O HTML estrutura o conteúdo, o CSS dá-lhe vida, e a publicação gratuita garante que a sua página está no ar hoje mesmo.</p>
+
+<p>O próximo passo é simples: peça ao Hermes Agent para gerar a próxima landing page por si e liberte o seu tempo para o que mais importa — criar conteúdo, captar leads e converter visitantes em subscritores.</p>
 
           <div class="article-cta">
             <h3>Queres ir mais longe?</h3>
