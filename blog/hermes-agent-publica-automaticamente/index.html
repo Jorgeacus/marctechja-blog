@@ -57,10 +57,34 @@
 <p>Podes criar uma skill no Hermes Agent que gera artigos automaticamente. Exemplo de configuração:</p>
 <pre><code>name: gerar-artigo
 description: Gera um artigo de blog com base num tópico
+author: MarcTechJA
+version: "1.0"
+
+inputs:
+  topico:
+    type: string
+    description: Tema do artigo a gerar
+    required: true
+
 steps:
-  - prompt: "Gera um artigo sobre automação com Hermes Agent em português de Portugal"
-    output: artigo.html
-  - command: bash scripts/post.sh "Título do Artigo" "Categoria" "Autor" artigo.html</code></pre>
+  - name: gerar_conteudo
+    action: llm.generate
+    params:
+      prompt: |
+        Gera um artigo sobre automação com Hermes Agent em português de Portugal.
+        Tópico: {{ inputs.topico }}
+  - name: guardar_html
+    action: tools.file.write
+    params:
+      path: artigo.html
+      content: "{{ steps.gerar_conteudo.output }}"
+  - name: publicar
+    action: tools.shell.run
+    params:
+      command: bash scripts/post.sh "Título do Artigo" "Categoria" "Autor" artigo.html
+
+outputs:
+  status: "Artigo publicado com sucesso"</code></pre>
 
 <h2>Publicação diária automática</h2>
 <p>Com o GitHub Actions, podes agendar a publicação para correr todos os dias. O workflow:</p>

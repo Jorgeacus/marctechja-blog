@@ -244,6 +244,54 @@ def call_openai_api(prompt, api_key):
     result = json.loads(resp.read().decode("utf-8"))
     return result["choices"][0]["message"]["content"]
 
+def validate_content(html_content, title):
+    """Valida a qualidade do HTML gerado antes de publicar.
+
+    Deteta artigos truncados (a meio de parágrafo/código), tags partidas,
+    comentários HTML no corpo, <h1> duplicado e outros problemas estruturais.
+    Devolve lista de erros (vazia = válido).
+    """
+    import re
+
+    errors = []
+
+    # 1. Tags <pre><code> balanceadas (blocos de código fechados)
+    open_pre = html_content.count("<pre>")
+    close_pre = html_content.count("</pre>")
+    if open_pre != close_pre:
+        errors.append(f"{open_pre} <pre> abertos mas {close_pre} fechados — bloco de código cortado")
+
+    # 2. Comentários HTML (são removidos na publicação e quebram validação)
+    if "<!--" in html_content:
+        errors.append("comentário HTML (<!--) no corpo do artigo")
+
+    # 3. <h1> no corpo (título já aparece no topo — duplica no excerpt/cards)
+    if "<h1>" in html_content:
+        errors.append("<h1> no corpo do artigo (não usar; headings internos começam em <h2>)")
+
+    # 4. Título repetido como primeiro heading do corpo
+    first_h2 = re.search(r"<h2[^>]*>(.*?)</h2>", html_content, re.S)
+    if first_h2:
+        import html as h
+        heading_text = h.unescape(re.sub(r"<[^>]+>", "", first_h2.group(1))).strip().lower()
+        clean_title = title.lower().strip()
+        if clean_title in heading_text:
+            errors.append("primeiro <h2> repete o título do artigo")
+
+    # 5. Parágrafo/heading cortado a meio (bloco HTML sem tag de fecho no fim do texto)
+    if html_content.rstrip().endswith(("</p>", "</h2>", "</h3>", "</li>", "</pre>", "</ul>", "</ol>", "</div>")):
+        pass  # termina bem
+    else:
+        errors.append("conteúdo parece cortado a meio (não termina numa tag de fecho válida)")
+
+    # 6. Limite mínimo de conteúdo (artigo sem corpo útil)
+    text_len = len(re.sub(r"<[^>]+>", "", html_content).strip())
+    if text_len < 400:
+        errors.append(f"corpo demasiado curto ({text_len} caracteres de texto)")
+
+    return errors
+
+
 def generate_article(topic, reference_content, provider, api_key):
     today = datetime.now().strftime("%d de %B de %Y")
     audiences_pt = {
@@ -282,6 +330,43 @@ O artigo HTML deve ter:
 - Pelo menos um bloco de código (<pre><code>) com exemplo real de skill YAML ou comando
 - Call to action final a promover o ebook
 - Tom informal mas profissional, acessível ao público indicado
+
+REGRAS DE QUALIDADE OBRIGATÓRIAS:
+
+1. ESTRUTURA DIDÁTICA:
+   - Começa com um parágrafo de introdução curto que desperta interesse (ex: "Imagina...", "Sentes que...") antes do primeiro heading.
+   - Usa passos numerados ("Passo 1:", "Passo 2:", ...) para tutoriais práticos.
+   - Cada passo tem: explicação breve + bloco de código + explicação do que o código faz.
+   - Termina com uma conclusão que resuma o que o leitor aprendeu e o próximo passo sugerido.
+   - NUNCA deixes um parágrafo ou código cortado a meio — o artigo tem de estar completo do início ao fim.
+   - NUNCA comeces um bloco de código e o deixes sem terminar (cada <pre><code> ... </code></pre> tem de estar fechado).
+
+2. REGRAS DE CÓDIGO (funcionalidade e consistência):
+   - Os blocos de código têm de ser COMPLETOS e COERENTES — verifica mentalmente que funcionam antes de os escreveres (sintaxe, indentação, nomes, chaves, parênteses).
+   - Usa SEMPRE o formato canónico de skill YAML do Hermes Agent com esta estrutura exata:
+     name: <nome>
+     description: <o que faz>
+     author: MarcTechJA
+     version: "1.0"
+     inputs:
+       <param>: { type: string, description: <para que serve>, required: true }
+     steps:
+       - name: <passo>
+         action: <llm.generate | tools.file.read | tools.file.write | tools.shell.run | tools.email.send | tools.whatsapp.send | web_search>
+         params:
+           <chave>: "{{ inputs.<param> }}"   (ou "{{ steps.<passo_anterior>.output }}")
+     outputs:
+       <chave>: "<descrição do resultado>"
+   - Usa sempre "inputs:" (NUNCA "parameters:") e referências "{{ inputs.x }}" / "{{ steps.x.output }}" (NUNCA "{x}").
+   - Em código Python: não uses métodos que não estejam definidos; todo o código apresentado tem de executar sem erro.
+   - Não inventes URLs de repositórios (usa apenas https://github.com/HermesAgent/hermes-agent.git, https://python.org, https://git-scm.com, https://ollama.ai/install.sh).
+   - Comando de instalação consistente: macOS "brew install hermes-agent"; Linux/Windows remetem para o guia de instalação. NUNCA "pip install hermes-agent".
+
+3. REGRAS DE LIMPEZA:
+   - NÃO incluis comentários HTML (nem <!-- -->) no corpo — são removidos na publicação e quebram a validação.
+   - NÃO incluis <h1> no corpo (o título já aparece no topo da página) — os headings internos começam em <h2>.
+   - NÃO repitas o título como primeiro heading ou como meta description (evita duplicação no excerpt e nos cards).
+   - Meta description completa, com pontuação final e sem cortes a meio.
 
 IMPORTANTE: Gera APENAS o HTML do conteúdo (o que vai dentro da div <div class="article-content">).
 NÃO incluis <!DOCTYPE>, <html>, <head>, <body> ou tags de estrutura da página.
@@ -333,6 +418,33 @@ def main():
     if content_html.endswith("```"):
         content_html = content_html[:-3]
     content_html = content_html.strip()
+
+    # --- Validação de qualidade pós-geração ---
+    errors = validate_content(content_html, topic["title"])
+    if errors:
+        print("❌ Artigo rejeitado — problema(s) de qualidade:")
+        for e in errors:
+            print(f"   - {e}")
+        print("   A gerar novamente...")
+        try:
+            content_html = generate_article(topic, reference_content, provider, api_key)
+            content_html = content_html.strip()
+            if content_html.startswith("```html"):
+                content_html = content_html[7:]
+            if content_html.startswith("```"):
+                content_html = content_html[3:]
+            if content_html.endswith("```"):
+                content_html = content_html[:-3]
+            content_html = content_html.strip()
+            errors = validate_content(content_html, topic["title"])
+            if errors:
+                print("❌ Segunda tentativa também falhou:")
+                for e in errors:
+                    print(f"   - {e}")
+                sys.exit(1)
+        except Exception as e:
+            print(f"❌ Erro na segunda tentativa: {e}")
+            sys.exit(1)
 
     # Save content to temp file
     temp_file = f"/tmp/marctechja_article_{datetime.now().strftime('%Y%m%d%H%M%S')}.html"

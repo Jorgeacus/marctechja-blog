@@ -42,12 +42,7 @@
           </div>
         </div>
         <div class="article-content">
-          <!-- SEO Metadata (Para referência do painel de administração)
-Título SEO: O que são agentes de IA e como funcionam na prática? [Guia Simples]
-Meta Description: Descubra o que são os agentes de Inteligência Artificial, como tomam decisões de forma autónoma, usam ferramentas e como o Hermes Agent facilita a sua criação.
--->
-
-<p>Certamente já ouviu falar de Inteligência Artificial (IA) generativa, de modelos de linguagem (LLMs) como o ChatGPT, o Claude ou o Gemini. No entanto, o mundo da tecnologia está a mover-se rapidamente para lá dos simples <i>chatbots</i> que apenas respondem a perguntas. A nova grande revolução chama-se <strong>Agentes de IA</strong>.</p>
+          <p>Certamente já ouviu falar de Inteligência Artificial (IA) generativa, de modelos de linguagem (LLMs) como o ChatGPT, o Claude ou o Gemini. No entanto, o mundo da tecnologia está a mover-se rapidamente para lá dos simples <i>chatbots</i> que apenas respondem a perguntas. A nova grande revolução chama-se <strong>Agentes de IA</strong>.</p>
 
 <p>Mas o que são exatamente estes agentes? Como é que conseguem tomar decisões sozinhos, usar ferramentas e executar tarefas complexas sem intervenção humana constante? Neste artigo, vamos desmistificar o conceito e mostrar-lhe, de forma prática, como esta tecnologia funciona no mundo real.</p>
 
@@ -92,24 +87,36 @@ Meta Description: Descubra o que são os agentes de Inteligência Artificial, co
 
 <p>Veja abaixo um exemplo prático de uma <strong>Skill em YAML</strong> para o Hermes Agent. Esta skill permite ao agente ler de forma autónoma um ficheiro de texto local e gerar um resumo executivo estruturado:</p>
 
-<pre><code>name: "resumidor_documentos"
-description: "Lê um ficheiro de texto local e gera um resumo executivo com os pontos-chave."
+<pre><code>name: resumidor_documentos
+description: Lê um ficheiro de texto local e gera um resumo executivo com os pontos-chave.
+author: MarcTechJA
+version: "1.0"
+
 inputs:
-  - name: "caminho_ficheiro"
-    type: "string"
-    description: "O caminho completo para o ficheiro que precisa de ser resumido."
+  caminho_ficheiro:
+    type: string
+    description: O caminho completo para o ficheiro que precisa de ser resumido.
+    required: true
+
 steps:
-  - name: "ler_ficheiro"
-    run: "cat {{inputs.caminho_ficheiro}}"
-    register: "conteudo_bruto"
-  - name: "gerar_resumo"
-    prompt: |
-      Analisa o seguinte texto e cria um resumo executivo profissional:
-      
-      Texto:
-      {{conteudo_bruto}}
-      
-      Formata o output com um título claro, introdução e uma lista de tópicos (bullet points) com as conclusões principais.</code></pre>
+  - name: ler_ficheiro
+    action: tools.file.read
+    params:
+      path: "{{ inputs.caminho_ficheiro }}"
+
+  - name: gerar_resumo
+    action: llm.generate
+    params:
+      prompt: |
+        Analisa o seguinte texto e cria um resumo executivo profissional:
+
+        Texto:
+        {{ steps.ler_ficheiro.output }}
+
+        Formata o output com um título claro, introdução e uma lista de tópicos (bullet points) com as conclusões principais.
+
+outputs:
+  resumo: "Resumo executivo do ficheiro {{ inputs.caminho_ficheiro }}"</code></pre>
 
 <p>Com esta skill configurada no diretório <code>~/.hermes/skills/</code>, basta dar uma instrução simples ao seu agente no terminal:</p>
 

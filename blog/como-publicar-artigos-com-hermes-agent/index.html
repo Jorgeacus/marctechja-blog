@@ -57,9 +57,29 @@
 <p>No diretório <code>~/.hermes/skills/</code>, cria o ficheiro <code>gerar-post.yaml</code>:</p>
 <pre><code>name: gerar-post
 description: Gera um post para o blog
+author: MarcTechJA
+version: "1.0"
+
+inputs:
+  topico:
+    type: string
+    description: Tema do artigo a gerar
+    required: true
+
 steps:
-  - prompt: "Escreve um artigo sobre {{topic}} em português de Portugal."
-    output: /tmp/artigo.html</code></pre>
+  - name: gerar_conteudo
+    action: llm.generate
+    params:
+      prompt: |
+        Escreve um artigo sobre {{ inputs.topico }} em português de Portugal.
+  - name: guardar_html
+    action: tools.file.write
+    params:
+      path: /tmp/artigo.html
+      content: "{{ steps.gerar_conteudo.output }}"
+
+outputs:
+  caminho: "/tmp/artigo.html"</code></pre>
 
 <h2>Passo 2: Script de publicação</h2>
 <p>Cria um script que recebe o HTML gerado e trata de:</p>

@@ -44,51 +44,66 @@
           <h2>Estrutura de uma Skill (YAML)</h2>
           <pre><code>name: pesquisar_web
 description: Pesquisa na web e retorna resultados resumidos
-type: tool
+author: MarcTechJA
+version: "1.0"
 
-parameters:
+inputs:
   query:
     type: string
     description: Termo de pesquisa
     required: true
 
 steps:
-  - action: web_search
-    query: "{query}"
-    max_results: 5
-  - action: summarize
-    text: "{resultados}"
-    max_length: 300
+  - name: pesquisar
+    action: web_search
+    params:
+      query: "{{ inputs.query }}"
+      max_results: 5
 
-output: |
-  ## Resultados da Pesquisa: {query}
-  {sumario}</code></pre>
+  - name: resumir
+    action: llm.generate
+    params:
+      prompt: |
+        Resume o seguinte conteúdo em até 300 palavras:
+        {{ steps.pesquisar.output }}
+
+outputs:
+  resumo: "Resumo dos resultados da pesquisa sobre {{ inputs.query }}"</code></pre>
 
           <h2>Exemplo Prático: Skill de Email</h2>
           <pre><code>name: enviar_email
 description: Envia email via SMTP
-type: tool
+author: MarcTechJA
+version: "1.0"
 
-parameters:
+inputs:
   to:
     type: string
+    description: Endereço de email do destinatário
     required: true
   subject:
     type: string
+    description: Assunto do email
     required: true
   body:
     type: string
+    description: Corpo da mensagem
     required: true
 
 steps:
-  - action: smtp_send
-    host: "smtp.gmail.com"
-    port: 587
-    username: "{env.EMAIL_USER}"
-    password: "{env.EMAIL_PASS}"
-    to: "{to}"
-    subject: "{subject}"
-    body: "{body}"</code></pre>
+  - name: enviar
+    action: tools.email.send
+    params:
+      to: "{{ inputs.to }}"
+      subject: "{{ inputs.subject }}"
+      body: "{{ inputs.body }}"
+      smtp_host: "smtp.gmail.com"
+      smtp_port: 587
+      username: "{{ env.EMAIL_USER }}"
+      password: "{{ env.EMAIL_PASS }}"
+
+outputs:
+  status: "Email enviado com sucesso para {{ inputs.to }}"</code></pre>
 
           <h2>Skills em Python</h2>
           <p>Para maior flexibilidade, podes criar skills em Python:</p>
@@ -99,9 +114,15 @@ class AnalisarSentimento(Skill):
     description = "Analisa o sentimento de um texto"
 
     def run(self, text: str) -> dict:
-        # Lógica de análise de sentimento
-        score = self.analyze(text)
-        return {"sentimento": score > 0 and "positivo" or "negativo", "score": score}</code></pre>
+        palavras_positivas = ["bom", "ótimo", "excelente", "gosto", "adorei"]
+        palavras_negativas = ["mau", "péssimo", "horrível", "odeio", "detesto"]
+
+        texto_min = text.lower()
+        score = sum(1 for p in palavras_positivas if p in texto_min)
+        score -= sum(1 for n in palavras_negativas if n in texto_min)
+
+        sentimento = "positivo" if score > 0 else "negativo" if score < 0 else "neutro"
+        return {"sentimento": sentimento, "score": score}</code></pre>
 
           <h2>Onde Colocar as Skills</h2>
           <p>As skills são armazenadas no diretório <code>~/.hermes/skills/</code>. Cada skill num ficheiro <code>.yaml</code> ou <code>.py</code>. O Hermes Agent carrega automaticamente todas as skills neste diretório ao iniciar.</p>
