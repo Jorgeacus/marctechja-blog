@@ -161,6 +161,7 @@ Estas regras são OBRIGATÓRIAS para qualquer artigo (gerado ou editado manualme
     - Revisão "site not ready" foca: conteúdo único/original, navegação clara, UX; Google **sugere secção de comentários** (moderada) — não implementada ainda (candidata).
     - CMP certificado Google + TCF é OBRIGATÓRIO para servir **anúncios personalizados** a utilizadores EEA/Reino Unido/Suíça (desde 16 Jan 2024). O banner atual é um CMP ligeiro próprio — se a revisão aprovar e formos servir anúncios na UE, considerar CMP certificado (Google "Privacy & messaging" ou terceiro TCF) ou servir apenas anúncios não personalizados.
     - Sem links partidos, páginas legais presentes, HTTPS ok, sitemap sem `lastmod` (melhoria opcional).
+  - **Melhorias adicionais (4 Ago, auditoria profunda):** JSON-LD (WebSite/Organization/Organization+BlogPosting) em home, sobre e todos os artigos + template post.sh; `<meta name="author">` e byline "✍️ Hermes Agent" em todos os artigos; página Sobre com identidade do autor (Marcus/GitHub Jorgeacus); Privacidade+Cookies com `aboutads.info` e menção ao banner; divulgação de afiliados nos Termos (4.1) e no livro; `<lastmod>` no sitemap; link "Definições de cookies" no rodapé (reabre o banner via `window.MarctechJACookieConsent.show()`).
 - ⬜ Exportar subscritores da Sheet para `subscribers.csv` quando houver dados
 
 ## MARC-Jarvis (agente local) — papel no blog

@@ -34,6 +34,7 @@
   }
 
   function buildBanner() {
+    if (document.getElementById('cookie-consent-banner')) return;
     var banner = document.createElement('div');
     banner.id = 'cookie-consent-banner';
     banner.setAttribute('role', 'dialog');
@@ -82,6 +83,17 @@
     }
     buildBanner();
   }
+
+  // API pública para reabrir o banner (link "Definições de cookies" no rodapé)
+  window.MarctechJACookieConsent = {
+    show: function () {
+      if (getPrefs()) {
+        // reabrir para permitir alterar a escolha
+        localStorage.removeItem(KEY);
+      }
+      buildBanner();
+    }
+  };
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
