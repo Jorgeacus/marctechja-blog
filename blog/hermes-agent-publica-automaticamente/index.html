@@ -37,6 +37,7 @@
           <h1>Hermes Agent Publica Automaticamente</h1>
           <div class="meta">
             <span>📅 30 Jul 2026</span>
+            <span>📖 10 min de leitura</span>
             <span>🏷️ Automação</span>
             <span>✍️ Hermes Agent</span>
           </div>
@@ -105,6 +106,77 @@ outputs:
 </ul>
 
 <p>Com o Hermes Agent a gerar o conteúdo e o GitHub Actions a publicar, o teu blog mantém-se atualizado sem intervenção manual.</p>
+
+<h2>Workflow completo no GitHub Actions</h2>
+<p>Para executar este processo diariamente, cria o ficheiro <code>.github/workflows/publicar.yml</code> no repositório do blog:</p>
+<pre><code>name: Publicação Automática
+on:
+  schedule:
+    - cron: '0 9 * * *'
+  workflow_dispatch:
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Instalar dependências
+        run: pip install -r requirements.txt
+      - name: Gerar e publicar artigo
+        run: |
+          python scripts/generate-post.py
+      - name: Commit e push
+        run: |
+          git config user.name "Hermes Agent"
+          git config user.email "marctechja@gmail.com"
+          git add .
+          git diff --cached --quiet || git commit -m "artigo: publicação automática"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}</code></pre>
+
+<h2>Porque é que esta automação funciona</h2>
+<p>O segredo está na separação de responsabilidades:</p>
+<ul>
+<li>O <strong>Hermes Agent</strong> trata da parte criativa — escolher o tema, escrever o conteúdo e garantir a qualidade.</li>
+<li>O <strong>script de publicação</strong> trata da parte técnica — criar o HTML com o template, gerar as meta tags, atualizar o arquivo do blog e a homepage.</li>
+<li>O <strong>GitHub Actions</strong> trata da parte de operação — agendar, executar e fazer o deploy automático via GitHub Pages.</li>
+</ul>
+<p>Assim, se uma peça falhar (por exemplo, a API do modelo estar temporariamente indisponível), a falha fica isolada e é visível no histórico de runs do GitHub, sem afetar as restantes peças.</p>
+
+<h2>Validação de qualidade antes de publicar</h2>
+<p>Publicar todos os dias não basta — o conteúdo tem de ser válido. O script de geração deve validar antes do commit:</p>
+<ul>
+<li><strong>Conteúdo truncado</strong> — rejeitar artigos cortados a meio (por exemplo, tags ou blocos de código sem fecho).</li>
+<li><strong>Comentários HTML</strong> — remover ou rejeitar comentários <code>&lt;!-- --&gt;</code> no corpo, que podem partir o layout.</li>
+<li><strong>Meta descriptions completas</strong> — sem cortes a meio da frase e sem aspas não escapadas.</li>
+<li><strong>Estrutura</strong> — sem <code>&lt;h1&gt;</code> no corpo e sem repetição do título no primeiro heading.</li>
+</ul>
+<p>Se a validação falhar, o script regenera o artigo e tenta novamente; só avança para o commit quando o conteúdo passa nos testes.</p>
+
+<h2>Monitorização e recuperação</h2>
+<p>Uma automação sem monitorização é uma automação cega. Recomenda-se:</p>
+<ol>
+<li>Correr um <strong>health check diário</strong> que valide o HTTP 200 das páginas e a presença do artigo esperado.</li>
+<li>Configurar uma <strong>notificação</strong> (email ou mensagem) quando uma run falhar.</li>
+<li>Manter o histórico de runs visível — o GitHub Actions já mostra a listagem de execuções com o respetivo estado.</li>
+</ol>
+<p>Com estes passos, o problema é detetado no próprio dia e corrigido antes de se acumular.</p>
+
+<h2>Perguntas Frequentes</h2>
+<h3>O GitHub Actions gratuito chega?</h3>
+<p>Sim. Em repositórios públicos, os minutos de execução são gratuitos, e a geração de um artigo por dia usa apenas uma fração do limite mensal.</p>
+<h3>E se um dia falhar a publicação?</h3>
+<p>A falha fica registada na run correspondente. No dia seguinte, basta corrigir a causa e correr o workflow manualmente — ou deixar que o agendamento continue normalmente.</p>
+<h3>Posso publicar mais do que um artigo por dia?</h3>
+<p>Sim. O mesmo mecanismo funciona para N artigos: basta chamar o script de geração várias vezes, cada uma com um tópico diferente da lista de rotação.</p>
+
+<h2>Conclusão</h2>
+<p>Com o Hermes Agent a gerar o conteúdo e o GitHub Actions a publicar, o teu blog mantém-se atualizado sem intervenção manual. É um sistema que combina criatividade, automatização e consistência — e que este próprio site usa para publicar um artigo novo todos os dias.</p>
 
           <div class="article-cta">
             <h3>Queres ir mais longe?</h3>

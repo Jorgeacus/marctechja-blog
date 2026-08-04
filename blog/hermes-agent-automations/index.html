@@ -25,7 +25,7 @@
         <div class="article-header">
           <div class="breadcrumb"><a href="/">Home</a> / <a href="/blog/">Blog</a> / 5 Automações Diárias com Hermes Agent</div>
           <h1>5 Automações Diárias com Hermes Agent</h1>
-          <div class="meta"><span>📅 27 Jul 2026</span> <span>📖 6 min de leitura</span> <span>🏷️ Automação</span></div>
+          <div class="meta"><span>📅 27 Jul 2026</span> <span>📖 11 min de leitura</span> <span>🏷️ Automação</span></div>
         </div>
         <div class="article-content">
           <p>O Hermes Agent brilha quando se trata de automatizar tarefas repetitivas. Aqui estão 5 automações que podes implementar hoje para aumentares a tua produtividade.</p>
@@ -66,7 +66,72 @@
 - Output: resumo de 200 palavras com fontes</code></pre>
 
           <h2>Como Implementar</h2>
-          <p>Cada automação é uma skill no Hermes Agent. As skills são ficheiros YAML ou Python que definem o comportamento do agente. No Guia Completo do Hermes Agent, tens tutoriais detalhados para criar cada uma destas skills.</p>
+          <p>Cada automação é uma skill no Hermes Agent. As skills são ficheiros YAML ou Python que definem o comportamento do agente: recebem entradas (<code>inputs</code>), executam uma sequência de passos (<code>steps</code>) e devolvem um resultado (<code>outputs</code>).</p>
+          <p>Um exemplo canónico para a automação de pesquisa e síntese:</p>
+          <pre><code>name: pesquisar-e-sintetizar
+description: Pesquisa um tema na web e devolve um resumo executivo
+author: MarcTechJA
+version: "1.0"
+
+inputs:
+  topico:
+    type: string
+    description: Tema a pesquisar
+    required: true
+  idioma:
+    type: string
+    description: Idioma do resumo
+    required: false
+
+steps:
+  - name: pesquisar_web
+    action: web_search
+    params:
+      query: "{{ inputs.topico }}"
+  - name: sintetizar
+    action: llm.generate
+    params:
+      prompt: |
+        Resume as fontes encontradas em {{ inputs.idioma | default("português") }}.
+        Fontes: {{ steps.pesquisar_web.output }}
+  - name: guardar_resumo
+    action: tools.file.write
+    params:
+      path: resumo.md
+      content: "{{ steps.sintetizar.output }}"
+
+outputs:
+  resumo: "Caminho do ficheiro com o resumo"</code></pre>
+          <p>Guarda este ficheiro em <code>~/.hermes/skills/pesquisar-e-sintetizar.yaml</code> e executa com <code>hermes run pesquisar-e-sintetizar '{"topico": "agentes de IA"}'</code>.</p>
+
+          <h2>Onde Cada Automação Brilha</h2>
+          <ul>
+            <li><strong>Análise de dados</strong> — substitui horas de manipulação de folhas de cálculo em Excel ou Google Sheets por um relatório em segundos.</li>
+            <li><strong>Atendimento</strong> — responde fora de horas e encaminha para um humano quando a pergunta sai da base de conhecimento.</li>
+            <li><strong>Code review</strong> — uma segunda opinião automática antes de cada merge, especialmente útil em projetos de equipa.</li>
+            <li><strong>Gestão de projeto</strong> — mantém o quadro de tarefas atualizado sem ninguém ter de o alimentar à mão.</li>
+            <li><strong>Pesquisa</strong> — transforma leitura de notícias em resumos diários prontos a consumir.</li>
+          </ul>
+
+          <h2>Dicas para Não Falhar</h2>
+          <ol>
+            <li><strong>Começa pequeno</strong> — automatiza primeiro uma tarefa simples e valida o resultado antes de ligar tudo.</li>
+            <li><strong>Define limites claros</strong> — indica na skill o que o agente <em>não</em> deve fazer, para evitar surpresas.</li>
+            <li><strong>Guarda os logs</strong> — ter o registo do que foi executado ajuda a diagnosticar falhas.</li>
+            <li><strong>Revê as permissões</strong> — não dês acesso de escrita a sistemas importantes antes de testar em ambiente seguro.</li>
+          </ol>
+
+          <h2>Perguntas Frequentes</h2>
+          <h3>Preciso de escrever código para criar skills?</h3>
+          <p>Para a maioria das automações, basta YAML. Só em casos avançados (integrações complexas) é que recorres a skills em Python.</p>
+          <h3>As skills funcionam em qualquer sistema operativo?</h3>
+          <p>Sim, desde que as ações que usam (por exemplo, <code>tools.shell.run</code>) existam no sistema. Comandos específicos de macOS/Linux/Windows devem ser adaptados.</p>
+          <h3>Quando é que NÃO devo automatizar?</h3>
+          <p>Se a tarefa é rara, sensível ou exige julgamento humano (como responder a uma reclamação difícil), vale mais executá-la manualmente. Automatiza o repetitivo e de baixo risco — e mantém o humano nas decisões que importam.</p>
+
+          <h2>Conclusão</h2>
+          <p>Estas cinco automações cobrem os cenários mais comuns do dia a dia — dados, atendimento, código, tarefas e pesquisa. Começa por uma delas, cria a tua primeira skill e, quando ganhares confiança, combina várias para construir pipelines completos.</p>
+          <p>Por exemplo, um fluxo de "relatório matinal" pode usar a skill de pesquisa às 07:00, passar o resumo pela skill de análise de dados e enviar o resultado final por email ao meio-dia — tudo sem qualquer intervenção tua, todos os dias, com a mesma consistência. O Guia Completo do Hermes Agent aprofunda cada uma destas áreas com exemplos prontos a usar.</p>
 
           <div class="article-cta">
             <h3>Queres automatizar tudo?</h3>

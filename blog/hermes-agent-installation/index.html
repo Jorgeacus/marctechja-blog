@@ -25,7 +25,7 @@
         <div class="article-header">
           <div class="breadcrumb"><a href="/">Home</a> / <a href="/blog/">Blog</a> / Como Instalar o Hermes Agent</div>
           <h1>Como Instalar o Hermes Agent no macOS, Linux e Windows</h1>
-          <div class="meta"><span>📅 28 Jul 2026</span> <span>📖 8 min de leitura</span> <span>🏷️ Tutorial</span></div>
+          <div class="meta"><span>📅 28 Jul 2026</span> <span>📖 12 min de leitura</span> <span>🏷️ Tutorial</span></div>
         </div>
         <div class="article-content">
           <p>Este guia cobre a instalação do Hermes Agent nos três principais sistemas operativos. Ao final, terás o Hermes Agent a funcionar com o teu provider de IA preferido.</p>
@@ -90,13 +90,49 @@ ollama pull hermes-agent  # modelo otimizado</code></pre>
           <p>Executa o comando de teste:</p>
           <pre><code>hermes --version
 hermes --help</code></pre>
-          <p>Se vires a informação de versão e ajuda, a instalação está concluída.</p>
+          <p>Se vires a informação de versão e ajuda, a instalação está concluída. Recomenda-se também correr <code>hermes status</code> para confirmar que os providers configurados estão acessíveis antes de começares a trabalhar.</p>
 
           <h2>Resolução de Problemas Comuns</h2>
           <h3>"Comando não encontrado"</h3>
           <p>Certifica-te de que o ambiente virtual está ativo (<code>source venv/bin/activate</code> no macOS/Linux, <code>venv\Scripts\activate</code> no Windows).</p>
           <h3>Erro de dependências</h3>
           <p>Algumas dependências podem exigir compilação. No macOS, instala as ferramentas de linha de comandos do Xcode: <code>xcode-select --install</code>. No Linux, <code>sudo apt install build-essential</code>.</p>
+
+          <h2>Primeira Configuração</h2>
+          <p>Com a instalação concluída, o próximo passo é fazer a configuração inicial. O Hermes Agent oferece um assistente que cria o ficheiro de configuração e te guia na escolha do provider:</p>
+          <ol>
+            <li>Executa <code>hermes init</code> na pasta onde queres trabalhar — o comando cria a estrutura de diretórios e o ficheiro <code>.env</code> de exemplo.</li>
+            <li>Escolhe o provider principal (OpenAI, Anthropic, Gemini, DeepSeek ou local).</li>
+            <li>Introduz a chave de API quando solicitado. O assistente guarda-a no <code>.env</code> e mantém-na fora do controlo de versões.</li>
+            <li>Define o modelo predefinido. Podes deixar o valor padrão e alterar depois por tarefa.</li>
+          </ol>
+          <p>Se preferires editar manualmente, os ficheiros ficam em <code>~/.hermes/</code> e podes ajustar modelos, temperatura e tempo limite de cada pedido.</p>
+
+          <h2>Primeiro Agente</h2>
+          <p>Para confirmares que tudo funciona, cria um agente simples e faz-lhe uma pergunta:</p>
+          <pre><code>hermes agent new boas-vindas
+hermes run boas-vindas "Olá, apresenta-te em duas frases"</code></pre>
+          <p>Se a resposta aparecer sem erros, tens o pipeline completo a funcionar: o Hermes Agent comunicou com o provider, recebeu a resposta e devolveu-a no terminal.</p>
+
+          <h2>Manutenção e Atualizações</h2>
+          <p>Como é uma ferramenta em evolução rápida, é boa prática atualizar regularmente:</p>
+          <pre><code>brew update &amp;&amp; brew upgrade hermes-agent</code></pre>
+          <p>Para instalações via <code>git clone</code>, entra na pasta do projeto, faz <code>git pull</code> e reinstala as dependências com <code>pip install -r requirements.txt</code>.</p>
+
+          <h2>Requisitos Mínimos</h2>
+          <p>Para uma experiência fluida, recomenda-se: um processador de 64 bits, pelo menos 4 GB de RAM (8 GB se usares modelos locais) e 2 GB de espaço livre em disco. O Hermes Agent corre em macOS 11+, distribuições Linux recentes e Windows 10+.</p>
+          <p>Não precisas de uma máquina potente para começar — o processamento mais pesado acontece na API do provider remoto. Só se quiseres correr modelos locais é que o hardware passa a importar, porque o modelo vive no teu computador.</p>
+
+          <h2>Perguntas Frequentes</h2>
+          <h3>Posso ter vários providers ao mesmo tempo?</h3>
+          <p>Sim. O Hermes Agent é multi-provider: podes definir vários providers e escolher o modelo ideal para cada skill ou tarefa, bastando indicar o provider no comando.</p>
+          <h3>E se não quiser pagar por uma API?</h3>
+          <p>Usa modelos locais com o Ollama. A instalação local é gratuita e os teus dados nunca saem do teu computador — um bom ponto de partida para testar.</p>
+          <h3>O que devo fazer se a instalação falhar a meio?</h3>
+          <p>Volta ao passo onde falhou e confirma os pré-requisitos (versão do Python, Git instalado e ambiente virtual ativo). Na maioria dos casos, o problema é uma dependência de sistema que falta instalar.</p>
+
+          <h2>Conclusão</h2>
+          <p>Instalar o Hermes Agent é rápido em qualquer sistema operativo, e a configuração inicial demora poucos minutos. Com o agente funcional, estás pronto para o passo seguinte: <a href="/blog/hermes-agent-skills/">criar a tua primeira skill</a> e começar a automatizar tarefas do dia a dia.</p>
 
           <div class="article-cta">
             <h3>Queres ir mais longe?</h3>

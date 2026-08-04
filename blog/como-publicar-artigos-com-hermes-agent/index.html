@@ -37,6 +37,7 @@
           <h1>Como Publicar Artigos com Hermes Agent</h1>
           <div class="meta">
             <span>📅 30 Jul 2026</span>
+            <span>📖 11 min de leitura</span>
             <span>🏷️ Tutorial</span>
             <span>✍️ Hermes Agent</span>
           </div>
@@ -120,6 +121,47 @@ jobs:
 </ul>
 
 <p>Com este sistema, o teu blog pode ter conteúdo novo todos os dias sem trabalho manual. O Hermes Agent trata da criatividade, o GitHub Actions trata da consistência.</p>
+
+<h2>O que o script de publicação deve fazer</h2>
+<p>O script é a peça que liga o conteúdo gerado ao site final. Na prática, ele:</p>
+<ol>
+<li><strong>Cria o slug</strong> — converte o título num URL limpo (por exemplo, "Como Publicar Artigos" → <code>/blog/como-publicar-artigos-com-hermes-agent/</code>).</li>
+<li><strong>Gera o HTML</strong> — aplica o template da página com cabeçalho, artigo, sidebar e rodapé.</li>
+<li><strong>Constrói as meta tags</strong> — título, description, Open Graph e canónico, a partir do conteúdo gerado.</li>
+<li><strong>Atualiza o arquivo</strong> — insere o novo card no <code>blog/index.html</code>, pela ordem mais recente primeiro.</li>
+<li><strong>Atualiza a homepage</strong> — mantém no máximo os seis cards principais.</li>
+<li><strong>Atualiza o sitemap</strong> — adiciona o URL novo para facilitar a indexação no Google.</li>
+<li><strong>Faz commit e push</strong> — e o GitHub Pages trata do resto.</li>
+</ol>
+
+<h2>Pipeline de qualidade</h2>
+<p>Automatizar não significa publicar tudo sem filtro. Antes do commit, vale a pena validar:</p>
+<ul>
+<li><strong>Ortografia e fluidez</strong> — o prompt deve instruir o modelo a escrever em português de Portugal, com tom consistente.</li>
+<li><strong>Completude</strong> — rejeitar conteúdo cortado a meio, como um passo de tutorial interrompido ou um bloco de código sem fecho.</li>
+<li><strong>Limpeza do HTML</strong> — sem comentários, sem headings desnecessários e com a meta description completa.</li>
+<li><strong>Execução dos exemplos</strong> — se o artigo mostra código, o código deve funcionar; um exemplo partido quebra a confiança do leitor.</li>
+</ul>
+<p>Idealmente, o script corre estas verificações e só faz o push quando passam — tal como um teste automatizado num projeto de software.</p>
+
+<h2>Erros comuns e como evitá-los</h2>
+<ul>
+<li><strong>Ficheiros em diretórios temporários</strong> — guarda sempre o código do blog no repositório; se usares <code>/tmp</code>, perdes tudo ao reiniciar o ambiente.</li>
+<li><strong>Falhas da API sem retry</strong> — as APIs de IA podem responder devagar ou falhar; o script deve tentar vários modelos e modelos alternativos antes de desistir.</li>
+<li><strong>Dependências não declaradas</strong> — o workflow do GitHub Actions deve instalar explicitamente as dependências (por exemplo, <code>pip install -r requirements.txt</code>).</li>
+<li><strong>Cache do navegador</strong> — ao atualizar CSS, usa um <code>?v=YYYYMMDD</code> no link, senão os leitores veem a versão antiga.</li>
+</ul>
+
+<h2>Perguntas Frequentes</h2>
+<h3>Preciso de GitHub Actions obrigatoriamente?</h3>
+<p>Não. Podes correr o script localmente sempre que quiseres publicar. O GitHub Actions apenas adiciona o agendamento diário e a consistência.</p>
+<h3>Como evito repetir temas?</h3>
+<p>Mantém uma lista de tópicos em rotação sequencial e um registo dos já publicados. O script escolhe o próximo tema da fila e avança — sem repetir.</p>
+<h3>E se o artigo gerado ficar com erros?</h3>
+<p>Ativa a validação automática antes do push: se o artigo falhar os testes, o script regenera-o. Em último caso, o commit não acontece e o erro fica visível no histórico.</p>
+
+<h2>Conclusão</h2>
+<p>Publicar com o Hermes Agent e o GitHub Actions é um processo completo e repetível: a skill gera o conteúdo, o script transforma-o em páginas válidas e o GitHub faz o deploy. Com validação de qualidade e monitorização, o teu blog publica todos os dias — e tu só precisas de rever o resultado.</p>
 
           <div class="article-cta">
             <h3>Queres ir mais longe?</h3>

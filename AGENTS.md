@@ -155,7 +155,12 @@ Estas regras são OBRIGATÓRIAS para qualquer artigo (gerado ou editado manualme
 - Os artigos gerados passam por `validate_content()` (generate-post.py) antes do push — se falhar, regenera.
 
 ## Pendente
-- ⬜ **AdSense** — primeira revisão reprovada. Corrigido: páginas Privacidade, Cookies, Termos e Contactos + links no footer + sitemap + **banner de consentimento de cookies (CMP)** (4 Ago). Pedir nova revisão quando publicado. Artigos com <450 palavras (hermes-agent-automations, book-launch, installation, introduction, publica-automaticamente, como-publicar-artigos) devem ser reforçados para conteúdo "útil e original".
+- ⬜ **AdSense** — primeira revisão reprovada. Corrigido: páginas Privacidade, Cookies, Termos e Contactos + links no footer + sitemap + **banner de consentimento de cookies (CMP)** (4 Ago). **Artigos finos reforçados para ≥800 palavras** (4 Ago): hermes-agent-automations (804), book-launch (801), installation (815), introduction (963), publica-automaticamente (871), como-publicar-artigos (844) — com secções novas úteis (FAQ, conclusões, exemplos, workflows). Pedir nova revisão quando publicado.
+  - **Descobertas da pesquisa AdSense (4 Ago):**
+    - A meta tag `<meta name="google-adsense-account" content="ca-pub-...">` É o método recomendado de código AdSense — já está em todas as 20 páginas (404.html e ficheiro de verificação do Google excetuados). NÃO adicionar o script `adsbygoogle.js`/unidades de anúncio até a revisão aprovar.
+    - Revisão "site not ready" foca: conteúdo único/original, navegação clara, UX; Google **sugere secção de comentários** (moderada) — não implementada ainda (candidata).
+    - CMP certificado Google + TCF é OBRIGATÓRIO para servir **anúncios personalizados** a utilizadores EEA/Reino Unido/Suíça (desde 16 Jan 2024). O banner atual é um CMP ligeiro próprio — se a revisão aprovar e formos servir anúncios na UE, considerar CMP certificado (Google "Privacy & messaging" ou terceiro TCF) ou servir apenas anúncios não personalizados.
+    - Sem links partidos, páginas legais presentes, HTTPS ok, sitemap sem `lastmod` (melhoria opcional).
 - ⬜ Exportar subscritores da Sheet para `subscribers.csv` quando houver dados
 
 ## MARC-Jarvis (agente local) — papel no blog

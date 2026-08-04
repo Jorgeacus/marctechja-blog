@@ -33,7 +33,7 @@
         <div class="article-header">
           <div class="breadcrumb"><a href="/">Home</a> / <a href="/blog/">Blog</a> / O que é o Hermes Agent?</div>
           <h1>O que é o Hermes Agent?</h1>
-          <div class="meta"><span>📅 26 Jul 2026</span> <span>📖 4 min de leitura</span> <span>🏷️ Introdução</span></div>
+          <div class="meta"><span>📅 26 Jul 2026</span> <span>📖 9 min de leitura</span> <span>🏷️ Introdução</span></div>
         </div>
         <div class="article-content">
           <p>Se acompanhas o mundo da inteligência artificial, já deves ter ouvido falar de agentes de IA. Mas o que são exatamente, e porque é que o <strong>Hermes Agent</strong> se destaca?</p>
@@ -77,6 +77,50 @@
             <li>Experimentar comandos e ver o agente em ação</li>
           </ol>
           <p>No próximo artigo, vamos ver <a href="/blog/hermes-agent-installation/">como instalar o Hermes Agent</a> passo-a-passo.</p>
+
+          <h2>Como o Hermes Agent se Compara com um Chatbot?</h2>
+          <p>À primeira vista, um agente como o Hermes Agent pode parecer mais um chatbot como o ChatGPT. A diferença essencial está na capacidade de <strong>agir</strong>. Enquanto um chatbot conversa e devolve texto, o Hermes Agent executa comandos, chama ferramentas, lê e escreve ficheiros, corre scripts e percorre fluxos completos — tudo orquestrado por um modelo de linguagem que decide, passo a passo, que ação tomar.</p>
+          <p>Pensa num exemplo simples: pedes ao chatbot para te enviar um email de boas-vindas e ele escreve o texto. Pedes ao Hermes Agent e ele escreve o texto, abre o teu cliente de email, preenche o destinatário, envia e confirma. A diferença é entre sugerir e <strong>executar</strong>.</p>
+
+          <h2>Arquitetura por Dentro</h2>
+          <p>Para entenderes o que torna o Hermes Agent poderoso, ajuda conhecer as suas peças principais:</p>
+          <ul>
+            <li><strong>Modelo de linguagem</strong> — o "cérebro" que interpreta o pedido e decide as próximas ações. Pode ser remoto (OpenAI, Anthropic, Gemini) ou local (Ollama).</li>
+            <li><strong>Contexto e memória</strong> — o histórico de interações e o estado da tarefa, para o agente não "perder o fio à meada".</li>
+            <li><strong>Ferramentas</strong> — capacidades concretas: ler ficheiros, correr comandos, pesquisar na web, enviar emails.</li>
+            <li><strong>Skills</strong> — blocos de automação reutilizáveis que empacotam uma sequência de ações com um objetivo.</li>
+            <li><strong>Loop de execução</strong> — o ciclo em que o agente observa o resultado de uma ação e decide a seguinte.</li>
+          </ul>
+          <p>Esta separação de responsabilidades é o que permite combinar modelos diferentes na mesma tarefa e manter o controlo humano sobre o que é executado.</p>
+
+          <h2>Casos de Uso Reais</h2>
+          <p>Na prática, o Hermes Agent já é usado para:</p>
+          <ul>
+            <li><strong>Automação de conteúdos</strong> — este blog publica um artigo por dia de forma automática graças a um agente (podes ler como em <a href="/blog/hermes-agent-publica-automaticamente/">Hermes Agent publica automaticamente</a>).</li>
+            <li><strong>Análise de dados</strong> — resumir ficheiros CSV e Excel, identificar tendências e gerar relatórios.</li>
+            <li><strong>Desenvolvimento de software</strong> — revisão de código, geração de testes e documentação.</li>
+            <li><strong>Gestão de tarefas</strong> — criar e atualizar itens em Trello, Notion ou Asana via comandos.</li>
+          </ul>
+
+          <h2>Limitações e Segurança</h2>
+          <p>Nenhuma ferramenta é perfeita, e é importante conhecer as limitações:</p>
+          <ul>
+            <li><strong>Alucinações</strong> — o modelo pode inventar factos. Valida sempre saídas importantes.</li>
+            <li><strong>Permissões</strong> — revê o que o agente pode fazer antes de lhe dar acesso a sistemas sensíveis.</li>
+            <li><strong>Dados</strong> — ao usar providers remotos, os teus dados passam pelos servidores deles. Para dados sensíveis, usa modelos locais.</li>
+          </ul>
+          <p>A boa notícia é que o Hermes Agent é open-source e pode correr completamente localmente, o que coloca a privacidade sob o teu controlo.</p>
+
+          <h2>Perguntas Frequentes</h2>
+          <h3>Preciso de saber programar para usar o Hermes Agent?</h3>
+          <p>Para comandos básicos, não. Para criar skills avançadas, conhecimentos básicos de YAML e lógica ajudam — e o blog tem guias passo-a-passo para começares.</p>
+          <h3>O Hermes Agent funciona só com modelos pagos?</h3>
+          <p>Não. Podes usar modelos locais gratuitos com Ollama ou llama.cpp, sem custos de API.</p>
+          <h3>É seguro dar-lhe acesso ao meu computador?</h3>
+          <p>Depende das permissões que configuras. Começa com um ambiente isolado e aumenta o acesso gradualmente, à medida que confias no comportamento do agente.</p>
+
+          <h2>Conclusão</h2>
+          <p>O Hermes Agent é muito mais do que mais um chatbot: é uma plataforma para delegar tarefas reais a agentes de IA, no teu computador e sob o teu controlo. Agora que percebes os conceitos, o próximo passo natural é <a href="/blog/hermes-agent-installation/">instalá-lo e experimentares</a> o teu primeiro comando.</p>
 
           <div class="article-cta">
             <h3>Queres ir mais longe?</h3>
