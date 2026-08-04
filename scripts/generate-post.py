@@ -349,7 +349,7 @@ REGRAS DE QUALIDADE OBRIGATÓRIAS:
      author: MarcTechJA
      version: "1.0"
      inputs:
-       <param>: { type: string, description: <para que serve>, required: true }
+        <param>: {{ type: string, description: <para que serve>, required: true }}
      steps:
        - name: <passo>
          action: <llm.generate | tools.file.read | tools.file.write | tools.shell.run | tools.email.send | tools.whatsapp.send | web_search>
@@ -357,7 +357,7 @@ REGRAS DE QUALIDADE OBRIGATÓRIAS:
            <chave>: "{{ inputs.<param> }}"   (ou "{{ steps.<passo_anterior>.output }}")
      outputs:
        <chave>: "<descrição do resultado>"
-   - Usa sempre "inputs:" (NUNCA "parameters:") e referências "{{ inputs.x }}" / "{{ steps.x.output }}" (NUNCA "{x}").
+   - Usa sempre "inputs:" (NUNCA "parameters:") e referências "{{ inputs.x }}" / "{{ steps.x.output }}" (NUNCA "{{x}}").
    - Em código Python: não uses métodos que não estejam definidos; todo o código apresentado tem de executar sem erro.
    - Não inventes URLs de repositórios (usa apenas https://github.com/HermesAgent/hermes-agent.git, https://python.org, https://git-scm.com, https://ollama.ai/install.sh).
    - Comando de instalação consistente: macOS "brew install hermes-agent"; Linux/Windows remetem para o guia de instalação. NUNCA "pip install hermes-agent".
