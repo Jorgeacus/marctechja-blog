@@ -76,7 +76,7 @@ cat > "$POST_DIR/index.html" << HTMLEOF
   <meta property="og:description" content="${SEO_DESC}">
   <meta property="og:url" content="https://marcusja777.com/${POST_DIR}/">
   <link rel="canonical" href="https://marcusja777.com/${POST_DIR}/">
-  <link rel="stylesheet" href="/assets/css/style.css?v=20260731">
+  <link rel="stylesheet" href="/assets/css/style.css?v=20260804">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
   <meta name="google-adsense-account" content="ca-pub-3717814491008089">
 </head>
@@ -168,6 +168,7 @@ cat > "$POST_DIR/index.html" << HTMLEOF
     </div>
   </footer>
   <script src="/assets/js/main.js"></script>
+  <script src="/assets/js/cookie-consent.js"></script>
 </body>
 </html>
 HTMLEOF

@@ -30,6 +30,7 @@
 | Contactos | `/contactos/` |
 
 **Páginas legais (Privacidade, Cookies, Termos, Contactos) são OBRIGATÓRIAS para a aprovação do Google AdSense** — não remover.
+- **Banner de consentimento de cookies (CMP ligeiro):** `assets/js/cookie-consent.js` + CSS no fim de `style.css`. Adicionar a tag `<script src="/assets/js/cookie-consent.js"></script>` após `main.js` em **qualquer página nova**. O template em `scripts/post.sh` já a inclui.
 
 ## Artigos publicados (11)
 1. `hermes-agent-skills/` — Skills no Hermes Agent (25 Jul)
@@ -154,7 +155,7 @@ Estas regras são OBRIGATÓRIAS para qualquer artigo (gerado ou editado manualme
 - Os artigos gerados passam por `validate_content()` (generate-post.py) antes do push — se falhar, regenera.
 
 ## Pendente
-- ⬜ **AdSense** — primeira revisão reprovada. Corrigido: adicionadas páginas Privacidade, Cookies, Termos e Contactos + links no footer de todas as páginas + sitemap atualizado. Pedir nova revisão quando publicado.
+- ⬜ **AdSense** — primeira revisão reprovada. Corrigido: páginas Privacidade, Cookies, Termos e Contactos + links no footer + sitemap + **banner de consentimento de cookies (CMP)** (4 Ago). Pedir nova revisão quando publicado. Artigos com <450 palavras (hermes-agent-automations, book-launch, installation, introduction, publica-automaticamente, como-publicar-artigos) devem ser reforçados para conteúdo "útil e original".
 - ⬜ Exportar subscritores da Sheet para `subscribers.csv` quando houver dados
 
 ## MARC-Jarvis (agente local) — papel no blog
