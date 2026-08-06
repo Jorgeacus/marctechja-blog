@@ -17,10 +17,12 @@ jobs:
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: python3 scripts/generate-post.py
+      - name: Preparar _site (só ficheiros do site)
+        run: bash scripts/stage-site.sh
       - name: Deploy para Cloudflare Pages
         if: ${{ secrets.CLOUDFLARE_API_TOKEN != '' && secrets.CLOUDFLARE_ACCOUNT_ID != '' }}
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy . --project-name=marctechja-blog --branch=production
+          command: pages deploy _site --project-name=marctechja-blog --branch=production
