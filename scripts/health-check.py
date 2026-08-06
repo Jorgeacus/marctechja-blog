@@ -176,7 +176,9 @@ def check_live():
         _, home_html = get(f"{BASE}/")
         css_m = re.search(r'stylesheet" href="([^"]+\.css[^"]*)"', home_html)
         home_css = css_m.group(1) if css_m else ""
-    css_url = home_css if home_css else f"{BASE}/assets/css/style.css?v=0"
+    css_url = (BASE + home_css) if home_css.startswith("/") else home_css
+    if not css_url:
+        css_url = f"{BASE}/assets/css/style.css?v=0"
     status, css_body = get(css_url)
     check(status == 200, f"style.css responde 200 ({css_url})")
     if status == 200:
