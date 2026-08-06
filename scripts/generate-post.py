@@ -23,6 +23,7 @@ import subprocess
 import urllib.error
 import urllib.request
 from datetime import datetime
+from pathlib import Path
 
 # --- Tópicos para os artigos ---
 # Ordenados do mais simples/rápido de automatizar para o mais complexo.
@@ -194,7 +195,7 @@ def call_gemini_api(prompt, api_key):
                     "contents": [{"parts": [{"text": prompt}]}],
                     "generationConfig": {
                         "temperature": 0.8,
-                        "maxOutputTokens": 4096,
+                        "maxOutputTokens": 8192,
                         "topK": 40,
                         "topP": 0.95
                     }
@@ -395,8 +396,26 @@ def main():
 
     # Pick today's topic: sequential rotation, one per day, starting with the simplest.
     # Uses a stable index so each calendar day maps to one topic (dois dias = dois temas).
+    # Skip topics whose article already exists in blog/ (evita duplicar se o run
+    # do dia já tiver sido publicado manualmente ou por um run anterior).
+    def slugify(title):
+        import re
+        import unicodedata as ud
+        s = ud.normalize("NFD", title.lower())
+        s = "".join(c for c in s if ud.category(c) != "Mn")
+        return re.sub(r"[^a-z0-9]+", "-", s).strip("-")
+
     today_index = (datetime.now() - datetime(2026, 8, 1)).days
-    topic = TOPICS[today_index % len(TOPICS)]
+    published_slugs = {p.name for p in Path(BLOG_DIR).iterdir() if p.is_dir()}
+    topic = None
+    for offset in range(len(TOPICS)):
+        candidate = TOPICS[(today_index + offset) % len(TOPICS)]
+        if slugify(candidate["title"]) not in published_slugs:
+            topic = candidate
+            break
+    if topic is None:
+        topic = TOPICS[today_index % len(TOPICS)]
+        print("   ⚠️ Todos os tópicos já foram publicados; a usar o da rotação de hoje.")
 
     print(f"📝 A gerar artigo: {topic['title']}")
     print(f"   Público: {topic['audience']}")
@@ -420,12 +439,16 @@ def main():
     content_html = content_html.strip()
 
     # --- Validação de qualidade pós-geração ---
+    # Até MAX_ATTEMPTS tentativas: se a validação rejeitar, regera e valida de novo.
+    # (Combate a truncamentos da API que deixam blocos <pre> a meio.)
+    MAX_ATTEMPTS = 3
     errors = validate_content(content_html, topic["title"])
-    if errors:
+    attempt = 1
+    while errors and attempt < MAX_ATTEMPTS:
         print("❌ Artigo rejeitado — problema(s) de qualidade:")
         for e in errors:
             print(f"   - {e}")
-        print("   A gerar novamente...")
+        print(f"   A gerar novamente ({attempt}/{MAX_ATTEMPTS})...")
         try:
             content_html = generate_article(topic, reference_content, provider, api_key)
             content_html = content_html.strip()
@@ -437,14 +460,15 @@ def main():
                 content_html = content_html[:-3]
             content_html = content_html.strip()
             errors = validate_content(content_html, topic["title"])
-            if errors:
-                print("❌ Segunda tentativa também falhou:")
-                for e in errors:
-                    print(f"   - {e}")
-                sys.exit(1)
+            attempt += 1
         except Exception as e:
-            print(f"❌ Erro na segunda tentativa: {e}")
+            print(f"❌ Erro ao regenerar artigo: {e}")
             sys.exit(1)
+    if errors:
+        print("❌ Todas as tentativas falharam na validação:")
+        for e in errors:
+            print(f"   - {e}")
+        sys.exit(1)
 
     # Save content to temp file
     temp_file = f"/tmp/marctechja_article_{datetime.now().strftime('%Y%m%d%H%M%S')}.html"
