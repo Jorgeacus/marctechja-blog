@@ -21,6 +21,7 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 html { scroll-behavior: smooth; }
+html, body { overflow-x: clip; }
 body { font-family: var(--font); color: var(--text); background: var(--bg); line-height: 1.7; -webkit-font-smoothing: antialiased; }
 
 a { color: var(--accent-gold); text-decoration: none; transition: color 0.2s; }
@@ -168,8 +169,8 @@ img { max-width: 100%; height: auto; display: block; }
 .article-header .meta { font-size: 13px; color: var(--text-light); }
 .article-header .meta span { margin-right: 16px; }
 .article-content { font-size: 16px; line-height: 1.8; min-width: 0; overflow-wrap: break-word; }
-.article-content h2 { font-size: 24px; font-weight: 700; color: var(--primary); margin: 32px 0 16px; }
-.article-content h3 { font-size: 20px; font-weight: 600; color: var(--primary); margin: 24px 0 12px; }
+.article-content h2 { font-size: 24px; font-weight: 700; color: var(--primary); margin: 32px 0 16px; overflow-wrap: anywhere; }
+.article-content h3 { font-size: 20px; font-weight: 600; color: var(--primary); margin: 24px 0 12px; overflow-wrap: anywhere; }
 .article-content p { margin-bottom: 16px; }
 .article-content ul, .article-content ol { margin: 0 0 16px 24px; }
 .article-content li { margin-bottom: 8px; }
@@ -204,6 +205,8 @@ img { max-width: 100%; height: auto; display: block; }
   color: var(--text-light);
 }
 .article-content img { border-radius: var(--radius); margin: 24px 0; box-shadow: var(--shadow); }
+.article-content table { display: block; max-width: 100%; overflow-x: auto; margin: 20px 0; }
+.article-content td, .article-content th { padding: 8px 12px; border: 1px solid var(--border); text-align: left; }
 .article-cta {
   background: linear-gradient(135deg, var(--primary), var(--secondary));
   color: #fff;

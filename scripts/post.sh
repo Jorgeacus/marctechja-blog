@@ -23,6 +23,15 @@ case "$(uname -s)" in
   *)       sed_inplace() { sed -i "$@"; } ;;
 esac
 
+# Cache-busting do CSS: a versão (?v=YYYYMMDD) é derivada AUTOMATICAMENTE do
+# último commit que tocou em assets/css/style.css. Assim, quando o CSS muda,
+# o versionamento acompanha sem edições manuais. Se falhar, usa a data de hoje.
+REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+CSS_VERSION="$(git -C "$REPO_ROOT" log -1 --format=%cs -- assets/css/style.css 2>/dev/null | tr -d '-')"
+if [ -z "$CSS_VERSION" ]; then
+  CSS_VERSION="$(date +%Y%m%d)"
+fi
+
 if [ $# -lt 1 ]; then
   echo "Erro: Indica pelo menos o título do artigo."
   echo "Uso: $0 \"Título\" [\"Categoria\"] [\"Autor\"] [\"Ficheiro\"]"
@@ -77,7 +86,7 @@ cat > "$POST_DIR/index.html" << HTMLEOF
   <meta property="og:description" content="${SEO_DESC}">
   <meta property="og:url" content="https://marcusja777.com/${POST_DIR}/">
   <link rel="canonical" href="https://marcusja777.com/${POST_DIR}/">
-  <link rel="stylesheet" href="/assets/css/style.css?v=20260806">
+  <link rel="stylesheet" href="/assets/css/style.css?v=${CSS_VERSION}">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
   <meta name="google-adsense-account" content="ca-pub-3717814491008089">
   <meta name="author" content="${AUTHOR}">
@@ -301,6 +310,17 @@ if [ -f "$SITEMAP" ]; then
   NEW_URL="  <url><loc>https://marcusja777.com/${POST_DIR}/</loc><priority>0.7</priority></url>"
   sed_inplace "s|</urlset>|${NEW_URL}\n</urlset>|" "$SITEMAP"
 fi
+
+# ----------------------------------------------------------------------------
+# Cache-busting do CSS: sincroniza ?v= em TODAS as páginas do site (artigos,
+# arquivo, home, legais, 404) para a versão atual do style.css. Garante que
+# nenhuma página fica presa a um CSS antigo em cache — mesmo que a versão tenha
+# mudado entretanto, esta publicação normaliza tudo automaticamente.
+# ----------------------------------------------------------------------------
+echo "  ↻ Sincronizando style.css?v=${CSS_VERSION} em todas as páginas..."
+for f in $(grep -rl 'style\.css?v=' --include='*.html' "$REPO_ROOT" 2>/dev/null || true); do
+  sed_inplace "s/style\.css?v=[0-9]*/style.css?v=${CSS_VERSION}/g" "$f"
+done
 
 # Auto-commit and push
 cd "$(dirname "$0")/.."

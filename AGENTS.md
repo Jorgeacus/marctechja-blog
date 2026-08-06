@@ -15,6 +15,7 @@
 ## Design
 - Cores: petróleo `#031522`, navy `#061B2B`, dourado `#D9A83E`, ciano `#008FBE`
 - CSS: `assets/css/style.css` (usar `?v=YYYYMMDD` no link para cache-busting)
+- **Cache-busting do CSS é AUTOMÁTICO:** `scripts/post.sh` deriva a versão do último commit que tocou em `style.css` e sincroniza `?v=` em TODAS as páginas (artigos, arquivo, home, legais, 404) a cada publicação. **NUNCA** editar a versão `?v=` à mão — basta editar o CSS e commitar; a próxima publicação normaliza tudo. O `health-check.py` valida a consistência (local e live).
 - **NUNCA alterar o design original** — as correções devem ser mínimas e cirúrgicas.
 
 ## Páginas
@@ -100,6 +101,7 @@ Gmail API (ler + responder): `auth`, `search`, `read`, `reply` (draft, NÃO envi
 - **BUG CRÍTICO**: Gemini gerou `<!-- SEO Metadata ... -->`; o truncamento com `head -c` deixava `<!--` sem fecho → navegador tratava o resto como comentário (1 artigo visível). **Correção:** `re.sub(r"<!--.*?-->", "", raw, DOTALL)` em SEO_DESC/EXCERPT/EXCERPT_HOME; prompt proíbe comentários.
 - **Botões do hero**: `.hero::before` (overlay `inset:0`) interceptava cliques → `pointer-events: none`.
 - **Cache CDN**: GitHub Pages usa `max-age=600` + `x-cache: HIT` → forçar `?v=...` nas URLs e cache-busting no CSS.
+- **Responsividade mobile (6 Ago)**: artigos alargavam-se para o lado no iPhone porque o grid `.layout-with-sidebar { grid-template-columns: 1fr 300px }` não encolhia abaixo do min-content e havia `<code>`/URLs longos que não quebravam. **Correção no `style.css`:** `grid-template-columns: minmax(0, 1fr) 300px` + `min-width: 0` nos filhos, `overflow-wrap: anywhere` em `code`/`a`, `overflow-x: clip` no html/body, `table { display:block; overflow-x:auto }` e `overflow-wrap` em headings. **Automação:** versão CSS derivada de git + sincronização global no `post.sh`; `health-check.py` valida que todas as páginas usam a mesma versão e que o CSS live tem as proteções.
 - **Falha da API**: o script só capturava `HTTPError`; timeouts/URLError falhavam sem retry → agora captura tudo e tenta 4 modelos com retry.
 - **BUG `\n` literal nos cards**: `NEW_CARD+="\n..."` em bash com aspas duplas produz os caracteres literais `\`+`n` (não quebra de linha). **Correção:** usar `$'\n'` (ANSI-C quoting) nas construções de NEW_CARD/NEW_CARD_HOME. Sintomas: `\n` visível no card da homepage/blog. Verificado com `od -c`.
 - **Título duplicado**: o Gemini às vezes repete o título como primeiro `<h2>` do corpo → meta description e card ficam com o título 2×. **Correção:** prompt do generate-post.py proíbe repetir o título; EXCERPT/EXCERPT_HOME no post.sh ignoram o primeiro heading se for igual ao título.
