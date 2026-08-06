@@ -1,0 +1,140 @@
+# =============================================================================
+# Manutenção Automática — agente híbrido do blog
+# -----------------------------------------------------------------------------
+# Gatilho: quando "Hermes Agent" (marc.yml) ou "Health Check Blog"
+# (health-check.yml) terminarem com falha. Modo manual: workflow_dispatch.
+#
+# Estratégia HÍBRIDA:
+#   1. Descarrega o log real do run falhado.
+#   2. scripts/repair-agent.py (sub-agente via Gemini) classifica a falha com
+#      um CONJUNTO FECHADO de ações: regenerate | sync_css | nothing | issue.
+#   3. Ações determinísticas e verificáveis correm AUTONOMAMENTE mas só depois
+#      do portão de verificação (health-check.py --local) passar:
+#        - regenerate: reexecuta o gerador do artigo diário
+#        - sync_css:   normaliza a versão ?v= de CSS em todas as páginas
+#   4. Erros de lógica/design/situação ambígua → ACTION=issue → abre Issue
+#      para humano. Nunca altera o design original.
+#
+# Guardrails: concurrency garante 1 reparação de cada vez; o repair.yml NÃO se
+# auto-gatilha (não está na lista de workflows monitorizados) → sem loops.
+# =============================================================================
+
+name: Manutenção Automática
+
+on:
+  workflow_run:
+    workflows: ["Hermes Agent", "Health Check Blog"]
+    types: [completed]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: read
+  issues: write
+
+concurrency:
+  group: repair-blog
+  cancel-in-progress: false
+
+jobs:
+  repair:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'failure'
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Identificar run falhado
+        id: run
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          RUN_ID="0"
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            RUN_ID=$(gh run list --workflow='Hermes Agent' --limit 10 --json databaseId,conclusion -q '.[] | select(.conclusion=="failure") | .databaseId' | head -1)
+            if [ -z "$RUN_ID" ]; then
+              RUN_ID=$(gh run list --workflow='Health Check Blog' --limit 10 --json databaseId,conclusion -q '.[] | select(.conclusion=="failure") | .databaseId' | head -1)
+            fi
+            RUN_ID=${RUN_ID:-0}
+          else
+            RUN_ID="${{ github.event.workflow_run.id }}"
+          fi
+          echo "RUN_ID=$RUN_ID" >> "$GITHUB_ENV"
+
+      - name: Descarregar log do run falhado
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if [ "$RUN_ID" != "0" ]; then
+            gh run view "$RUN_ID" --log-failed > /tmp/failed.log 2>/dev/null || true
+          fi
+          echo "Tamanho do log: $(wc -c < /tmp/failed.log 2>/dev/null || echo 0) bytes"
+
+      - name: Classificar a falha (sub-agente)
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          if [ "$RUN_ID" = "0" ]; then
+            echo "ACTION=sync_css" >> "$GITHUB_ENV"
+            echo "DIAG=Dispatch manual sem run falhado recente — a correr manutenção preventiva (CSS)." >> "$GITHUB_ENV"
+            exit 0
+          fi
+          python3 scripts/repair-agent.py /tmp/failed.log . | tee /tmp/agent.out
+          echo "ACTION<<EOF" >> "$GITHUB_ENV"; sed -n 's/^ACTION=//p' /tmp/agent.out >> "$GITHUB_ENV"; echo "EOF" >> "$GITHUB_ENV"
+          echo "DIAG<<EOF" >> "$GITHUB_ENV"; sed -n 's/^DIAG=//p' /tmp/agent.out >> "$GITHUB_ENV"; echo "EOF" >> "$GITHUB_ENV"
+
+      - name: regenerate — reexecutar gerador do artigo diário
+        if: env.ACTION == 'regenerate'
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          python3 scripts/generate-post.py || { echo "::error::A regeneração voltou a falhar — rever manualmente."; exit 1; }
+          python3 scripts/health-check.py --local
+
+      - name: sync_css — normalizar versão de CSS em todas as páginas
+        if: env.ACTION == 'sync_css'
+        run: |
+          bash scripts/sync-css-version.sh
+          python3 scripts/health-check.py --local
+          git add -A
+          if ! git diff --cached --quiet; then
+            git -c user.name="Manutenção Automática" -c user.email="marctechja@gmail.com" commit -m "manutencao: sincroniza versao de CSS em todas as paginas"
+            git push
+          else
+            echo "Nada para commitar — versões já consistentes."
+          fi
+
+      - name: issue — abrir Issue para revisão humana
+        if: env.ACTION == 'issue'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          BODY="## 🚨 Falha no pipeline do blog — requer revisão humana
+
+          O agente de manutenção automática analisou o log do run falhado e **não encontrou uma correção determinística e verificável** — abriu esta Issue para decisão humana.
+
+          **Diagnóstico do agente:** $DIAG
+
+          **Detalhes:**
+          - Workflow falhado: \`${{ github.event.workflow_run.name }}\` (run #${{ github.event.workflow_run.id }})
+          - Repo: \`${{ github.repository }}\`, branch \`${{ github.ref }}\`
+
+          > Ação possível: corrigir o problema e re-executar \`python3 scripts/generate-post.py\`, ou ignorar se for transitório."
+          if gh issue list --state open --search "Falha no pipeline do blog" --limit 1 --json number -q '.[0].number' | grep -q .; then
+            echo "Issue de manutenção já aberta — mantida."
+          else
+            gh issue create --title "🚨 Falha no pipeline do blog — requer revisão humana" --body "$BODY"
+          fi
+
+      - name: Report (nothing / concluído)
+        if: env.ACTION == 'nothing'
+        run: echo "Sem ação necessária — $DIAG"
+
+      - name: Resumo da reparação
+        if: always()
+        run: |
+          echo "Ação executada: ${ACTION:-—}"
+          echo "Diagnóstico: ${DIAG:-—}"

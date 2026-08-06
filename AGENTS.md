@@ -86,9 +86,21 @@ Reordena os cards do blog archive do mais recente ao mais antigo (invocado pelo 
 ### `scripts/gmail_monitor.py`
 Gmail API (ler + responder): `auth`, `search`, `read`, `reply` (draft, NÃO envia), `send`, `unread`, `run`.
 
+### `scripts/sync-css-version.sh`
+Sincroniza o cache-busting do CSS (`?v=YYYYMMDD`) em TODAS as páginas HTML para a versão atual do `style.css` (derivada do git). Idempotente. Usado pelo `post.sh` a cada publicação e pelo agente de manutenção (`repair.yml`, ação `sync_css`).
+
+### `scripts/repair-agent.py`
+Sub-agente de classificação do agente de manutenção. Recebe o log de um run falhado + contexto git e devolve `ACTION=`/`DIAG=` (stdout) usando Gemini com um **conjunto fechado** de ações: `regenerate | sync_css | nothing | issue`. Qualquer falha (sem chave, API fora do ar, resposta inválida, ação fora do conjunto) cai para `issue` — nunca age fora do permitido.
+
 ## Workflow GitHub Actions
 - **`marc.yml`** — nome "Hermes Agent"; schedule `0 9 * * *` + `workflow_dispatch`; gera e publica 1 artigo/dia
 - **`health-check.yml`** — "Health Check Blog"; schedule `30 9 * * *` + `workflow_dispatch`; verifica o site e abre Issue se houver quebras
+- **`repair.yml`** — "Manutenção Automática" (agente híbrido); gatilho `workflow_run` quando "Hermes Agent" ou "Health Check Blog" terminarem **com falha** + `workflow_dispatch`; descarrega o log real do run falhado, classifica com `repair-agent.py` e executa:
+  - `regenerate`: reexecuta `generate-post.py` (portão: `health-check.py --local`)
+  - `sync_css`: normaliza `?v=` em todas as páginas (portão: `health-check.py --local`) e commita como "Manutenção Automática"
+  - `nothing`: sem ação (falha transitória)
+  - `issue`: **abre Issue para humano** (erro de lógica/design/situação ambígua — nunca altera o design original)
+  - Guardrails: `concurrency` impede reparações simultâneas; o `repair.yml` NÃO se auto-gatilha (não está na lista monitorizada) → sem loops; máx. 1 reparação por evento.
 - **Secret:** `GEMINI_API_KEY`
 
 ## API Gemini (2026)
@@ -113,6 +125,7 @@ Gmail API (ler + responder): `auth`, `search`, `read`, `reply` (draft, NÃO envi
 - **Comando de instalação inconsistente**: artigo de estudo usava `pip install hermes-agent`, mas o guia oficial usa `brew install hermes-agent` (macOS) / git clone+venv (Linux/Windows). **Regra:** instalação macOS = `brew install hermes-agent`; nunca `pip install hermes-agent`.
 - **Meta description truncada**: várias metas cortavam a meio (`... respo"`) ou começavam com o título repetido. **Regra:** meta description completa, com pontuação final, sem repetir o título e sem aspas não escapadas.
 - **Repo local em `~/MARCS_Blog`** (NUNCA /tmp — é apagado ao reiniciar). Fazer `git pull` antes de editar.
+- **Agente de manutenção híbrido (6 Ago)**: a classificação de falhas por IA tem de usar um **conjunto fechado de ações** e cair SEMPRE para `issue` em caso de ambiguidade/falha da API — nunca auto-corrigir sem portão de verificação (`health-check.py --local`). O contexto git (últimos commits) no prompt é essencial: evitou que o agente re-publicasse um artigo que já tinha sido publicado manualmente (classificou `nothing` em vez de `regenerate`). Modelos flash podem ecoar o system prompt e esgotar o output a meio do JSON → maxOutputTokens generoso (1200) + extração de `action` por regex como fallback. YAML do Actions: conteúdo de `run: |` tem de estar indentado (o `BODY` multi-linha da Issue sem indentação quebra o parse).
 
 ## Regras de estrutura e qualidade dos artigos
 Estas regras são OBRIGATÓRIAS para qualquer artigo (gerado ou editado manualmente):

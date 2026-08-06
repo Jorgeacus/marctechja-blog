@@ -311,16 +311,10 @@ if [ -f "$SITEMAP" ]; then
   sed_inplace "s|</urlset>|${NEW_URL}\n</urlset>|" "$SITEMAP"
 fi
 
-# ----------------------------------------------------------------------------
-# Cache-busting do CSS: sincroniza ?v= em TODAS as páginas do site (artigos,
-# arquivo, home, legais, 404) para a versão atual do style.css. Garante que
-# nenhuma página fica presa a um CSS antigo em cache — mesmo que a versão tenha
-# mudado entretanto, esta publicação normaliza tudo automaticamente.
-# ----------------------------------------------------------------------------
-echo "  ↻ Sincronizando style.css?v=${CSS_VERSION} em todas as páginas..."
-for f in $(grep -rl 'style\.css?v=' --include='*.html' "$REPO_ROOT" 2>/dev/null || true); do
-  sed_inplace "s/style\.css?v=[0-9]*/style.css?v=${CSS_VERSION}/g" "$f"
-done
+# Cache-busting do CSS: sincroniza ?v= em TODAS as páginas (script partilhado
+# com o agente de manutenção). Garante que nenhuma página fica presa a um CSS
+# antigo em cache — esta publicação normaliza tudo automaticamente.
+bash "$REPO_ROOT/scripts/sync-css-version.sh"
 
 # Auto-commit and push
 cd "$(dirname "$0")/.."
