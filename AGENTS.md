@@ -108,15 +108,16 @@ Sub-agente de classificação do agente de manutenção. Recebe o log de um run 
 - Projeto: `marctechja-blog` (Direct Upload — sem build). URL: `marctechja-blog.pages.dev`. Domínio custom: `marcusja777.com`.
 - O deploy NÃO passa pela fila do GitHub Pages: `wrangler pages deploy _site` envia os ficheiros via API (instântaneo). `scripts/stage-site.sh` prepara `_site/` (rsync com exclusões de `.github`, `scripts`, `AGENTS.md`, `subscribers.csv`, etc.) — o wrangler direct upload NÃO suporta `.assetsignore` (isso é só Workers Assets), por isso usamos staging.
 - DNS: o domínio está no plano grátis da Cloudflare (nameservers da Cloudflare na Hostinger). Recorde `marcusja777.com` CNAME (flattened) → `marctechja-blog.pages.dev`, proxy ativado. HTTPS universal (certificado auto da Cloudflare).
-- **Migração (checklist manual, 6 Ago — estado atual):**
-  - [x] Conta Cloudflare (grátis) + zona `marcusja777.com` adicionada (`pending`, id `8cb322bc8c0e8a68c07e15d339db35fc`).
-  - [~] API Token criado (Account » Cloudflare Pages » Edit) — **falta permissão `Zone » DNS » Edit`** (sem ela a API não cria o recorde DNS; necessário para concluir a validação do domínio).
-  - [x] Projeto Pages `marctechja-blog` (Direct Upload) + 1º deploy (`bash scripts/stage-site.sh && npx wrangler pages deploy _site --project-name=marctechja-blog`) — live em `marctechja-blog.pages.dev`, `scripts/AGENTS.md/subscribers.csv` → 404.
-  - [x] Domínio custom `marcusja777.com` atachado (status `pending`, validação `pending`, cert: google).
-  - [ ] **Hostinger (Hpanel → Domínio → Nameservers): trocar `cosmos.dns-parking.com`/`nova.dns-parking.com` por `nelly.ns.cloudflare.com` + `zahir.ns.cloudflare.com`** (ação manual do utilizador).
+- **Migração (checklist manual, 6 Ago — CONCLUÍDA):**
+  - [x] Conta Cloudflare (grátis) + zona `marcusja777.com` adicionada (agora `active`, id `8cb322bc8c0e8a68c07e15d339db35fc`).
+  - [x] API Token `cfat_1wKE…5311` (Account » Cloudflare Pages » Edit; sem permissão DNS — recordes geridos manualmente no painel).
+  - [x] Projeto Pages `marctechja-blog` (Direct Upload) + 1º deploy (`bash scripts/stage-site.sh && npx wrangler pages deploy _site --project-name=marctechja-blog`) — `marctechja-blog.pages.dev` e `marcusja777.com` live; `scripts/AGENTS.md/subscribers.csv` → 404.
+  - [x] Domínio custom `marcusja777.com` atachado e validado (verification `active`; cert Google Trust Services até 4 Nov).
+  - [x] Hostinger: nameservers trocados para `nelly.ns.cloudflare.com` + `zahir.ns.cloudflare.com` (zona `active`).
+  - [x] Recorde DNS: apex `marcusja777.com` **CNAME → `marctechja-blog.pages.dev`** (com proxy). ⚠️ criar no painel DNS → Records com Name `@`; um CNAME com Name `www` NÃO valida o domínio (Pages devolve "CNAME record not set").
   - [x] Secrets GitHub `CLOUDFLARE_API_TOKEN` + `CLOUDFLARE_ACCOUNT_ID` definidos (PUT 201, 6 Ago).
   - [x] GitHub Pages desativado: Settings → Pages → Source "Deploy from a branch" (PUT `/pages` 204) — acaba o workflow auto "pages build and deployment".
-  - [ ] Verificar: `python3 scripts/health-check.py` (live) + `server: cloudflare`/`x-cache` nos headers.
+  - [x] Verificado: `python3 scripts/health-check.py` (live) 100% OK, `server: cloudflare`, HTTP→HTTPS 301, cert válido.
 
 ## API Gemini (2026)
 - Endpoint: `https://generativelanguage.googleapis.com/{version}/models/{model}:generateContent`
