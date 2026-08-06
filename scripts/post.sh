@@ -335,10 +335,40 @@ if [ -n "$GITHUB_TOKEN" ]; then
 fi
 
 git add -A
-git commit -m "Novo artigo: ${TITLE} [Hermes Agent]" 2>/dev/null || echo "Nada novo para commitar"
-git push 2>/dev/null && echo "✅ Publicado!" || echo "⚠️ Falha no push. Faz git push manualmente."
+if git diff --cached --quiet; then
+  echo "ℹ️ Nada novo para commitar (artigo já publicado?)"
+else
+  git commit -m "Novo artigo: ${TITLE} [Hermes Agent]" >/dev/null || { echo "❌ Falha no commit."; exit 1; }
+  echo "  ✓ Commit criado"
+  if git push >/dev/null 2>&1; then
+    echo "✅ Publicado com sucesso!"
+  else
+    echo "❌ Falha no push para o GitHub. O artigo foi commitado mas não foi publicado."
+    exit 1
+  fi
+fi
+
+# Verificação pós-publicação: o GitHub Pages demora a fazer deploy; aguarda até
+# o artigo responder 200. Avisa (não falha) se ainda estiver em fila — o
+# health-check diário é a rede de segurança para quebras de deploy.
+ARTICLE_URL="https://marcusja777.com/${POST_DIR}/"
+echo "  ↻ A verificar deploy em ${ARTICLE_URL}..."
+code=000
+attempt=0
+while [ "$attempt" -lt "${VERIFY_ATTEMPTS:-20}" ]; do
+  code=$(curl -s -o /dev/null -w "%{http_code}" "$ARTICLE_URL" 2>/dev/null || echo 000)
+  if [ "$code" = "200" ]; then
+    echo "  ✅ Live: ${ARTICLE_URL} (HTTP 200)"
+    break
+  fi
+  attempt=$((attempt + 1))
+  sleep 20
+done
+if [ "$code" != "200" ]; then
+  echo "  ⚠️ Ainda não live após $((attempt * 20))s (HTTP ${code}) — o deploy pode estar em fila. Verifica em breve; o health-check diário confirma."
+fi
 
 echo ""
 echo "📝 Artigo criado: ${POST_DIR}/"
-echo "🔗 https://marcusja777.com/${POST_DIR}/"
+echo "🔗 ${ARTICLE_URL}"
 echo ""

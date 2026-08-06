@@ -180,9 +180,9 @@ def load_reference():
 
 GEMINI_MODELS = [
     "gemini-3.6-flash",
+    "gemini-3.5-flash",
     "gemini-2.5-flash-latest",
     "gemini-2.5-pro-latest",
-    "gemini-3.5-flash",
 ]
 
 def call_gemini_api(prompt, api_key):
@@ -382,11 +382,14 @@ Apenas o conteúdo interno: parágrafos, headings, listas, código e CTA.
         return call_openai_api(prompt, api_key)
 
 def main():
+    dry_run = "--dry-run" in sys.argv
     provider = os.environ.get("AI_PROVIDER", "gemini").lower()
     api_key = os.environ.get("GEMINI_API_KEY" if provider == "gemini" else "OPENAI_API_KEY")
 
     print(f"📋 Provider: {provider}")
     print(f"📋 API Key set: {'✅ Sim' if api_key else '❌ Não'}")
+    if dry_run:
+        print("🧪 MODO DRY-RUN: gera e valida o artigo, mas NÃO publica.")
 
     if not api_key:
         print("❌ ERRO: Define a variável de ambiente", "GEMINI_API_KEY" if provider == "gemini" else "OPENAI_API_KEY")
@@ -469,6 +472,10 @@ def main():
         for e in errors:
             print(f"   - {e}")
         sys.exit(1)
+
+    if dry_run:
+        print(f"✅ DRY-RUN: artigo válido ({len(content_html)} chars) — não publicado.")
+        sys.exit(0)
 
     # Save content to temp file
     temp_file = f"/tmp/marctechja_article_{datetime.now().strftime('%Y%m%d%H%M%S')}.html"
