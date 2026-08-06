@@ -142,7 +142,8 @@ img { max-width: 100%; height: auto; display: block; }
 .blog-card .meta .date { display: inline-block; }
 
 /* Sidebar Layout */
-.layout-with-sidebar { display: grid; grid-template-columns: 1fr 300px; gap: 40px; }
+.layout-with-sidebar { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 40px; }
+.layout-with-sidebar > * { min-width: 0; }
 .sidebar { position: sticky; top: calc(var(--header-height) + 20px); align-self: start; }
 .sidebar-widget {
   background: var(--bg-card);
@@ -166,7 +167,7 @@ img { max-width: 100%; height: auto; display: block; }
 .article-header h1 { font-size: 32px; font-weight: 800; color: var(--primary); line-height: 1.2; margin-bottom: 12px; }
 .article-header .meta { font-size: 13px; color: var(--text-light); }
 .article-header .meta span { margin-right: 16px; }
-.article-content { font-size: 16px; line-height: 1.8; }
+.article-content { font-size: 16px; line-height: 1.8; min-width: 0; overflow-wrap: break-word; }
 .article-content h2 { font-size: 24px; font-weight: 700; color: var(--primary); margin: 32px 0 16px; }
 .article-content h3 { font-size: 20px; font-weight: 600; color: var(--primary); margin: 24px 0 12px; }
 .article-content p { margin-bottom: 16px; }
@@ -178,7 +179,9 @@ img { max-width: 100%; height: auto; display: block; }
   border-radius: 4px;
   font-size: 14px;
   font-family: 'SF Mono', 'Fira Code', monospace;
+  overflow-wrap: anywhere;
 }
+.article-content a { overflow-wrap: anywhere; }
 .article-content pre {
   background: var(--primary);
   color: #E8E8E3;
