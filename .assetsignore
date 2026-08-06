@@ -1,0 +1,12 @@
+# Ficheiros EXCLUÍDOS do deploy para o Cloudflare Pages (formato .gitignore).
+# O deploy usa `wrangler pages deploy .` — estes ficheiros não vão para o site.
+.git
+.github
+.hermes
+.assetsignore
+.gitignore
+AGENTS.md
+scripts/
+node_modules
+package-lock.json
+wrangler.toml

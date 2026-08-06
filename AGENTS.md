@@ -1,8 +1,9 @@
 # MarctechJA — Blog de Hermes Agent
 
-**Domínio:** https://marcusja777.com (HTTPS ativo, Let's Encrypt)  
-**GitHub:** Jorgeacus/marctechja-blog (branch `main`)  
-**GitHub Pages:** https://jorgeacus.github.io/marctechja-blog/ (redireciona para o domínio)  
+**Domínio:** https://marcusja777.com (HTTPS ativo)  
+**GitHub:** Jorgeacus/marctechja-blog (branch `main`) — repo de origem/versionamento  
+**Alojamento (desde 6 Ago 2026):** Cloudflare Pages (`marctechja-blog.pages.dev`) + DNS na Cloudflare. Deploy diário via GitHub Actions → `wrangler pages deploy` (Direct Upload) — **não** depende da fila do GitHub Pages.  
+**GitHub Pages:** desativado como origem do domínio (o domínio aponta para o Cloudflare Pages).  
 **Email:** marctechja@gmail.com
 
 ## Como aceder (importante!)
@@ -93,7 +94,7 @@ Sincroniza o cache-busting do CSS (`?v=YYYYMMDD`) em TODAS as páginas HTML para
 Sub-agente de classificação do agente de manutenção. Recebe o log de um run falhado + contexto git e devolve `ACTION=`/`DIAG=` (stdout) usando Gemini com um **conjunto fechado** de ações: `regenerate | sync_css | nothing | issue`. Qualquer falha (sem chave, API fora do ar, resposta inválida, ação fora do conjunto) cai para `issue` — nunca age fora do permitido.
 
 ## Workflow GitHub Actions
-- **`marc.yml`** — nome "Hermes Agent"; schedule `0 9 * * *` + `workflow_dispatch`; gera e publica 1 artigo/dia
+- **`marc.yml`** — nome "Hermes Agent"; schedule `0 9 * * *` + `workflow_dispatch`; gera e publica 1 artigo/dia (gera com Gemini, commita+push para o repo, e **deploys para o Cloudflare Pages** via `cloudflare/wrangler-action@v3` com `wrangler pages deploy . --project-name=marctechja-blog --branch=production`)
 - **`health-check.yml`** — "Health Check Blog"; schedule `30 9 * * *` + `workflow_dispatch`; verifica o site e abre Issue se houver quebras
 - **`repair.yml`** — "Manutenção Automática" (agente híbrido); gatilho `workflow_run` quando "Hermes Agent" ou "Health Check Blog" terminarem **com falha** + `workflow_dispatch`; descarrega o log real do run falhado, classifica com `repair-agent.py` e executa:
   - `regenerate`: reexecuta `generate-post.py` (portão: `health-check.py --local`)
@@ -101,7 +102,21 @@ Sub-agente de classificação do agente de manutenção. Recebe o log de um run 
   - `nothing`: sem ação (falha transitória)
   - `issue`: **abre Issue para humano** (erro de lógica/design/situação ambígua — nunca altera o design original)
   - Guardrails: `concurrency` impede reparações simultâneas; o `repair.yml` NÃO se auto-gatilha (não está na lista monitorizada) → sem loops; máx. 1 reparação por evento.
-- **Secret:** `GEMINI_API_KEY`
+- **Secrets:** `GEMINI_API_KEY`, `CLOUDFLARE_API_TOKEN` (permissão Pages:Edit), `CLOUDFLARE_ACCOUNT_ID`
+
+## Cloudflare Pages (alojamento desde 6 Ago 2026)
+- Projeto: `marctechja-blog` (Direct Upload — sem build). URL: `marctechja-blog.pages.dev`. Domínio custom: `marcusja777.com`.
+- O deploy NÃO passa pela fila do GitHub Pages: `wrangler pages deploy .` envia os ficheiros do working tree via API (instântaneo). `.assetsignore` exclui `.github`, `scripts`, `AGENTS.md`, etc. do site publicado.
+- DNS: o domínio está no plano grátis da Cloudflare (nameservers da Cloudflare na Hostinger). Recorde `marcusja777.com` CNAME (flattened) → `marctechja-blog.pages.dev`, proxy ativado. HTTPS universal (certificado auto da Cloudflare).
+- **Migração (checklist manual, 6 Ago):**
+  1. Criar conta Cloudflare (grátis, dash.cloudflare.com) e adicionar `marcusja777.com`.
+  2. Criar API Token (My Profile → API Tokens → Create): permissão `Account » Cloudflare Pages » Edit` + `Zone » DNS » Edit` (só o domínio).
+  3. Criar o projeto Pages `marctechja-blog` (Direct Upload) e fazer o 1º upload do site (manual: `npx wrangler pages deploy . --project-name=marctechja-blog`).
+  4. Atachar domínio custom `marcusja777.com` ao projeto (Settings → Custom domains) — a Cloudflare cria o recorde DNS.
+  5. No painel da Hostinger (Hpanel → Domínio → Nameservers): trocar `cosmos.dns-parking.com`/`nova.dns-parking.com` pelos 2 nameservers que a Cloudflare dá.
+  6. Adicionar os secrets `CLOUDFLARE_API_TOKEN` e `CLOUDFLARE_ACCOUNT_ID` ao GitHub (Settings → Secrets → Actions).
+  7. GitHub Settings → Pages → mudar Source para "Deploy from a branch" (ou desativar) para parar o workflow auto "pages build and deployment" (evita notificações de falha da fila).
+  8. Verificar: `python3 scripts/health-check.py` (live) + confirmar `server: cloudflare`/`x-cache` nos headers.
 
 ## API Gemini (2026)
 - Endpoint: `https://generativelanguage.googleapis.com/{version}/models/{model}:generateContent`
