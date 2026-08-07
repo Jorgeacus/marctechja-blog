@@ -34,7 +34,7 @@
 **Páginas legais (Privacidade, Cookies, Termos, Contactos) são OBRIGATÓRIAS para a aprovação do Google AdSense** — não remover.
 - **Banner de consentimento de cookies (CMP ligeiro):** `assets/js/cookie-consent.js` + CSS no fim de `style.css`. Adicionar a tag `<script src="/assets/js/cookie-consent.js"></script>` após `main.js` em **qualquer página nova**. O template em `scripts/post.sh` já a inclui.
 
-## Artigos publicados (11)
+## Artigos publicados (15)
 1. `hermes-agent-skills/` — Skills no Hermes Agent (25 Jul)
 2. `hermes-agent-introduction/` — O que é o Hermes Agent (26 Jul)
 3. `hermes-agent-automations/` — 5 Automações Diárias (27 Jul)
@@ -46,6 +46,10 @@
 9. `o-que-sao-agentes-de-ia-e-como-funcionam-na-pratica/` — O que são agentes de IA (31 Jul)
 10. `automatizar-mensagens-no-whatsapp-com-hermes-agent/` — Automatizar mensagens no WhatsApp (1 Ago)
 11. `criar-uma-landing-page-simples-com-html-e-css-em-30-minutos/` — Criar uma landing page com HTML e CSS (2 Ago)
+12. `automatizar-o-telegram-com-hermes-agent-respostas-e-agendamentos/` — Automatizar o Telegram (4 Ago)
+13. `automatizar-o-atendimento-no-whatsapp-business-com-hermes-agent/` — WhatsApp Business (5 Ago)
+14. `criar-uma-landing-page-para-o-teu-produto-com-html-e-css/` — Landing page para o teu produto (6 Ago)
+15. `enviar-audio-e-imagens-automaticos-no-whatsapp-com-hermes-agent/` — Enviar áudio e imagens no WhatsApp (7 Ago)
 
 **Ordem:** do mais recente para o mais antigo no blog archive. Homepage: 6 cards (5 essenciais + mais recente).
 
@@ -143,6 +147,7 @@ Sub-agente de classificação do agente de manutenção. Recebe o log de um run 
 - **Repo local em `~/MARCS_Blog`** (NUNCA /tmp — é apagado ao reiniciar). Fazer `git pull` antes de editar.
 - **Agente de manutenção híbrido (6 Ago)**: a classificação de falhas por IA tem de usar um **conjunto fechado de ações** e cair SEMPRE para `issue` em caso de ambiguidade/falha da API — nunca auto-corrigir sem portão de verificação (`health-check.py --local`). O contexto git (últimos commits) no prompt é essencial: evitou que o agente re-publicasse um artigo que já tinha sido publicado manualmente (classificou `nothing` em vez de `regenerate`). Modelos flash podem ecoar o system prompt e esgotar o output a meio do JSON → maxOutputTokens generoso (1200) + extração de `action` por regex como fallback. YAML do Actions: conteúdo de `run: |` tem de estar indentado (o `BODY` multi-linha da Issue sem indentação quebra o parse).
 - **Deploy do Pages preso na fila (6 Ago)**: o workflow auto-gerado "pages build and deployment" falhou 3× seguidas com `actions/deploy-pages` a atingir o timeout de 600s — o build/upload do artefacto passou, o deployment foi criado mas ficou **`deployment_queued`** para sempre (fila do Pages presa). É **infraestrutura do GitHub, sem fix no repositório**; o site manteve-se live com a versão anterior (health-check passa). Ação: re-run do run falhado (ou novo push) para re-encolar o deployment; se persistir, esperar — nunca alterar código por causa disto.
+- **`secrets` NÃO é permitido em condições `if:` (7 Ago)**: `if: ${{ secrets.X != '' }}` invalida o workflow inteiro (`Unrecognized named-value: 'secrets'`) → o cron não dispara, o `workflow_dispatch` devolve 422 e os pushes criam runs de validação com 0 jobs que falham. **Correção:** expor o secret num `env` a nível do job (`CF_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}`) e usar `if: env.CF_API_TOKEN != ''` no passo — o contexto `env` é válido em `if:`. Deteção: se o `marc.yml` não correr no horário e o dispatch der 422, validar o ficheiro com o parser do GitHub (o PyYAML local não apanha este erro — só o parser do GitHub).
 
 ## Regras de estrutura e qualidade dos artigos
 Estas regras são OBRIGATÓRIAS para qualquer artigo (gerado ou editado manualmente):
