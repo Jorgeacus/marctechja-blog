@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Enviar áudio e imagens automáticos no WhatsApp com Hermes Agent — MarctechJA</title>
+  <meta name="description" content="Imagina que podes enviar um áudio personalizado, com uma voz humana gerada por Inteligência Artificial, e uma imagem de alta qualidade para o WhatsApp">
+  <meta property="og:title" content="Enviar áudio e imagens automáticos no WhatsApp com Hermes Agent">
+  <meta property="og:description" content="Imagina que podes enviar um áudio personalizado, com uma voz humana gerada por Inteligência Artificial, e uma imagem de alta qualidade para o WhatsApp">
+  <meta property="og:url" content="https://marcusja777.com/blog/enviar-audio-e-imagens-automaticos-no-whatsapp-com-hermes-agent/">
+  <link rel="canonical" href="https://marcusja777.com/blog/enviar-audio-e-imagens-automaticos-no-whatsapp-com-hermes-agent/">
+  <link rel="stylesheet" href="/assets/css/style.css?v=20260807">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+  <meta name="google-adsense-account" content="ca-pub-3717814491008089">
+  <meta name="author" content="Hermes Agent">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Enviar áudio e imagens automáticos no WhatsApp com Hermes Agent",
+  "url": "https://marcusja777.com/blog/enviar-audio-e-imagens-automaticos-no-whatsapp-com-hermes-agent/",
+  "datePublished": "2026-08-07",
+  "dateModified": "2026-08-07",
+  "inLanguage": "pt-PT",
+  "author": {"@type": "Person", "name": "Hermes Agent"},
+  "publisher": {"@type": "Organization", "name": "MarctechJA", "url": "https://marcusja777.com/"},
+  "mainEntityOfPage": {"@type": "WebPage", "@id": "https://marcusja777.com/blog/enviar-audio-e-imagens-automaticos-no-whatsapp-com-hermes-agent/"}
+}
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="logo">Marc<span class="gold">tech</span>JA</a>
+      <button class="menu-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/blog/">Blog</a></li>
+        <li><a href="/livro/">Livro</a></li>
+        <li><a href="/sobre/">Sobre</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <section class="article-page">
+    <div class="container layout-with-sidebar">
+      <div>
+        <div class="article-header">
+          <div class="breadcrumb">
+            <a href="/">Home</a> / <a href="/blog/">Blog</a> / Enviar áudio e imagens automáticos no WhatsApp com Hermes Agent
+          </div>
+          <h1>Enviar áudio e imagens automáticos no WhatsApp com Hermes Agent</h1>
+          <div class="meta">
+            <span>📅 07 Aug 2026</span>
+            <span>🏷️ Geral</span>
+            <span>✍️ Hermes Agent</span>
+          </div>
+        </div>
+        <div class="article-content">
+          <meta name="title" content="Enviar áudio e imagens automáticos no WhatsApp com Hermes Agent">
+<meta name="description" content="Aprende a automatizar o envio de áudios gerados por IA e imagens no WhatsApp com o Hermes Agent. Guia prático com configuração de skills passo a passo.">
+
+<p>Imagina que podes enviar um áudio personalizado, com uma voz humana gerada por Inteligência Artificial, e uma imagem de alta qualidade para o WhatsApp de um cliente, de forma 100% automática, sem sequer tocares no teu telemóvel. Parece ficção científica? Com o <strong>Hermes Agent</strong>, esta é a realidade atual de milhares de profissionais e empresas que estão a revolucionar a sua produtividade e a comunicação com os seus clientes.</p>
+
+<h2>Porquê Automatizar o WhatsApp com o Hermes Agent?</h2>
+<p>O WhatsApp é o canal de comunicação com maior taxa de abertura do mundo. No entanto, enviar mensagens manuais para dezenas ou centenas de contactos consome imenso tempo. Pior: mensagens puramente de texto muitas vezes são ignoradas. O envio de <strong>imagens dinâmicas</strong> e <strong>áudios personalizados</strong> gera muito mais proximidade, confiança e conversão.</p>
+<p>Com o Hermes Agent, podes criar "skills" (competências) em ficheiros YAML simples que instruem a IA a gerar conteúdo de voz natural e a enviá-lo juntamente com ficheiros multimédia de forma totalmente autónoma.</p>
+
+<h2>Configuração Passo a Passo: Enviar Áudio e Imagem com IA</h2>
+<p>Vamos configurar uma automação prática e funcional. Segue os passos abaixo para criares a tua primeira skill de envio multimédia.</p>
+
+<h3>Passo 1: Instalação do Hermes Agent</h3>
+<p>Para começar, precisas de ter o Hermes Agent instalado na tua máquina. Se utilizas o macOS, podes instalá-lo rapidamente através do terminal utilizando o Homebrew:</p>
+
+<pre><code>brew install hermes-agent</code></pre>
+
+<p>Se utilizas Linux ou Windows, deves consultar as instruções detalhadas de instalação no guia oficial para configurar as tuas variáveis de ambiente e dependências do sistema.</p>
+
+<h3>Passo 2: Criar a Skill Personalizada (YAML)</h3>
+<p>As automações do Hermes Agent são estruturadas em ficheiros YAML limpos e legíveis. Cria um ficheiro chamado <code>enviar_multimedia.yaml</code> dentro do teu diretório de skills (normalmente localizado em <code>~/.hermes/skills/</code>) e adiciona o seguinte código:</p>
+
+<pre><code>name: enviar_multimedia
+description: Automatiza o envio de áudios gerados por IA e imagens personalizadas no WhatsApp.
+author: MarcTechJA
+version: "1.0"
+inputs:
+  phone_number: { type: string, description: "Número de telemóvel do destinatário com indicativo (ex: +351912345678)", required: true }
+  image_url: { type: string, description: "URL da imagem que pretendes enviar", required: true }
+  audio_text: { type: string, description: "Texto que a IA vai converter em áudio de voz", required: true }
+steps:
+  - name: generate_speech
+    action: llm.generate
+    params:
+      prompt: "Lê o seguinte texto de forma calorosa, profissional e natural para gravação de voz: { inputs.audio_text }"
+  - name: send_audio
+    action: tools.whatsapp.send
+    params:
+      to: "{ inputs.phone_number }"
+      type: "audio"
+      content: "{ steps.generate_speech.output }"
+  - name: send_image
+    action: tools.whatsapp.send
+    params:
+      to: "{ inputs.phone_number }"
+      type: "image"
+      content: "{ inputs.image_url }"
+outputs:
+  status: "O áudio e a imagem foram enviados com sucesso para { inputs.phone_number }."</code></pre>
+
+<p><strong>O que faz este código?</strong></p>
+<ul>
+  <li><strong>inputs:</strong> Define os parâmetros necessários para a execução (número do destinatário, link da imagem e o texto que será falado).</li>
+  <li><strong>steps.generate_speech:</strong> Utiliza o motor de IA configurado no teu Hermes Agent (como a API da OpenAI, Gemini ou um modelo local via Ollama) para sintetizar o texto num áudio de voz realista.</li>
+  <li><strong>steps.send_audio &amp; steps.send_image:</strong> Utilizam a ferramenta integrada do WhatsApp do Hermes Agent para disparar o áudio gerado e a imagem fornecida diretamente para o número de destino.</li>
+</ul>
+
+<h3>Passo 3: Executar a Skill no Terminal</h3>
+<p>Com a skill configurada e guardada na pasta correta, podes executá-la instantaneamente através de um único comando no teu terminal:</p>
+
+<pre><code>hermes run enviar_multimedia --phone_number "+351912345678" --image_url "https://python.org/static/img/python-logo.png" --audio_text "Olá! Passava por aqui para confirmar que o teu relatório de automação está pronto. Podes ver o gráfico na imagem anexa."</code></pre>
+
+<p>Ao premires Enter, o Hermes Agent irá processar o texto, convertê-lo em áudio através de IA, aceder ao teu canal do WhatsApp e entregar ambas as mensagens ao destinatário em poucos segundos.</p>
+
+<h2>Casos Práticos de Aplicação no Dia a Dia</h2>
+<p>Esta poderosa combinação de áudio por IA e imagem abre portas a infinitas possibilidades de automação empresarial e pessoal:</p>
+<ul>
+  <li><strong>Recuperação de Carrinhos Abandonados:</strong> Envia uma imagem do produto esquecido no teu e-commerce acompanhada de um áudio simpático do teu "assistente virtual" a oferecer um cupão de desconto exclusivo.</li>
+  <li><strong>Lembretes de Consultas e Reservas:</strong> Clínicas, ginásios ou restaurantes podem programar o envio de um áudio personalizado com o nome do cliente e uma imagem do mapa ou QR Code de confirmação.</li>
+  <li><strong>Suporte ao Cliente Escalável:</strong> Responde a dúvidas frequentes enviando capturas de ecrã explicativas acompanhadas de um áudio passo a passo, poupando horas de trabalho à tua equipa de suporte.</li>
+</ul>
+
+<h2>Conclusão: O Futuro da Automação Está ao Teu Alcance</h2>
+<p>Automatizar o WhatsApp com o Hermes Agent vai muito além do simples envio de mensagens de texto automáticas. Ao integrares inteligência artificial para gerar áudios dinâmicos e anexar imagens contextuais, consegues humanizar a comunicação à escala global, sem perder o toque pessoal que converte contactos em clientes satisfeitos.</p>
+
+<div style="background-color: #f9f9f9; border-left: 4px solid #0073aa; padding: 20px; margin-top: 30px; border-radius: 4px;">
+  <h3 style="margin-top: 0;">Queres dominar o Hermes Agent e criar automações ainda mais avançadas?</h3>
+  <p>Este tutorial é apenas a ponta do iceberg do que podes alcançar. Se queres aprender a configurar múltiplos providers de IA (como OpenAI, Claude e modelos locais com Ollama), criar equipas de agentes que colaboram entre si e integrar fluxos com CRMs, Notion e bases de dados, precisas de ler o recurso definitivo.</p>
+  <p>Adquire já o <strong>Guia Completo do Hermes Agent</strong> por MarcTechJA. Com 124 páginas práticas e 42 capítulos detalhados, vais aprender desde os conceitos mais básicos até ao deploy de agentes em produção.</p>
+  <p><strong>Aproveita o preço especial de lançamento de apenas R$29,90!</strong></p>
+  <p><a href="https://hotm.io/jFUussV9" target="_blank" style="display: inline-block; background-color: #0073aa; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 4px; font-weight: bold;">Descarrega o Guia Completo do Hermes Agent aqui</a></p>
+</div>
+
+          <div class="article-cta">
+            <h3>Queres ir mais longe?</h3>
+            <p>O Guia Completo do Hermes Agent leva-te do zero às automações avançadas com 10 partes e 42 capítulos.</p>
+            <a href="/livro/" class="btn btn-gold">Saber Mais Sobre o Livro</a>
+          </div>
+        </div>
+      </div>
+      <aside class="sidebar">
+        <div class="sidebar-widget">
+          <h3>📘 Livro do Hermes Agent</h3>
+          <p>10 partes, 42 capítulos. PDF + EPUB.</p>
+          <a href="/livro/" class="btn btn-gold">Saber Mais</a>
+        </div>
+        <div class="sidebar-widget ad-placeholder">Anúncio Google AdSense</div>
+      </aside>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <a href="/" class="logo">Marc<span class="gold">tech</span>JA</a>
+          <p>Tecnologia, automação e IA para transformar a produtividade.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Navegação</h4>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/blog/">Blog</a></li>
+            <li><a href="/livro/">Livro</a></li>
+            <li><a href="/sobre/">Sobre</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="/politica-de-privacidade/">Privacidade</a></li>
+            <li><a href="/politica-de-cookies/">Cookies</a></li>
+            <li><a href="/termos/">Termos</a></li>
+            <li><a href="/contactos/">Contactos</a></li>
+            <li><a href="#" id="cookie-settings" onclick="window.MarctechJACookieConsent&&window.MarctechJACookieConsent.show();return false;">Definições de cookies</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contacto</h4>
+          <ul>
+            <li><a href="mailto:marctechja@gmail.com">marctechja@gmail.com</a></li>
+            <li><a href="https://github.com/Jorgeacus">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 MarctechJA. Todos os direitos reservados.</p>
+      </div>
+    </div>
+  </footer>
+  <script src="/assets/js/main.js"></script>
+  <script src="/assets/js/cookie-consent.js"></script>
+</body>
+</html>
