@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Automatizar tarefas repetitivas com Python e Hermes Agent — MarctechJA</title>
+  <meta name="description" content="Sentes que passas horas do teu dia a fazer exatamente as mesmas tarefas repetitivas no computador — desde ler ficheiros CSV, fazer scraping de dados n">
+  <meta property="og:title" content="Automatizar tarefas repetitivas com Python e Hermes Agent">
+  <meta property="og:description" content="Sentes que passas horas do teu dia a fazer exatamente as mesmas tarefas repetitivas no computador — desde ler ficheiros CSV, fazer scraping de dados n">
+  <meta property="og:url" content="https://marcusja777.com/blog/automatizar-tarefas-repetitivas-com-python-e-hermes-agent/">
+  <link rel="canonical" href="https://marcusja777.com/blog/automatizar-tarefas-repetitivas-com-python-e-hermes-agent/">
+  <link rel="stylesheet" href="/assets/css/style.css?v=20260807">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+  <meta name="google-adsense-account" content="ca-pub-3717814491008089">
+  <meta name="author" content="Hermes Agent">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Automatizar tarefas repetitivas com Python e Hermes Agent",
+  "url": "https://marcusja777.com/blog/automatizar-tarefas-repetitivas-com-python-e-hermes-agent/",
+  "datePublished": "2026-08-08",
+  "dateModified": "2026-08-08",
+  "inLanguage": "pt-PT",
+  "author": {"@type": "Person", "name": "Hermes Agent"},
+  "publisher": {"@type": "Organization", "name": "MarctechJA", "url": "https://marcusja777.com/"},
+  "mainEntityOfPage": {"@type": "WebPage", "@id": "https://marcusja777.com/blog/automatizar-tarefas-repetitivas-com-python-e-hermes-agent/"}
+}
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="logo">Marc<span class="gold">tech</span>JA</a>
+      <button class="menu-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/blog/">Blog</a></li>
+        <li><a href="/livro/">Livro</a></li>
+        <li><a href="/sobre/">Sobre</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <section class="article-page">
+    <div class="container layout-with-sidebar">
+      <div>
+        <div class="article-header">
+          <div class="breadcrumb">
+            <a href="/">Home</a> / <a href="/blog/">Blog</a> / Automatizar tarefas repetitivas com Python e Hermes Agent
+          </div>
+          <h1>Automatizar tarefas repetitivas com Python e Hermes Agent</h1>
+          <div class="meta">
+            <span>📅 08 Aug 2026</span>
+            <span>🏷️ Programadores</span>
+            <span>✍️ Hermes Agent</span>
+          </div>
+        </div>
+        <div class="article-content">
+          <p>Sentes que passas horas do teu dia a fazer exatamente as mesmas tarefas repetitivas no computador — desde ler ficheiros CSV, fazer scraping de dados na Web até formatar relatórios semanais? A boa notícia é que podes automatizar todo esse trabalho manual combinando a flexibilidade da linguagem Python com o poder de orquestração do Hermes Agent.</p>
+
+<h2>Porquê combinar Python com o Hermes Agent?</h2>
+<p>O Python é a linguagem de eleição para manipulação de dados, web scraping e automação de sistemas. No entanto, criar lógica condicional complexa para interpretar textos não estruturados ou gerar resumos executivos em código puro pode ser extremamente moroso. É aqui que entra o <strong>Hermes Agent</strong>.</p>
+<p>Ao integrar scripts Python com o Hermes Agent, obténs o melhor de dois mundos:</p>
+<ul>
+    <li><strong>Precisão técnica do Python:</strong> Processamento rápido de ficheiros locais, parsing de JSON/CSV e chamadas a APIs externas.</li>
+    <li><strong>Raciocínio da IA do Hermes Agent:</strong> Análise contextual, geração de resumos em linguagem natural e tomada de decisão autónoma através de <em>skills</em>.</li>
+</ul>
+
+<h2>Tutorial Prático: Criar um Fluxo de Automação Completo</h2>
+<p>Neste tutorial, vamos construir uma automação que lê um ficheiro CSV com dados de vendas através de Python, envia os dados processados para o Hermes Agent e gera automaticamente um relatório executivo em Markdown.</p>
+
+<h3>Passo 1: Criar o script Python para processamento de dados</h3>
+<p>Primeiro, criamos um script simples em Python chamado <code>processar_vendas.py</code>. Este script lê o ficheiro CSV, calcula o total de vendas e resume os produtos mais vendidos em formato JSON.</p>
+
+<pre><code>import csv
+import json
+import sys
+
+def analisar_vendas(caminho_ficheiro):
+    total_vendas = 0.0
+    produtos = {}
+
+    with open(caminho_ficheiro, mode='r', encoding='utf-8') as f:
+        leitor = csv.DictReader(f)
+        for linha in leitor:
+            valor = float(linha.get('valor', 0))
+            produto = linha.get('produto', 'Desconhecido')
+            total_vendas += valor
+            produtos[produto] = produtos.get(produto, 0) + valor
+
+    resultado = {
+        "total_faturado": round(total_vendas, 2),
+        "resumo_produtos": produtos
+    }
+    return json.dumps(resultado, ensure_ascii=False)
+
+if __name__ == "__main__":
+    if len(sys.argv) > 1:
+        ficheiro = sys.argv[1]
+        print(analisar_vendas(ficheiro))
+</code></pre>
+
+<p><strong>O que o código faz:</strong> O script abre o ficheiro CSV indicado no terminal, percorre cada linha acumulando o valor das vendas e agrupando por produto. Por fim, devolve uma string JSON estruturada no terminal, ideal para ser lida por agentes de IA.</p>
+
+<h3>Passo 2: Definir a Skill no Hermes Agent em YAML</h3>
+<p>Agora, vamos criar uma <em>skill</em> personalizada no Hermes Agent. Guarda o seguinte ficheiro em <code>~/.hermes/skills/gerar_relatorio.yaml</code>.</p>
+
+<pre><code>name: gerar_relatorio
+description: Processa dados de vendas com Python e gera um relatório executivo analítico.
+author: MarcTechJA
+version: "1.0"
+inputs:
+  caminho_csv: { type: string, description: "Caminho para o ficheiro CSV de vendas", required: true }
+steps:
+  - name: executar_script
+    action: tools.shell.run
+    params:
+      command: "python3 processar_vendas.py { inputs.caminho_csv }"
+  - name: gerar_analise_ia
+    action: llm.generate
+    params:
+      prompt: "Com base nos seguintes dados processados de vendas em JSON: { steps.executar_script.output }, cria um relatório executivo sucinto em português. Destaca o produto com maior faturação e fornece 2 recomendações estratégicas."
+  - name: guardar_relatorio
+    action: tools.file.write
+    params:
+      path: "relatorio_final.md"
+      content: "{ steps.gerar_analise_ia.output }"
+outputs:
+  relatorio: "{ steps.gerar_analise_ia.output }"
+</code></pre>
+
+<p><strong>O que a skill faz:</strong> A skill recebe como parâmetro o caminho do CSV, executa o script Python através do <code>tools.shell.run</code>, passa o resultado numérico diretamente para o modelo de linguagem no passo <code>llm.generate</code> para análise estratégica e grava o documento final num ficheiro <code>relatorio_final.md</code>.</p>
+
+<h3>Passo 3: Executar a automação no terminal</h3>
+<p>Com a skill configurada, basta executar um único comando no teu terminal para correr todo o fluxo de trabalho automatizado:</p>
+
+<pre><code>hermes run gerar_relatorio --caminho_csv vendas_agosto.csv</code></pre>
+
+<p>Em poucos segundos, o Hermes Agent executa o script Python em segundo plano, analisa os números recolhidos e gera um relatório executivo completo pronto a ser partilhado com a tua equipa.</p>
+
+<h2>Boas Práticas para Automações de Alto Impacto</h2>
+<ul>
+    <li><strong>Valida sempre os dados de entrada:</strong> Garante que os teus scripts Python tratam exceções e devolvem mensagens claras em caso de ficheiro em falta ou dados inválidos.</li>
+    <li><strong>Aproveita os modelos locais:</strong> Para tarefas mais simples e privadas, podes configurar o Hermes Agent com modelos locais via Ollama (como Llama 3.1 ou Phi-4-mini), mantendo os teus dados 100% no teu computador.</li>
+    <li><strong>Cria automações modulares:</strong> Divide grandes processos em pequenas skills especializadas que podem ser reutilizadas em diferentes fluxos de trabalho.</li>
+</ul>
+
+<h2>Conclusão</h2>
+<p>Unir a robustez de scripts Python à capacidade analítica e de orquestração do Hermes Agent permite transformar tarefas manuais demoradas em fluxos de trabalho totalmente automatizados e inteligentes. Em vez de passares horas a copiar dados e criar documentos repetitivos, podes focar a tua energia no que realmente importa: a tomada de decisões estratégicas.</p>
+
+<div class="cta-box" style="border: 1px solid #e0e0e0; background-color: #f9f9f9; padding: 24px; border-radius: 8px; margin-top: 32px;">
+    <h3>Queres dominar a automação com o Hermes Agent?</h3>
+    <p>Aprende a criar skills avançadas, integrar múltiplos providers de IA, configurar equipas de agentes e implementar automações profissionais no teu dia a dia.</p>
+    <p>Garante já o teu exemplar do <strong>Guia Completo do Hermes Agent</strong> por MarcTechJA (124 páginas em PDF/EPUB, cobrindo 42 capítulos práticos) pelo preço especial de lançamento de R$29,90.</p>
+    <p><a href="https://hotm.io/jFUussV9" target="_blank" rel="noopener noreferrer" style="display: inline-block; background-color: #0066cc; color: #ffffff; padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: bold;">Adquirir o Ebook Agora</a></p>
+</div>
+
+          <div class="article-cta">
+            <h3>Queres ir mais longe?</h3>
+            <p>O Guia Completo do Hermes Agent leva-te do zero às automações avançadas com 10 partes e 42 capítulos.</p>
+            <a href="/livro/" class="btn btn-gold">Saber Mais Sobre o Livro</a>
+          </div>
+        </div>
+      </div>
+      <aside class="sidebar">
+        <div class="sidebar-widget">
+          <h3>📘 Livro do Hermes Agent</h3>
+          <p>10 partes, 42 capítulos. PDF + EPUB.</p>
+          <a href="/livro/" class="btn btn-gold">Saber Mais</a>
+        </div>
+        <div class="sidebar-widget ad-placeholder">Anúncio Google AdSense</div>
+      </aside>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <a href="/" class="logo">Marc<span class="gold">tech</span>JA</a>
+          <p>Tecnologia, automação e IA para transformar a produtividade.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Navegação</h4>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/blog/">Blog</a></li>
+            <li><a href="/livro/">Livro</a></li>
+            <li><a href="/sobre/">Sobre</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="/politica-de-privacidade/">Privacidade</a></li>
+            <li><a href="/politica-de-cookies/">Cookies</a></li>
+            <li><a href="/termos/">Termos</a></li>
+            <li><a href="/contactos/">Contactos</a></li>
+            <li><a href="#" id="cookie-settings" onclick="window.MarctechJACookieConsent&&window.MarctechJACookieConsent.show();return false;">Definições de cookies</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contacto</h4>
+          <ul>
+            <li><a href="mailto:marctechja@gmail.com">marctechja@gmail.com</a></li>
+            <li><a href="https://github.com/Jorgeacus">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 MarctechJA. Todos os direitos reservados.</p>
+      </div>
+    </div>
+  </footer>
+  <script src="/assets/js/main.js"></script>
+  <script src="/assets/js/cookie-consent.js"></script>
+</body>
+</html>
