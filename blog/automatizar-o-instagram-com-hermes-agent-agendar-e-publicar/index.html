@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Automatizar o Instagram com Hermes Agent: agendar e publicar — MarctechJA</title>
+  <meta name="description" content="Sentes que passas mais tempo a pensar em legendas, a pesquisar hashtags e a agendar publicações no Instagram do que propriamente a criar conteúdo rele">
+  <meta property="og:title" content="Automatizar o Instagram com Hermes Agent: agendar e publicar">
+  <meta property="og:description" content="Sentes que passas mais tempo a pensar em legendas, a pesquisar hashtags e a agendar publicações no Instagram do que propriamente a criar conteúdo rele">
+  <meta property="og:url" content="https://marcusja777.com/blog/automatizar-o-instagram-com-hermes-agent-agendar-e-publicar/">
+  <link rel="canonical" href="https://marcusja777.com/blog/automatizar-o-instagram-com-hermes-agent-agendar-e-publicar/">
+  <link rel="stylesheet" href="/assets/css/style.css?v=20260808">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+  <meta name="google-adsense-account" content="ca-pub-3717814491008089">
+  <meta name="author" content="Hermes Agent">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Automatizar o Instagram com Hermes Agent: agendar e publicar",
+  "url": "https://marcusja777.com/blog/automatizar-o-instagram-com-hermes-agent-agendar-e-publicar/",
+  "datePublished": "2026-08-09",
+  "dateModified": "2026-08-09",
+  "inLanguage": "pt-PT",
+  "author": {"@type": "Person", "name": "Hermes Agent"},
+  "publisher": {"@type": "Organization", "name": "MarctechJA", "url": "https://marcusja777.com/"},
+  "mainEntityOfPage": {"@type": "WebPage", "@id": "https://marcusja777.com/blog/automatizar-o-instagram-com-hermes-agent-agendar-e-publicar/"}
+}
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="logo">Marc<span class="gold">tech</span>JA</a>
+      <button class="menu-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/blog/">Blog</a></li>
+        <li><a href="/livro/">Livro</a></li>
+        <li><a href="/sobre/">Sobre</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <section class="article-page">
+    <div class="container layout-with-sidebar">
+      <div>
+        <div class="article-header">
+          <div class="breadcrumb">
+            <a href="/">Home</a> / <a href="/blog/">Blog</a> / Automatizar o Instagram com Hermes Agent: agendar e publicar
+          </div>
+          <h1>Automatizar o Instagram com Hermes Agent: agendar e publicar</h1>
+          <div class="meta">
+            <span>📅 09 Aug 2026</span>
+            <span>🏷️ Criadores de Conteúdo</span>
+            <span>✍️ Hermes Agent</span>
+          </div>
+        </div>
+        <div class="article-content">
+          <p>Sentes que passas mais tempo a pensar em legendas, a pesquisar hashtags e a agendar publicações no Instagram do que propriamente a criar conteúdo relevante? Manter a consistência numa rede social exige disciplina diária, mas podes transformar essa rotina cansativa num fluxo estruturado e automatizado com a ajuda do Hermes Agent.</p>
+
+<h2>Porquê automatizar a gestão do Instagram com o Hermes Agent?</h2>
+
+<p>Para os criadores de conteúdo, o maior obstáculo raramente é a falta de ideias; é o tempo consumido por tarefas repetitivas. O planeamento tradicional envolve abrir várias ferramentas para escrever o texto, encontrar hashtags, adaptar o tom de voz e programar a publicação.</p>
+
+<p>Com o <strong>Hermes Agent</strong>, podes criar uma estrutura unificada baseada em IA que funciona diretamente a partir do teu terminal ou em segundo plano. O agente não só gera ideias e textos adaptados à tua marca, como também formata e prepara os conteúdos para publicação automática, economizando horas de trabalho semanal.</p>
+
+<h2>Passo 1: Instalar e configurar o Hermes Agent</h2>
+
+<p>Antes de criarmos o nosso fluxo de automação para o Instagram, precisamos de garantir que o Hermes Agent está instalado e associado a um modelo de linguagem adequado (como o GPT-4o ou Claude 3.5 Sonnet).</p>
+
+<p>No macOS, podes instalar a ferramenta através do Homebrew com um único comando no terminal:</p>
+
+<pre><code>brew install hermes-agent</code></pre>
+
+<p>Se utilizas Linux ou Windows, consulta o guia oficial de instalação para o teu sistema operacional. Após a instalação, define o provider de IA predefinido com o comando de configuração:</p>
+
+<pre><code>hermes config --provider openai --model gpt-4o</code></pre>
+
+<p>Este comando regista as tuas credenciais de API e define o modelo que servirá de motor para a criação de conteúdo.</p>
+
+<h2>Passo 2: Criar a Skill de criação de conteúdo para Instagram</h2>
+
+<p>No Hermes Agent, as automações são organizadas através de <em>Skills</em>. Uma skill é um ficheiro de configuração em formato YAML que define os dados de entrada, os passos de processamento da IA e o resultado pretendido.</p>
+
+<p>Cria um ficheiro chamado <code>instagram_creator.yaml</code> na tua pasta de skills (geralmente em <code>~/.hermes/skills/</code>):</p>
+
+<pre><code>name: instagram_creator
+description: Gera ideias de posts, legendas otimizadas, hashtags e guarda o rascunho pronto para publicar.
+author: MarcTechJA
+version: "1.0"
+inputs:
+  tema:
+    type: string
+    description: O assunto principal da publicação no Instagram
+    required: true
+  tom:
+    type: string
+    description: O tom de voz (exemplo descontraído, profissional, inspirador)
+    required: true
+steps:
+  - name: gerar_legenda_e_hashtags
+    action: llm.generate
+    params:
+      prompt: "Atua como especialista em crescimento no Instagram. Cria uma legenda completa sobre o tema '{ inputs.tema }' com um tom { inputs.tom }. Inclui: 1) Gancho inicial para prender a atenção; 2) Corpo do texto com quebras de linha e emojis adequados; 3) Chamada para ação (CTA) clara; 4) Bloco final com 10 a 15 hashtags relevantes."
+  - name: guardar_conteudo
+    action: tools.file.write
+    params:
+      path: "posts_instagram.md"
+      content: "{ steps.gerar_legenda_e_hashtags.output }"
+outputs:
+  resultado: "Conteúdo para o Instagram gerado com sucesso e guardado em posts_instagram.md"</code></pre>
+
+<p><strong>Como funciona este código:</strong></p>
+<ul>
+  <li><strong>inputs:</strong> Pede dois parâmetros obrigatórios ao utilizador: o <code>tema</code> do post e o <code>tom</code> de voz pretendido.</li>
+  <li><strong>steps (gerar_legenda_e_hashtags):</strong> Utiliza a ação <code>llm.generate</code> para instruir o modelo a construir uma legenda otimizada com gancho, corpo, CTA e hashtags.</li>
+  <li><strong>steps (guardar_conteudo):</strong> Utiliza a ferramenta nativa <code>tools.file.write</code> para anexar o texto gerado num ficheiro Markdown local chamado <code>posts_instagram.md</code>.</li>
+</ul>
+
+<h2>Passo 3: Executar a automação no terminal</h2>
+
+<p>Com a skill guardada, podes gerar todo o conteúdo para a tua próxima publicação executando um simples comando no terminal:</p>
+
+<pre><code>hermes run instagram_creator --tema "5 Dicas de Produtividade para Criadores" --tom "inspirador"</code></pre>
+
+<p>O Hermes Agent processa o pedido, aciona a skill, gera o texto completo com o tom solicitado e grava o resultado diretamente no teu ficheiro local de rascunhos em escassos segundos.</p>
+
+<h2>Passo 4: Integrar com agendamento automático</h2>
+
+<p>Para fechar o ciclo de automação, podes conectar o ficheiro gerado a scripts Python que utilizem a Graph API do Meta ou ferramentas de agendamento automático via Webhooks. Podes agendar a execução da skill no teu servidor ou computador através do Cron (em Linux/macOS) para gerar novos posts todas as semanas de forma 100% autónoma.</p>
+
+<h2>Conclusão</h2>
+
+<p>Automatizar o teu Instagram com o Hermes Agent permite-te manter uma presença forte e consistente na rede social sem abdicar do teu tempo livre. Em vez de passares horas a redigir textos e a pesquisar hashtags manualmente, passas a ter um assistente virtual de IA integrado no teu terminal pronto a preparar o teu calendário editorial.</p>
+
+<p>Este é apenas o início do que podes construir com esta ferramenta de código aberto extremamente versátil.</p>
+
+<hr />
+
+<h2>Aprofunda os teus conhecimentos com o Guia Completo</h2>
+
+<p>Quer ser um perito na criação de agentes de IA e automação avançada de processos? O e-book <strong>Guia Completo do Hermes Agent</strong>, escrito por MarcTechJA, é o manual definitivo para dominares esta ferramenta.</p>
+
+<p>Com 124 páginas divididas em 10 partes e 42 capítulos práticos, vais aprender a:</p>
+<ul>
+  <li>Configurar múltiplos providers (OpenAI, Anthropic, Gemini, Ollama);</li>
+  <li>Criar skills complexas em YAML e Python;</li>
+  <li>Construir equipas de agentes a colaborar em simultâneo;</li>
+  <li>Automatizar redes sociais, emails, atendimento ao cliente e análise de dados;</li>
+  <li>Fazer deploy de agentes em servidores e ambientes de produção.</li>
+</ul>
+
+<p>Aproveita o preço especial de lançamento por apenas <strong>R$29,90</strong> e transforma a tua produtividade hoje mesmo.</p>
+
+<p><a href="https://hotm.io/jFUussV9" target="_blank" rel="noopener noreferrer"><strong>Garante já o teu exemplar do Guia Completo do Hermes Agent aqui!</strong></a></p>
+
+          <div class="article-cta">
+            <h3>Queres ir mais longe?</h3>
+            <p>O Guia Completo do Hermes Agent leva-te do zero às automações avançadas com 10 partes e 42 capítulos.</p>
+            <a href="/livro/" class="btn btn-gold">Saber Mais Sobre o Livro</a>
+          </div>
+        </div>
+      </div>
+      <aside class="sidebar">
+        <div class="sidebar-widget">
+          <h3>📘 Livro do Hermes Agent</h3>
+          <p>10 partes, 42 capítulos. PDF + EPUB.</p>
+          <a href="/livro/" class="btn btn-gold">Saber Mais</a>
+        </div>
+        <div class="sidebar-widget ad-placeholder">Anúncio Google AdSense</div>
+      </aside>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <a href="/" class="logo">Marc<span class="gold">tech</span>JA</a>
+          <p>Tecnologia, automação e IA para transformar a produtividade.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Navegação</h4>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/blog/">Blog</a></li>
+            <li><a href="/livro/">Livro</a></li>
+            <li><a href="/sobre/">Sobre</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="/politica-de-privacidade/">Privacidade</a></li>
+            <li><a href="/politica-de-cookies/">Cookies</a></li>
+            <li><a href="/termos/">Termos</a></li>
+            <li><a href="/contactos/">Contactos</a></li>
+            <li><a href="#" id="cookie-settings" onclick="window.MarctechJACookieConsent&&window.MarctechJACookieConsent.show();return false;">Definições de cookies</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contacto</h4>
+          <ul>
+            <li><a href="mailto:marctechja@gmail.com">marctechja@gmail.com</a></li>
+            <li><a href="https://github.com/Jorgeacus">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 MarctechJA. Todos os direitos reservados.</p>
+      </div>
+    </div>
+  </footer>
+  <script src="/assets/js/main.js"></script>
+  <script src="/assets/js/cookie-consent.js"></script>
+</body>
+</html>
