@@ -114,6 +114,31 @@ img { max-width: 100%; height: auto; display: block; }
 .section-title span { border-bottom: 3px solid var(--accent-gold); padding-bottom: 8px; }
 
 /* Blog Cards */
+.featured-guide {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  background: linear-gradient(135deg, var(--secondary), var(--primary));
+  border: 1px solid var(--accent-gold);
+  border-radius: 12px;
+  padding: 1.75rem 2rem;
+  margin-bottom: 0.5rem;
+}
+.featured-guide-text { flex: 1; min-width: 240px; }
+.featured-guide-badge {
+  color: var(--accent-gold);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.75rem;
+  margin-bottom: 8px;
+}
+.featured-guide-text h2 { font-size: 20px; margin: 0 0 8px; color: #fff; }
+.featured-guide-text h2 a { color: #fff; }
+.featured-guide-text h2 a:hover { color: var(--accent-gold); }
+.featured-guide-text p { margin: 0; color: rgba(255,255,255,0.78); font-size: 15px; line-height: 1.6; }
+.featured-guide .btn { white-space: nowrap; }
 .blog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px; }
 .blog-card {
   background: var(--bg-card);
