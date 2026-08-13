@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
   <title>Skills no Hermes Agent — MarctechJA</title>
-  <meta name="description" content="Aprende a criar skills personalizadas no Hermes Agent. Guia completo com tipos de skills, estrutura YAML, Python, exemplos práticos e integrações.">
+  <meta name="description" content="Aprende a criar skills personalizadas no Hermes Agent. Guia completo com o formato SKILL.md, exemplos reais e funcionais de pesquisa na web e email.">
   <meta property="og:title" content="Skills no Hermes Agent">
   <meta property="og:description" content="Aprende a criar skills personalizadas no Hermes Agent.">
   <link rel="canonical" href="https://marcusja777.com/blog/hermes-agent-skills/">
@@ -67,94 +67,69 @@
             <li><strong>Skills de Conhecimento</strong> — adicionam documentação ou contexto específico ao agente</li>
           </ul>
 
-          <h2>Estrutura de uma Skill (YAML)</h2>
-          <pre><code>name: pesquisar_web
-description: Pesquisa na web e retorna resultados resumidos
-author: MarcTechJA
-version: "1.0"
+          <h2>O que é uma Skill no Hermes Agent real?</h2>
+          <p>No Hermes Agent instalado na versão atual, uma skill é um ficheiro <strong><code>SKILL.md</code></strong> em Markdown, guardado numa pasta. Ao contrário de formatos declarativos de etapas fixas, o <code>SKILL.md</code> contém <strong>instruções em linguagem natural</strong> que o agente lê e depois decide, ele próprio, por onde começar — usando as ferramentas nativas (<code>terminal</code>, <code>web</code>, <code>file</code>).</p>
 
-inputs:
-  query:
-    type: string
-    description: Termo de pesquisa
-    required: true
+          <h2>Estrutura real de uma Skill (<code>SKILL.md</code>)</h2>
+          <p>Cada skill vive em <code>~/.hermes/skills/&lt;nome&gt;/SKILL.md</code>. A estrutura tem um cabeçalho (frontmatter) e um corpo narrativo:</p>
+          <pre><code>---
+name: pesquisar-web
+description: Pesquisa na web e resume os resultados em poucas linhas.
+version: 1.0.0
+author: Hermes Agent
+platforms: [linux, macos, windows]
+---
 
-steps:
-  - name: pesquisar
-    action: web_search
-    params:
-      query: "{{ inputs.query }}"
-      max_results: 5
+# Pesquisar Web
 
-  - name: resumir
-    action: llm.generate
-    params:
-      prompt: |
-        Resume o seguinte conteúdo em até 300 palavras:
-        {{ steps.pesquisar.output }}
+## When to Use
+Quando o utilizador pede para procurar informação atualizada na internet.
 
-outputs:
-  resumo: "Resumo dos resultados da pesquisa sobre {{ inputs.query }}"</code></pre>
+## Instruções
+1. Usa a ferramenta `web_search` com o tema do utilizador.
+2. Lê os 3-5 resultados mais relevantes.
+3. Devolve um resumo claro, em português, com as fontes.</code></pre>
+          <p>Repara: não há passos fixos nem ações <code>llm.generate</code>. O documento ensina o agente <em>o que fazer</em>; o agente é que executa.</p>
+
+          <h2>Como criar e usar a skill no terminal</h2>
+          <p>Guarda o ficheiro acima em <code>~/.hermes/skills/pesquisar-web/SKILL.md</code>. Depois usa-a num chat:</p>
+          <pre><code>hermes skills list                # ver skills disponíveis
+hermes chat -s pesquisar-web      # abrir chat com a skill carregada</code></pre>
+          <p>Ou, mais simples, pede ao agente para a criar por ti, diretamente no chat:</p>
+          <pre><code>hermes chat -q "Cria uma skill chamada pesquisar-web que pesquisa na internet e resume os resultados em português"</code></pre>
 
           <h2>Exemplo Prático: Skill de Email</h2>
-          <pre><code>name: enviar_email
-description: Envia email via SMTP
-author: MarcTechJA
-version: "1.0"
+          <pre><code>---
+name: enviar-email
+description: Usa o CLI de email (Himalaya) para enviar uma mensagem.
+version: 1.0.0
+author: Hermes Agent
+---
 
-inputs:
-  to:
-    type: string
-    description: Endereço de email do destinatário
-    required: true
-  subject:
-    type: string
-    description: Assunto do email
-    required: true
-  body:
-    type: string
-    description: Corpo da mensagem
-    required: true
+# Enviar Email
 
-steps:
-  - name: enviar
-    action: tools.email.send
-    params:
-      to: "{{ inputs.to }}"
-      subject: "{{ inputs.subject }}"
-      body: "{{ inputs.body }}"
-      smtp_host: "smtp.gmail.com"
-      smtp_port: 587
-      username: "{{ env.EMAIL_USER }}"
-      password: "{{ env.EMAIL_PASS }}"
+## When to Use
+Quando o utilizador pede para enviar um email.
 
-outputs:
-  status: "Email enviado com sucesso para {{ inputs.to }}"</code></pre>
+## Instruções
+1. Confirma o destinatário e o assunto (pergunta se faltar).
+2. Usa a ferramenta `terminal` com o CLI Himalaya:
+   `himalaya send &lt;to&gt; --subject "&lt;assunto&gt;" --body "&lt;texto&gt;"`
+3. Confirma que o email foi aceite pela fila de envio.</code></pre>
+          <p>Para que esta skill funcione, é preciso ter o CLI <code>himalaya</code> instalado e autenticado (o agente usa ferramentas reais — não ações fictícias).</p>
 
-          <h2>Skills em Python</h2>
-          <p>Para maior flexibilidade, podes criar skills em Python:</p>
-          <pre><code>from hermes.skills import Skill
-
-class AnalisarSentimento(Skill):
-    name = "analisar_sentimento"
-    description = "Analisa o sentimento de um texto"
-
-    def run(self, text: str) -> dict:
-        palavras_positivas = ["bom", "ótimo", "excelente", "gosto", "adorei"]
-        palavras_negativas = ["mau", "péssimo", "horrível", "odeio", "detesto"]
-
-        texto_min = text.lower()
-        score = sum(1 for p in palavras_positivas if p in texto_min)
-        score -= sum(1 for n in palavras_negativas if n in texto_min)
-
-        sentimento = "positivo" if score > 0 else "negativo" if score < 0 else "neutro"
-        return {"sentimento": sentimento, "score": score}</code></pre>
+          <h2>Skills simples vs. skills com scripts</h2>
+          <p>Muitas skills do Hermes incluem uma subpasta <code>scripts/</code> com um script de apoio que o agente corre pela ferramenta <code>terminal</code>. Este é o padrão real para tarefas que precisam de lógica concreta:</p>
+          <pre><code>~/.hermes/skills/stream-launcher/
+├── SKILL.md
+└── scripts/
+    └── stream_launcher.py   # o agente executa: python scripts/stream_launcher.py --site youtube</code></pre>
 
           <h2>Onde Colocar as Skills</h2>
-          <p>As skills são armazenadas no diretório <code>~/.hermes/skills/</code>. Cada skill num ficheiro <code>.yaml</code> ou <code>.py</code>. O Hermes Agent carrega automaticamente todas as skills neste diretório ao iniciar.</p>
+          <p>As skills ficam em <code>~/.hermes/skills/&lt;nome&gt;/SKILL.md</code>. O Hermes carrega-as automaticamente ao iniciar, e podes ver as instaladas com <code>hermes skills list</code>.</p>
 
           <h2>Próximos Passos</h2>
-          <p>O universo de skills é vasto. No Guia Completo do Hermes Agent, exploramos dezenas de skills, desde automações empresariais até integrações com APIs complexas, com exemplos prontos a usar.</p>
+          <p>O universo de skills é vasto. No Guia Completo do Hermes Agent, exploramos dezenas de skills reais, desde automações empresariais até integrações com APIs complexas, com exemplos que funcionam na tua máquina.</p>
 
           <div class="article-cta">
             <h3>Domina as Skills do Hermes Agent</h3>

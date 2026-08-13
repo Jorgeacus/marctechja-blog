@@ -87,84 +87,65 @@
 
 <hr>
 
-<h2>Como Funciona a Estrutura de uma Skill no Hermes Agent</h2>
+<h2>Como ligar o WhatsApp no Hermes Agent</h2>
 
-<p>No Hermes Agent, as automações são organizadas em ficheiros de <em>skills</em> (geralmente guardados na pasta <code>~/.hermes/skills/</code>). Uma <em>skill</em> define os parâmetros de entrada, a lógica de execução e a ação final.</p>
+ <p>No Hermes Agent atual, o WhatsApp liga-se de duas formas: (1) pelo <strong>gateway</strong> usando a <em>WhatsApp Cloud API</em> oficial da Meta (recomendado para negócios), ou (2) pela bridge pessoal via <code>hermes whatsapp</code>. Neste guia usamos o gateway, que dá origem a uma sessão de mensagens como o Telegram.</p>
 
-<p>Abaixo encontra um exemplo prático de uma <em>skill</em> YAML criada para enviar notificações e lembretes através do WhatsApp:</p>
+ <h3>Preparação</h3>
 
-<pre><code>name: whatsapp_automation
-description: Envia mensagens automáticas, lembretes e respostas no WhatsApp
-author: MarcTechJA
+ <p>Antes de enviar mensagens precisas de um número da WhatsApp Cloud API ativo (criado no painel da Meta) e dos seguintes valores guardados no ficheiro <code>~/.hermes/.env</code>:</p>
+
+ <pre><code>WHATSAPP_CLOUD_PHONE_NUMBER_ID=123456789012345
+WHATSAPP_CLOUD_ACCESS_TOKEN=EAAG...token...do-servico</code></pre>
+
+ <p>Depois liga o WhatsApp no gateway:</p>
+
+ <pre><code>hermes gateway setup        # escolher "whatsapp" e preencher os dados acima</code></pre>
+
+ <hr>
+
+ <h2>3 Casos Práticos de Automação no WhatsApp</h2>
+
+ <h3>1. Respostas Automáticas para Perguntas Frequentes (FAQ)</h3>
+
+ <p>Se recebe frequentemente mensagens a perguntar sobre horários de funcionamento, morada ou preços, pode configurar o Hermes Agent para analisar a mensagem recebida e gerar a resposta adequada instantaneamente. Com o gateway ativo, o agente recebe a mensagem e responde sozinho, em linguagem natural.</p>
+
+ <p>Para afinar o tom das respostas, cria uma skill em <code>~/.hermes/skills/whatsapp-atendimento/SKILL.md</code>:</p>
+
+ <pre><code>---
+name: whatsapp-atendimento
+description: Responde a clientes no WhatsApp com um tom profissional mas próximo, em português de Portugal.
 version: 1.0.0
+author: Hermes Agent
+---
 
-inputs:
-  recipient:
-    type: string
-    description: "Número de telemóvel do destinatário com código do país (ex: +351912345678)"
-    required: true
-  message_type:
-    type: string
-    description: "Tipo de ação: resposta_automatica, lembrete ou agendada"
-    required: true
-  content:
-    type: string
-    description: "Conteúdo base da mensagem ou instrução para a IA"
-    required: true
-  schedule_time:
-    type: string
-    description: "Data e hora de envio (opcional, formato YYYY-MM-DD HH:MM)"
-    required: false
+# Atendimento WhatsApp
 
-steps:
-  - name: process_message_with_ai
-    action: llm.generate
-    params:
-      provider: default
-      prompt: |
-        Ajusta o texto abaixo para uma mensagem de WhatsApp amigável e profissional em português de Portugal.
-        Tipo: {{ inputs.message_type }}
-        Conteúdo: {{ inputs.content }}
+## When to Use
+Quando o gateway WhatsApp recebe uma mensagem de cliente.
 
-  - name: send_whatsapp
-    action: tools.whatsapp.send
-    params:
-      to: "{{ inputs.recipient }}"
-      message: "{{ steps.process_message_with_ai.output }}"
-      delay_until: "{{ inputs.schedule_time }}"
+## Instruções
+1. Identifica a intenção (pergunta, reclamação, pedido).
+2. Responde em português de Portugal, de forma clara e amigável.
+3. Se for uma pergunta de preço/horário, responde com os dados conhecidos.</code></pre>
 
-outputs:
-  status: "Mensagem processada e enviada com sucesso para {{ inputs.recipient }}"
-</code></pre>
+ <p>Podes também pedir diretamente no chat, sem skill, quando o gateway estiver ativo:</p>
 
-<hr>
+ <pre><code>hermes chat -q "Responde ao cliente do WhatsApp a perguntar qual é o vosso horário ao fim de semana" -s whatsapp-atendimento</code></pre>
 
-<h2>3 Casos Práticos de Automação no WhatsApp</h2>
+ <h3>2. Lembretes Automáticos de Consultas ou Reuniões</h3>
 
-<h3>1. Respostas Automáticas para Perguntas Frequentes (FAQ)</h3>
+ <p>A taxa de não comparência a reuniões e consultas diminui drasticamente quando é enviado um lembrete no próprio dia ou na véspera. Com o agendador nativo do Hermes, podes enviar um lembrete a horas certas:</p>
 
-<p>Se recebe frequentemente mensagens a perguntar sobre horários de funcionamento, morada ou preços, pode configurar o Hermes Agent para analisar a mensagem recebida e gerar a resposta adequada instantaneamente.</p>
+ <pre><code># Envia todos os dias às 09:00 um lembrete para o número indicado
+hermes cron create --name "lembrete-reuniao" --deliver whatsapp "0 9 * * *" "Lembrete: A sua reunião está agendada para hoje às 14:30."</code></pre>
 
-<p>Basta executar o comando no terminal do Hermes Agent:</p>
-
-<pre><code>hermes run whatsapp_automation --recipient "+351912345678" --message_type "resposta_automatica" --content "Qual é o vosso horário no fim de semana?"</code></pre>
-
-<p>O agente processa o pedido, personaliza a resposta com tom profissional e envia-a diretamente pelo WhatsApp.</p>
-
-<h3>2. Lembretes Automáticos de Consultas ou Reuniões</h3>
-
-<p>A taxa de não comparência a reuniões e consultas diminui drasticamente quando é enviado um lembrete no próprio dia ou na véspera. O Hermes Agent permite definir um horário e enviar um lembrete personalizado de forma totalmente autónoma.</p>
-
-<ul>
-  <li><strong>Exemplo de utilização:</strong> "Lembrete: A sua reunião está agendada para amanhã às 14:30."</li>
-  <li><strong>Vantagem:</strong> O agente adapta a linguagem conforme o perfil do cliente ou contexto da empresa.</li>
-</ul>
-
-<h3>3. Agendamento de Mensagens e Comunicações em Massa</h3>
+ <h3>3. Agendamento de Mensagens e Comunicações em Massa</h3>
 
 <p>Precisa de enviar uma novidade à sua equipa ou clientes na próxima segunda-feira às 09:00, mas não estará disponível nesse momento? Configure o parâmetro <code>schedule_time</code> no Hermes Agent para programar o envio prévio.</p>
 
-<pre><code>hermes run whatsapp_automation --recipient "+351961234567" --message_type "agendada" --content "Aviso: A nossa plataforma estará em manutenção às 22:00." --schedule_time "2026-08-05 09:00"</code></pre>
+<pre><code># Agendar uma comunicação para a equipa na próxima segunda-feira às 09:00
+hermes cron create --name "aviso-manutencao" --deliver whatsapp "0 9 * * 1" "Aviso à equipa: a nossa plataforma estará em manutenção hoje às 22:00."</code></pre>
 
 <hr>
 

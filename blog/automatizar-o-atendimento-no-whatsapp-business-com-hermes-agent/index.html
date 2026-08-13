@@ -76,51 +76,77 @@
 <p>Para ilustrar como podes colocar esta automação a funcionar na tua empresa, preparámos um tutorial simples e direto utilizando as capacidades de skills do Hermes Agent.</p>
 
 <h3>Passo 1: Instalar o Hermes Agent e configurar o Provider de IA</h3>
-<p>O primeiro passo consiste na instalação do agente no teu ambiente de trabalho ou servidor. Se utilizas macOS, podes efetuar a instalação através do Homebrew. Para outros sistemas (Linux e Windows), consulta a documentação oficial do projeto.</p>
+<p>O primeiro passo consiste na instalação do agente no teu ambiente de trabalho ou servidor. O método oficial é o instalador de linha de comandos (Linux e macOS); no Windows usa o instalador nativo do PowerShell.</p>
 
-<pre><code># Instalação no macOS via Homebrew
-brew install hermes-agent
+<pre><code># macOS e Linux — instalador oficial
+curl -fsSL https://hermes-agent.nousresearch.com/install.sh | bash
 
-# Definir o provider de IA padrão (exemplo com OpenAI)
-hermes config set provider openai
-hermes config set api_key "A_TUA_CHAVE_API_AQUI"</code></pre>
+# Windows (PowerShell)
+iex (irm https://hermes-agent.nousresearch.com/install.ps1)
 
-<p><strong>O que o código faz:</strong> Instala a CLI do Hermes Agent no teu sistema e configura a chave de API do modelo de linguagem que irá interpretar e gerar as respostas para os teus clientes.</p>
+# Definir o provider de IA (a chave fica em ~/.hermes/.env)
+hermes setup</code></pre>
 
-<h3>Passo 2: Criar a Skill em YAML para Atendimento no WhatsApp</h3>
-<p>No Hermes Agent, as automações são organizadas em ficheiros YAML chamados <em>skills</em>. Vamos criar uma skill dedicada ao atendimento ao cliente via WhatsApp no diretório <code>~/.hermes/skills/whatsapp_atendimento.yaml</code>.</p>
+<p><strong>O que o código faz:</strong> Instala a CLI do Hermes Agent e abre o assistente de configuração, onde escolhes o provider de IA e a respetiva chave de API, que fica guardada em <code>~/.hermes/.env</code>.</p>
 
-<pre><code>name: whatsapp_atendimento
+<h3>Passo 2: Ligar o WhatsApp Cloud API e criar a Skill de Atendimento</h3>
+<p>Para enviar e receber mensagens no WhatsApp Business, liga o <strong>WhatsApp Cloud API</strong> (o serviço oficial da Meta). Primeiro adiciona as tuas credenciais ao <code>~/.hermes/.env</code>:</p>
+
+<pre><code>WHATSAPP_CLOUD_PHONE_NUMBER_ID=o_teu_phone_number_id
+WHATSAPP_CLOUD_ACCESS_TOKEN=o_teu_token
+WHATSAPP_ENABLED=true</code></pre>
+
+<p>Depois regista o gateway do WhatsApp e associa a tua conta:</p>
+
+<pre><code>hermes gateway setup        # escolhe WhatsApp quando pedido
+hermes whatsapp-cloud        # confirma que o canal está ligado</code></pre>
+
+<p>No Hermes Agent, as automações são organizadas em ficheiros <code>SKILL.md</code>. Vamos criar uma skill dedicada ao atendimento ao cliente via WhatsApp em <code>~/.hermes/skills/whatsapp_atendimento/SKILL.md</code>:</p>
+
+<pre><code>---
+name: whatsapp_atendimento
 description: Analisa a mensagem do cliente no WhatsApp Business e envia uma resposta personalizada baseada no catálogo e FAQs da empresa.
-author: MarcTechJA
+author: MarctechJA
 version: "1.0"
-inputs:
-  mensagem_cliente: { type: string, description: Mensagem enviada pelo cliente no WhatsApp, required: true }
-  numero_cliente: { type: string, description: Número de telemóvel do cliente com indicativo internacional, required: true }
-steps:
-  - name: gerar_resposta
-    action: llm.generate
-    params:
-      prompt: "És o assistente virtual da empresa. Responde de forma cordial, profissional e direta à seguinte mensagem do cliente: '{ inputs.mensagem_cliente }'. Se o cliente pedir o catálogo, indica os produtos principais. Mantém o tom acessível e em português de Portugal."
-  - name: enviar_mensagem_whatsapp
-    action: tools.whatsapp.send
-    params:
-      recipient: "{ inputs.numero_cliente }"
-      message: "{ steps.gerar_resposta.output }"
-outputs:
-  resultado: "Mensagem de atendimento processada e enviada com sucesso para o WhatsApp."</code></pre>
+platforms:
+  - macos
+  - linux
+  - windows
+metadata:
+  hermes:
+    tags: [whatsapp, atendimento]
+---
 
-<p><strong>O que o código faz:</strong> A skill recebe como entrada a mensagem do cliente e o seu número de telemóvel. O primeiro passo (<code>gerar_resposta</code>) usa a IA para elaborar uma resposta adequada segundo o teu contexto de negócio. O segundo passo (<code>enviar_mensagem_whatsapp</code>) utiliza a ferramenta integrada de WhatsApp para disparar a mensagem gerada para o cliente.</p>
+# whatsapp_atendimento
+
+Atende clientes no WhatsApp Business com respostas personalizadas.
+
+## When to Use
+Quando chega uma mensagem de cliente no WhatsApp Business gerido pelo gateway do Hermes.
+
+## Instruções
+1. Lê a mensagem da pessoa que contactou a empresa no WhatsApp.
+2. Um assistente virtual responde de forma cordial, profissional e direta à mensagem.
+3. Se pedirem o catálogo, indica os produtos principais. Se a pergunta sair das FAQs, encaminha para um humano.
+4. Mantém o tom acessível e em português de Portugal.
+
+## Critérios de conclusão
+- A resposta foi enviada de volta pelo canal do WhatsApp.
+- Pedidos fora da base de conhecimento ficaram sinalizados para atendimento humano.</code></pre>
+
+<p><strong>O que o código faz:</strong> A skill descreve o comportamento do agente para o atendimento: interpreta a mensagem do cliente, gera uma resposta adequada ao contexto do negócio e envia-a de volta pelo canal do WhatsApp ligado no gateway.</p>
 
 <h3>Passo 3: Executar e Testar a Automação</h3>
-<p>Com a skill guardada, podes testar a execução diretamente a partir da tua linha de comandos ou integrar a chamada através de webhooks do WhatsApp Business API.</p>
+<p>Com a skill guardada e o gateway ativo, podes testar num chat. Também podes agendar mensagens automáticas para clientes com o cron:</p>
 
-<pre><code># Testar a skill diretamente via terminal
-hermes run skill whatsapp_atendimento \
-  --input mensagem_cliente="Olá, qual é o vosso horário de funcionamento e como posso ver o catálogo?" \
-  --input numero_cliente="+351910000000"</code></pre>
+<pre><code># Ver que a skill está disponível e testá-la
+hermes skills list
+hermes chat -s whatsapp_atendimento "Olá, qual é o vosso horário de funcionamento e como vejo o catálogo?"
 
-<p><strong>O que o código faz:</strong> Dispara a skill com dados de teste. O Hermes Agent processa o pedido com a IA e envia a resposta correspondente diretamente para o número indicado.</p>
+# Agendar um lembrete automático entregue por WhatsApp
+hermes cron create --name lembrete-visita --deliver whatsapp --skill whatsapp_atendimento "0 9 * * *" "Envia um lembrete amigável sobre a visita agendada de hoje"</code></pre>
+
+<p><strong>O que o código faz:</strong> Primeiro testa a skill com uma pergunta real. Depois, o comando <code>cron</code> cria um agendamento diário às 09:00 que usa a skill para entregar uma mensagem automática pelo WhatsApp.</p>
 
 <h2>Boas Práticas para o Atendimento com IA no WhatsApp</h2>
 

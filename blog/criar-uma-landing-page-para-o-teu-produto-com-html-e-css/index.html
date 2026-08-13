@@ -175,37 +175,38 @@
 
 <p>Em vez de escreveres todo o código HTML e CSS manualmente a cada novo lançamento, podes automatizar este processo integrando a inteligência artificial no teu fluxo de trabalho. Utilizando uma <strong>skill do Hermes Agent</strong>, podes gerar páginas completas prontas a publicar em segundos apenas indicando o nome do produto e os benefícios.</p>
 
-<pre><code>name: gerar_landing_page
+<pre><code>---
+name: gerar_landing_page
 description: Gera o código HTML e CSS de uma landing page otimizada para criadores de conteúdo
-author: MarcTechJA
+author: MarctechJA
 version: "1.0"
+platforms:
+  - macos
+  - linux
+  - windows
+metadata:
+  hermes:
+    tags: [landing, html, css]
+---
 
-inputs:
-  produto_nome:
-    type: string
-    description: Nome do produto digital ou e-book
-    required: true
-  beneficios:
-    type: string
-    description: Lista de principais benefícios do produto
-    required: true
+# gerar_landing_page
 
-steps:
-  - name: criar_codigo_landing
-    action: llm.generate
-    params:
-      prompt: "Cria uma landing page completa e responsiva em HTML5 e CSS para o produto { inputs.produto_nome }. Benefícios: { inputs.beneficios }. Inclui secção hero, prova social, formulário de captura e estilos modernos num único ficheiro HTML."
+Gera o código HTML e CSS de uma landing page otimizada.
 
-  - name: guardar_ficheiro
-    action: tools.file.write
-    params:
-      path: "landing_page.html"
-      content: "{ steps.criar_codigo_landing.output }"
+## When to Use
+Quando o utilizador precisa de uma landing page para um produto digital.
 
-outputs:
-  resultado: "Ficheiro landing_page.html gerado com sucesso para o produto { inputs.produto_nome }."</code></pre>
+## Instruções
+1. Recebe o nome do produto e os benefícios principais.
+2. Cria uma landing page completa e responsiva em HTML5 e CSS num único ficheiro HTML: secção hero, prova social, formulário de captura e estilos modernos.
+3. Devolve o código pronto a usar.
 
-<p><strong>O que este código faz:</strong> Define uma skill personalizada para o Hermes Agent em YAML. O agente recebe as informações básicas do teu novo produto, processa a estrutura via LLM e guarda automaticamente o código pronto num ficheiro <code>landing_page.html</code> no teu computador.</p>
+## Critérios de conclusão
+- A landing page é responsiva, cobre o produto e os benefícios, e está num único ficheiro HTML.</code></pre>
+
+<p><strong>O que este código faz:</strong> Define uma skill personalizada para o Hermes Agent em <code>SKILL.md</code>. O agente recebe as informações básicas do teu novo produto, gera a estrutura via IA e guarda automaticamente o código pronto num ficheiro <code>landing_page.html</code> no teu computador. Usa-a assim:</p>
+
+<pre><code>hermes chat -s gerar_landing_page "Cria uma landing page para o ebook Automatiza com IA com os benefícios: poupança de tempo, automação de tarefas e rendimento passivo"</code></pre>
 
 <h2>Conclusão</h2>
 

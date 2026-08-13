@@ -80,38 +80,40 @@
 <li><strong>GitHub Actions</strong> — para executar o processo diariamente</li>
 </ul>
 
-<h2>Skill YAML para gerar artigos</h2>
-<p>Podes criar uma skill no Hermes Agent que gera artigos automaticamente. Exemplo de configuração:</p>
-<pre><code>name: gerar-artigo
+<h2>Skill do Hermes Agent para gerar artigos</h2>
+<p>Podes criar uma skill no Hermes Agent que gera artigos automaticamente. Uma skill é um ficheiro em Markdown (<code>SKILL.md</code>) que descreve ao agente o que fazer. Exemplo de configuração:</p>
+<pre><code>---
+name: gerar-artigo
 description: Gera um artigo de blog com base num tópico
-author: MarcTechJA
+author: MarctechJA
 version: "1.0"
+platforms:
+  - macos
+  - linux
+  - windows
+metadata:
+  hermes:
+    tags: [blog, escrita]
+---
 
-inputs:
-  topico:
-    type: string
-    description: Tema do artigo a gerar
-    required: true
+# gerar-artigo
 
-steps:
-  - name: gerar_conteudo
-    action: llm.generate
-    params:
-      prompt: |
-        Gera um artigo sobre automação com Hermes Agent em português de Portugal.
-        Tópico: {{ inputs.topico }}
-  - name: guardar_html
-    action: tools.file.write
-    params:
-      path: artigo.html
-      content: "{{ steps.gerar_conteudo.output }}"
-  - name: publicar
-    action: tools.shell.run
-    params:
-      command: bash scripts/post.sh "Título do Artigo" "Categoria" "Autor" artigo.html
+Gera um artigo de blog com base num tópico.
 
-outputs:
-  status: "Artigo publicado com sucesso"</code></pre>
+## When to Use
+Quando o utilizador precisa de um novo artigo de blog sobre um tema.
+
+## Instruções
+1. Recebe o tópico do artigo.
+2. Escreve o conteúdo completo em português de Portugal, seguindo o tema pedido.
+3. Devolve o texto pronto para ser guardado num ficheiro.
+
+## Critérios de conclusão
+- O artigo está completo, sem cortes, com introdução, passos e conclusão.
+- O tema pedido foi devidamente coberto.</code></pre>
+<p>Depois, usas a skill no chat para gerar um artigo:</p>
+<pre><code>hermes skills list
+hermes chat -s gerar-artigo "Escreve um artigo sobre automação com Hermes Agent"</code></pre>
 
 <h2>Publicação diária automática</h2>
 <p>Com o GitHub Actions, podes agendar a publicação para correr todos os dias. O workflow:</p>
@@ -120,7 +122,7 @@ outputs:
 <li>Executa o script de geração de conteúdo</li>
 <li>O script cria o HTML, atualiza o blog archive e a homepage</li>
 <li>Faz commit e push automáticos</li>
-<li>O GitHub Pages deploys as alterações</li>
+<li>O Cloudflare Pages (via wrangler) faz o deploy das alterações</li>
 </ol>
 
 <h2>Vantagens desta automação</h2>
@@ -154,13 +156,19 @@ jobs:
       - name: Gerar e publicar artigo
         run: |
           python scripts/generate-post.py
-      - name: Commit e push
+      - name: Stage e deploy no Cloudflare Pages
         run: |
           git config user.name "Hermes Agent"
           git config user.email "marctechja@gmail.com"
           git add .
           git diff --cached --quiet || git commit -m "artigo: publicação automática"
           git push
+          bash scripts/stage-site.sh
+      - uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy _site --project-name=marctechja-blog --branch=production
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}</code></pre>
@@ -170,7 +178,7 @@ jobs:
 <ul>
 <li>O <strong>Hermes Agent</strong> trata da parte criativa — escolher o tema, escrever o conteúdo e garantir a qualidade.</li>
 <li>O <strong>script de publicação</strong> trata da parte técnica — criar o HTML com o template, gerar as meta tags, atualizar o arquivo do blog e a homepage.</li>
-<li>O <strong>GitHub Actions</strong> trata da parte de operação — agendar, executar e fazer o deploy automático via GitHub Pages.</li>
+<li>O <strong>GitHub Actions</strong> trata da parte de operação — agendar, executar e fazer o deploy automático via Cloudflare Pages.</li>
 </ul>
 <p>Assim, se uma peça falhar (por exemplo, a API do modelo estar temporariamente indisponível), a falha fica isolada e é visível no histórico de runs do GitHub, sem afetar as restantes peças.</p>
 

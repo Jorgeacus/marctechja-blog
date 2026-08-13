@@ -141,8 +141,8 @@ Sub-agente de classificação do agente de manutenção. Recebe o log de um run 
 - **Título duplicado**: o Gemini às vezes repete o título como primeiro `<h2>` do corpo → meta description e card ficam com o título 2×. **Correção:** prompt do generate-post.py proíbe repetir o título; EXCERPT/EXCERPT_HOME no post.sh ignoram o primeiro heading se for igual ao título.
 - **ARTIGO TRUNCADO (landing page, 2 Ago)**: o Gemini cortou o artigo a meio do Passo 2 (parágrafo "adaptado a" sem fim) e saltou direto para o CTA do livro — corpo pela metade, meta description também cortada com aspas não escapadas. **Correção (2 níveis):** (1) manual — completado o CSS, Passos 3-4, conclusão e meta; (2) automática — `validate_content()` no generate-post.py deteta conteúdo cortado/blocos <pre> partidos antes de publicar e regera.
 - **Código Python quebrado (skills, 25 Jul)**: bloco `AnalisarSentimento` chamava `self.analyze()` que nunca estava definido (daria AttributeError). **Regra:** todo o código apresentado tem de executar sem erro (verificar métodos/imports). **Corrigido** com implementação real (contagem de palavras positivas/negativas).
-- **Formato de skill YAML inconsistente entre artigos**: uns usavam `parameters:` outros `inputs:`; uns `{var}` outros `{{ inputs.var }}`; uns `type: tool` + `steps/action`, outros `steps/prompt`. **Correção:** uniformizado para o FORMATO CANÓNICO — `name`/`description`/`author`/`version` + `inputs:` (tipo/descrição/required) + `steps:` com `name`/`action`/`params` (referências `{{ inputs.x }}` e `{{ steps.x.output }}`) + `outputs:`. Prompt do generate-post.py exige este formato.
-- **Comando de instalação inconsistente**: artigo de estudo usava `pip install hermes-agent`, mas o guia oficial usa `brew install hermes-agent` (macOS) / git clone+venv (Linux/Windows). **Regra:** instalação macOS = `brew install hermes-agent`; nunca `pip install hermes-agent`.
+- **Formato de skill inconsistente entre artigos**: usavam `.yaml` com `inputs/steps/action`, `llm.generate`, `tools.*` e `hermes run` — **não existe** no Hermes Agent v0.17.0. **Correção:** uniformizado para o FORMATO CANÓNICO real — `SKILL.md` (frontmatter + Markdown narrativo) + `hermes chat -s <skill>` / `hermes skills list`. Prompt do generate-post.py exige este formato.
+- **Comando de instalação errado**: artigos usavam `brew install hermes-agent` e `pip install hermes-agent`, mas o instalador oficial é `curl -fsSL https://hermes-agent.nousresearch.com/install.sh | bash` (macOS/Linux) e `iex (irm https://hermes-agent.nousresearch.com/install.ps1)` (Windows). **Regra:** instalação = instalador oficial; nunca `brew install` nem `pip install`.
 - **Meta description truncada**: várias metas cortavam a meio (`... respo"`) ou começavam com o título repetido. **Regra:** meta description completa, com pontuação final, sem repetir o título e sem aspas não escapadas.
 - **Repo local em `~/MARCS_Blog`** (NUNCA /tmp — é apagado ao reiniciar). Fazer `git pull` antes de editar.
 - **Agente de manutenção híbrido (6 Ago)**: a classificação de falhas por IA tem de usar um **conjunto fechado de ações** e cair SEMPRE para `issue` em caso de ambiguidade/falha da API — nunca auto-corrigir sem portão de verificação (`health-check.py --local`). O contexto git (últimos commits) no prompt é essencial: evitou que o agente re-publicasse um artigo que já tinha sido publicado manualmente (classificou `nothing` em vez de `regenerate`). Modelos flash podem ecoar o system prompt e esgotar o output a meio do JSON → maxOutputTokens generoso (1200) + extração de `action` por regex como fallback. YAML do Actions: conteúdo de `run: |` tem de estar indentado (o `BODY` multi-linha da Issue sem indentação quebra o parse).
@@ -160,27 +160,40 @@ Estas regras são OBRIGATÓRIAS para qualquer artigo (gerado ou editado manualme
 
 ### Qualidade de código
 5. **Código funcional**: verificar mentalmente que executa (sintaxe, indentação, métodos definidos, imports). Nunca mostrar código que daria erro.
-6. **Formato canónico de skill YAML** (usar SEMPRE):
-   ```yaml
+6. **Formato canónico de skill (usar SEMPRE)** — skills são ficheiros `SKILL.md` em Markdown, com frontmatter YAML e corpo narrativo (NUNCA ficheiros `.yaml` com `inputs/steps/action`):
+   ```markdown
+   ---
    name: <nome>
    description: <o que faz>
-   author: MarcTechJA
+   author: MarctechJA
    version: "1.0"
-   inputs:
-     <param>:
-       type: string
-       description: <para que serve>
-       required: true
-   steps:
-     - name: <passo>
-       action: <llm.generate|tools.file.read|tools.file.write|tools.shell.run|tools.email.send|tools.whatsapp.send|web_search>
-       params:
-         <chave>: "{{ inputs.<param> }}"
-   outputs:
-     <chave>: "<descrição do resultado>"
+   platforms:
+     - macos
+     - linux
+     - windows
+   metadata:
+     hermes:
+       tags: [<tag1>, <tag2>]
+   ---
+
+   # <nome>
+
+   <Descrição curta do que a skill faz>
+
+   ## When to Use
+   <Quando usar esta skill>
+
+   ## Instruções
+   1. <Passo 1 — o que o agente deve fazer>
+   2. <Passo 2>
+
+   ## Critérios de conclusão
+   - <Condição de fim bem-sucedido>
    ```
-   - Referências: `{{ inputs.x }}` e `{{ steps.passo_anterior.output }}` (nunca `{x}`).
-7. **Instalação**: macOS `brew install hermes-agent`; Linux/Windows → link para guia de instalação. Nunca `pip install hermes-agent`.
+   - Caminho real: `~/.hermes/skills/<nome>/SKILL.md` (uma pasta por skill).
+   - Execução real: `hermes skills list` e `hermes chat -s <nome>` (NUNCA `hermes run`).
+   - Referência canónica: `~/.hermes/hermes-agent/skills/software-development/hermes-agent-skill-authoring/SKILL.md`.
+7. **Instalação**: macOS e Linux — `curl -fsSL https://hermes-agent.nousresearch.com/install.sh | bash`; Windows (PowerShell) — `iex (irm https://hermes-agent.nousresearch.com/install.ps1)`. Nunca `brew install hermes-agent` nem `pip install hermes-agent` (não são oficiais).
 8. **Não inventar URLs**: usar apenas os repositórios/links oficiais conhecidos.
 
 ### Limpeza

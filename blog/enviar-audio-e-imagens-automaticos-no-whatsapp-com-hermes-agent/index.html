@@ -70,56 +70,69 @@
 <p>Vamos configurar uma automação prática e funcional. Segue os passos abaixo para criares a tua primeira skill de envio multimédia.</p>
 
 <h3>Passo 1: Instalação do Hermes Agent</h3>
-<p>Para começar, precisas de ter o Hermes Agent instalado na tua máquina. Se utilizas o macOS, podes instalá-lo rapidamente através do terminal utilizando o Homebrew:</p>
+<p>Para começar, precisas de ter o Hermes Agent instalado na tua máquina. O método oficial usa o instalador de linha de comandos:</p>
 
-<pre><code>brew install hermes-agent</code></pre>
+<pre><code>curl -fsSL https://hermes-agent.nousresearch.com/install.sh | bash</code></pre>
 
-<p>Se utilizas Linux ou Windows, deves consultar as instruções detalhadas de instalação no guia oficial para configurar as tuas variáveis de ambiente e dependências do sistema.</p>
+<p>Se utilizas Windows, consulta o artigo de instalação do blog para o comando nativo (PowerShell) e a configuração das variáveis de ambiente.</p>
 
-<h3>Passo 2: Criar a Skill Personalizada (YAML)</h3>
-<p>As automações do Hermes Agent são estruturadas em ficheiros YAML limpos e legíveis. Cria um ficheiro chamado <code>enviar_multimedia.yaml</code> dentro do teu diretório de skills (normalmente localizado em <code>~/.hermes/skills/</code>) e adiciona o seguinte código:</p>
+<h3>Passo 2: Ligar o WhatsApp e criar a Skill (SKILL.md)</h3>
+<p>Primeiro liga o WhatsApp Cloud API no <code>~/.hermes/.env</code> e regista o canal no gateway:</p>
 
-<pre><code>name: enviar_multimedia
-description: Automatiza o envio de áudios gerados por IA e imagens personalizadas no WhatsApp.
-author: MarcTechJA
+<pre><code>WHATSAPP_CLOUD_PHONE_NUMBER_ID=o_teu_phone_number_id
+WHATSAPP_CLOUD_ACCESS_TOKEN=o_teu_token
+WHATSAPP_ENABLED=true</code></pre>
+
+<pre><code>hermes gateway setup       # escolhe WhatsApp quando pedido
+hermes whatsapp-cloud      # confirma que o canal está ligado</code></pre>
+
+<p>As automações do Hermes Agent são ficheiros <code>SKILL.md</code> em Markdown. Cria um chamado <code>enviar_multimedia/SKILL.md</code> dentro de <code>~/.hermes/skills/</code>:</p>
+
+<pre><code>---
+name: enviar_multimedia
+description: Envia um áudio gerado por IA e uma imagem no WhatsApp.
+author: MarctechJA
 version: "1.0"
-inputs:
-  phone_number: { type: string, description: "Número de telemóvel do destinatário com indicativo (ex: +351912345678)", required: true }
-  image_url: { type: string, description: "URL da imagem que pretendes enviar", required: true }
-  audio_text: { type: string, description: "Texto que a IA vai converter em áudio de voz", required: true }
-steps:
-  - name: generate_speech
-    action: llm.generate
-    params:
-      prompt: "Lê o seguinte texto de forma calorosa, profissional e natural para gravação de voz: { inputs.audio_text }"
-  - name: send_audio
-    action: tools.whatsapp.send
-    params:
-      to: "{ inputs.phone_number }"
-      type: "audio"
-      content: "{ steps.generate_speech.output }"
-  - name: send_image
-    action: tools.whatsapp.send
-    params:
-      to: "{ inputs.phone_number }"
-      type: "image"
-      content: "{ inputs.image_url }"
-outputs:
-  status: "O áudio e a imagem foram enviados com sucesso para { inputs.phone_number }."</code></pre>
+platforms:
+  - macos
+  - linux
+  - windows
+metadata:
+  hermes:
+    tags: [whatsapp, multimédia, audio]
+---
+
+# enviar_multimedia
+
+Envia um áudio falado (gerado por voz) e uma imagem no WhatsApp.
+
+## When to Use
+Quando vais mandar uma nota de voz automática e/ou uma imagem a alguém no WhatsApp.
+
+## Instruções
+1. Recebe o número do destinatário, o caminho/URL da imagem e o texto a falar.
+2. Gera o áudio a partir do texto usando a síntese de voz configurada (TTS).
+3. Envia o áudio e a imagem pelo canal do WhatsApp ligado no gateway.
+
+## Critérios de conclusão
+- O áudio e a imagem são entregues ao destinatário no WhatsApp sem erros.</code></pre>
 
 <p><strong>O que faz este código?</strong></p>
 <ul>
-  <li><strong>inputs:</strong> Define os parâmetros necessários para a execução (número do destinatário, link da imagem e o texto que será falado).</li>
-  <li><strong>steps.generate_speech:</strong> Utiliza o motor de IA configurado no teu Hermes Agent (como a API da OpenAI, Gemini ou um modelo local via Ollama) para sintetizar o texto num áudio de voz realista.</li>
-  <li><strong>steps.send_audio &amp; steps.send_image:</strong> Utilizam a ferramenta integrada do WhatsApp do Hermes Agent para disparar o áudio gerado e a imagem fornecida diretamente para o número de destino.</li>
+  <li><strong>frontmatter:</strong> Define o <code>name</code> e a <code>description</code> da skill, que o Hermes usa para a descobrir.</li>
+  <li><strong>Instruções:</strong> Explica ao agente a sequência — gerar a voz com a síntese de texto-para-fala configurada e enviar áudio e imagem pelo canal do WhatsApp.</li>
+  <li><strong>Gateway:</strong> É canal que o Hermes usa para entregar mensagens por WhatsApp (Cloud API da Meta).</li>
 </ul>
 
 <h3>Passo 3: Executar a Skill no Terminal</h3>
-<p>Com a skill configurada e guardada na pasta correta, podes executá-la instantaneamente através de um único comando no teu terminal:</p>
+<p>Com a skill configurada, podes pedir ao agente que a execute diretamente no chat:</p>
 
-<pre><code>hermes run enviar_multimedia --phone_number "+351912345678" --image_url "https://python.org/static/img/python-logo.png" --audio_text "Olá! Passava por aqui para confirmar que o teu relatório de automação está pronto. Podes ver o gráfico na imagem anexa."</code></pre>
+<pre><code>hermes skills list
+hermes chat -s enviar_multimedia "Envia ao +351912345678 um áudio a dizer: Olá! O teu relatório está pronto. E anexa a imagem https://python.org/static/img/python-logo.png"</code></pre>
 
-<p>Ao premires Enter, o Hermes Agent irá processar o texto, convertê-lo em áudio através de IA, aceder ao teu canal do WhatsApp e entregar ambas as mensagens ao destinatário em poucos segundos.</p>
+<p>O Hermes processa o pedido, gera a narração em voz (TTS), acede ao teu canal do WhatsApp e entrega o áudio e a imagem ao destinatário. Podes também automatizar isto em horários fixos com o cron:</p>
+
+<pre><code>hermes cron create --name relatorio-manha --deliver whatsapp --skill enviar_multimedia "0 8 * * 1" "Envia ao +351912345678 um áudio e o gráfico do relatório semanal"</code></pre>
 
 <h2>Casos Práticos de Aplicação no Dia a Dia</h2>
 <p>Esta poderosa combinação de áudio por IA e imagem abre portas a infinitas possibilidades de automação empresarial e pessoal:</p>

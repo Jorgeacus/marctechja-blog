@@ -328,7 +328,7 @@ O artigo HTML deve ter:
 - Headings (<h2>, <h3>) para estruturar
 - Parágrafos (<p>) com conteúdo prático
 - Listas (<ul>/<ol>) quando adequado
-- Pelo menos um bloco de código (<pre><code>) com exemplo real de skill YAML ou comando
+- Pelo menos um bloco de código (<pre><code>) com exemplo real de skill (SKILL.md) ou comando do Hermes
 - Call to action final a promover o ebook
 - Tom informal mas profissional, acessível ao público indicado
 
@@ -344,24 +344,37 @@ REGRAS DE QUALIDADE OBRIGATÓRIAS:
 
 2. REGRAS DE CÓDIGO (funcionalidade e consistência):
    - Os blocos de código têm de ser COMPLETOS e COERENTES — verifica mentalmente que funcionam antes de os escreveres (sintaxe, indentação, nomes, chaves, parênteses).
-   - Usa SEMPRE o formato canónico de skill YAML do Hermes Agent com esta estrutura exata:
+   - Usa SEMPRE o formato canónico real de skill do Hermes Agent: um ficheiro `SKILL.md` em Markdown com frontmatter YAML e corpo narrativo (NUNCA `.yaml` com `inputs/steps/action` nem `hermes run`). Estrutura exata:
+     ---
      name: <nome>
      description: <o que faz>
-     author: MarcTechJA
+     author: MarctechJA
      version: "1.0"
-     inputs:
-        <param>: {{ type: string, description: <para que serve>, required: true }}
-     steps:
-       - name: <passo>
-         action: <llm.generate | tools.file.read | tools.file.write | tools.shell.run | tools.email.send | tools.whatsapp.send | web_search>
-         params:
-           <chave>: "{{ inputs.<param> }}"   (ou "{{ steps.<passo_anterior>.output }}")
-     outputs:
-       <chave>: "<descrição do resultado>"
-   - Usa sempre "inputs:" (NUNCA "parameters:") e referências "{{ inputs.x }}" / "{{ steps.x.output }}" (NUNCA "{{x}}").
+     platforms:
+       - macos
+       - linux
+       - windows
+     metadata:
+       hermes:
+         tags: [<tag1>, <tag2>]
+     ---
+
+     # <nome>
+     <descrição curta>
+
+     ## When to Use
+     <quando usar>
+
+     ## Instruções
+     1. <passo>
+     2. <passo>
+
+     ## Critérios de conclusão
+     - <condição de fim>
+   - Execução real de skills: `hermes skills list` e `hermes chat -s <skill>` (NUNCA `hermes run`).
    - Em código Python: não uses métodos que não estejam definidos; todo o código apresentado tem de executar sem erro.
-   - Não inventes URLs de repositórios (usa apenas https://github.com/HermesAgent/hermes-agent.git, https://python.org, https://git-scm.com, https://ollama.ai/install.sh).
-   - Comando de instalação consistente: macOS "brew install hermes-agent"; Linux/Windows remetem para o guia de instalação. NUNCA "pip install hermes-agent".
+   - Não inventes URLs de repositórios (usa apenas https://hermes-agent.nousresearch.com/install.sh, https://hermes-agent.nousresearch.com/install.ps1, https://python.org, https://git-scm.com, https://ollama.ai/install.sh).
+   - Comando de instalação oficial: macOS/Linux `curl -fsSL https://hermes-agent.nousresearch.com/install.sh | bash`; Windows `iex (irm https://hermes-agent.nousresearch.com/install.ps1)`. NUNCA "brew install hermes-agent" nem "pip install hermes-agent".
 
 3. REGRAS DE LIMPEZA:
    - NÃO incluis comentários HTML (nem <!-- -->) no corpo — são removidos na publicação e quebram a validação.

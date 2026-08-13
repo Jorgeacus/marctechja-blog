@@ -109,44 +109,43 @@
 
 <p>O <strong>Hermes Agent</strong> é uma das ferramentas mais robustas e flexíveis do mercado para criar e gerir estes agentes, permitindo-lhe correr modelos na nuvem ou localmente (garantindo total privacidade dos seus dados).</p>
 
-<p>No Hermes Agent, as ferramentas que o agente utiliza são chamadas de <strong>Skills</strong> (habilidades), que podem ser facilmente criadas em ficheiros de configuração simples (YAML) ou em código Python.</p>
+<p>No Hermes Agent, as ferramentas que o agente utiliza são chamadas de <strong>Skills</strong> (habilidades), que são ficheiros <code>SKILL.md</code> em Markdown que descrevem o que o agente deve fazer.</p>
 
-<p>Veja abaixo um exemplo prático de uma <strong>Skill em YAML</strong> para o Hermes Agent. Esta skill permite ao agente ler de forma autónoma um ficheiro de texto local e gerar um resumo executivo estruturado:</p>
+<p>Veja abaixo um exemplo prático de uma <strong>Skill</strong> para o Hermes Agent. Esta skill permite ao agente ler de forma autónoma um ficheiro de texto local e gerar um resumo executivo estruturado:</p>
 
-<pre><code>name: resumidor_documentos
+<pre><code>---
+name: resumidor_documentos
 description: Lê um ficheiro de texto local e gera um resumo executivo com os pontos-chave.
-author: MarcTechJA
+author: MarctechJA
 version: "1.0"
+platforms:
+  - macos
+  - linux
+  - windows
+metadata:
+  hermes:
+    tags: [documentos, resumo]
+---
 
-inputs:
-  caminho_ficheiro:
-    type: string
-    description: O caminho completo para o ficheiro que precisa de ser resumido.
-    required: true
+# resumidor_documentos
 
-steps:
-  - name: ler_ficheiro
-    action: tools.file.read
-    params:
-      path: "{{ inputs.caminho_ficheiro }}"
+Lê um ficheiro de texto local e gera um resumo executivo com os pontos-chave.
 
-  - name: gerar_resumo
-    action: llm.generate
-    params:
-      prompt: |
-        Analisa o seguinte texto e cria um resumo executivo profissional:
+## When to Use
+Quando o utilizador precisa de um resumo de um documento de texto local.
 
-        Texto:
-        {{ steps.ler_ficheiro.output }}
+## Instruções
+1. Identifica o caminho do ficheiro de texto que o utilizador indica.
+2. Lê o ficheiro usando a ferramenta de ficheiros.
+3. Cria um resumo executivo profissional com os pontos principais e as conclusões.
 
-        Formata o output com um título claro, introdução e uma lista de tópicos (bullet points) com as conclusões principais.
+## Critérios de conclusão
+- O resumo é claro, estruturado e cobre os pontos-chave do documento.</code></pre>
 
-outputs:
-  resumo: "Resumo executivo do ficheiro {{ inputs.caminho_ficheiro }}"</code></pre>
+<p>Com esta skill configurada no diretório <code>~/.hermes/skills/resumidor_documentos/SKILL.md</code>, basta dar uma instrução simples ao teu agente no terminal:</p>
 
-<p>Com esta skill configurada no diretório <code>~/.hermes/skills/</code>, basta dar uma instrução simples ao seu agente no terminal:</p>
-
-<pre><code>hermes run resumidor_documentos --caminho_ficheiro "/documentos/relatorio_vendas.txt"</code></pre>
+<pre><code>hermes skills list
+hermes chat -s resumidor_documentos "Resume o ficheiro /documentos/relatorio_vendas.txt"</code></pre>
 
 <p>O agente irá ler o ficheiro, processar a informação utilizando o modelo de IA que definiu como padrão (por exemplo, através do Ollama de forma 100% local ou via OpenAI) e devolver-lhe-á o resumo estruturado em segundos.</p>
 

@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Como Publicar Artigos com Hermes Agent — MarctechJA</title>
-  <meta name="description" content="Tutorial passo-a-passo para publicar artigos no blog usando o Hermes Agent. Da skill YAML ao deploy com GitHub Pages.">
+  <meta name="description" content="Tutorial passo-a-passo para publicar artigos no blog usando o Hermes Agent. Da criação da skill ao deploy automático.">
   <meta property="og:title" content="Como Publicar Artigos com Hermes Agent">
-  <meta property="og:description" content="Tutorial passo-a-passo para publicar artigos no blog usando o Hermes Agent. Da skill YAML ao deploy com GitHub Pages.">
+  <meta property="og:description" content="Tutorial passo-a-passo para publicar artigos no blog usando o Hermes Agent. Da criação da skill ao deploy automático.">
   <meta property="og:url" content="https://marcusja777.com/blog/como-publicar-artigos-com-hermes-agent/">
   <link rel="canonical" href="https://marcusja777.com/blog/como-publicar-artigos-com-hermes-agent/">
   <link rel="stylesheet" href="/assets/css/style.css?v=20260812">
@@ -70,43 +70,48 @@
         </div>
         <div class="article-content">
 
-<p>O Hermes Agent é a ferramenta ideal para automatizar a publicação de conteúdo no teu blog. Neste tutorial, vais aprender o processo completo: desde a criação de uma skill YAML até ao deploy automático com GitHub Pages.</p>
+<p>O Hermes Agent é a ferramenta ideal para automatizar a publicação de conteúdo no teu blog. Neste tutorial, vais aprender o processo completo: desde a criação de uma skill até ao deploy automático.</p>
 
 <h2>O que vais precisar</h2>
 <ul>
 <li>Hermes Agent instalado (ou acesso CLI)</li>
 <li>Um repositório GitHub para o blog</li>
-<li>GitHub Pages ativo no repositório</li>
+<li>GitHub Actions no repositório com deploy para Cloudflare Pages</li>
 <li>Modelo de IA configurado (Gemini, Claude, etc.)</li>
 </ul>
 
 <h2>Passo 1: Criar a skill de geração</h2>
-<p>No diretório <code>~/.hermes/skills/</code>, cria o ficheiro <code>gerar-post.yaml</code>:</p>
-<pre><code>name: gerar-post
+<p>No diretório <code>~/.hermes/skills/</code>, cria a pasta <code>gerar-post</code> com o ficheiro <code>SKILL.md</code>:</p>
+<pre><code>---
+name: gerar-post
 description: Gera um post para o blog
-author: MarcTechJA
+author: MarctechJA
 version: "1.0"
+platforms:
+  - macos
+  - linux
+  - windows
+metadata:
+  hermes:
+    tags: [blog, escrita]
+---
 
-inputs:
-  topico:
-    type: string
-    description: Tema do artigo a gerar
-    required: true
+# gerar-post
 
-steps:
-  - name: gerar_conteudo
-    action: llm.generate
-    params:
-      prompt: |
-        Escreve um artigo sobre {{ inputs.topico }} em português de Portugal.
-  - name: guardar_html
-    action: tools.file.write
-    params:
-      path: /tmp/artigo.html
-      content: "{{ steps.gerar_conteudo.output }}"
+Gera um post completo para o blog.
 
-outputs:
-  caminho: "/tmp/artigo.html"</code></pre>
+## When to Use
+Quando o utilizador precisa de um novo artigo de blog.
+
+## Instruções
+1. Recebe o tópico do artigo.
+2. Escreve um artigo completo em português de Portugal.
+3. Devolve o conteúdo pronto para publicação.
+
+## Critérios de conclusão
+- O artigo é completo, sem cortes e cobre o tópico pedido.</code></pre>
+<p>Depois, podes usar a skill diretamente no chat:</p>
+<pre><code>hermes chat -s gerar-post "Escreve um artigo sobre automação no Hermes Agent"</code></pre>
 
 <h2>Passo 2: Script de publicação</h2>
 <p>Cria um script que recebe o HTML gerado e trata de:</p>
@@ -157,7 +162,7 @@ jobs:
 <li><strong>Atualiza o arquivo</strong> — insere o novo card no <code>blog/index.html</code>, pela ordem mais recente primeiro.</li>
 <li><strong>Atualiza a homepage</strong> — mantém no máximo os seis cards principais.</li>
 <li><strong>Atualiza o sitemap</strong> — adiciona o URL novo para facilitar a indexação no Google.</li>
-<li><strong>Faz commit e push</strong> — e o GitHub Pages trata do resto.</li>
+<li><strong>Faz commit e push</strong> — e o Cloudflare Pages trata do resto.</li>
 </ol>
 
 <h2>Pipeline de qualidade</h2>

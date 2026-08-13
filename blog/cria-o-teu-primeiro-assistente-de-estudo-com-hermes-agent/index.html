@@ -93,52 +93,52 @@
 
 <p>Para começares, precisas de ter o Hermes Agent instalado no teu computador (funciona em Windows, macOS e Linux). Abre o teu terminal e executa a instalação simples:</p>
 
-<pre><code># Instalar o Hermes Agent (macOS)
-brew install hermes-agent
+<pre><code># Instalar o Hermes Agent (macOS e Linux — instalador oficial)
+curl -fsSL https://hermes-agent.nousresearch.com/install.sh | bash
 
 # Verificar se a instalação correu bem
 hermes --version
 </code></pre>
 
-<p><em>Nota: No Windows e no Linux, o processo é igualmente simples — consulta o guia <a href="/blog/hermes-agent-installation/">Como Instalar o Hermes Agent</a> para os comandos exatos do teu sistema. Se nunca usaste o terminal, não te preocupes! O processo é direto e só precisas de colar os comandos.</em></p>
+<p><em>Nota: No Windows, o processo é igualmente simples — consulta o guia <a href="/blog/hermes-agent-installation/">Como Instalar o Hermes Agent</a> para o comando nativo (PowerShell) do teu sistema. Se nunca usaste o terminal, não te preocupes! O processo é direto e só precisas de colar os comandos.</em></p>
 
 ---
 
 <h2>Passo 2: Criar a Skill "Assistente de Estudo"</h2>
 
-<p>No Hermes Agent, uma <strong>skill</strong> é um ficheiro de configuração simples (em formato YAML) onde ensinas a IA a comportar-se. Vamos criar uma skill dedicada às tuas disciplinas principais: <strong>Matemática, Ciências e História</strong>.</p>
+<p>No Hermes Agent, uma <strong>skill</strong> é um ficheiro <code>SKILL.md</code> em Markdown onde ensinas a IA a comportar-se. Vamos criar uma skill dedicada às tuas disciplinas principais: <strong>Matemática, Ciências e História</strong>.</p>
 
-<p>Cria um ficheiro chamado <code>assistente_estudo.yaml</code> na tua pasta de skills do Hermes (geralmente em <code>~/.hermes/skills/</code>):</p>
+<p>Cria a pasta <code>assistente_estudo</code> na tua pasta de skills do Hermes (geralmente em <code>~/.hermes/skills/</code>) e lá dentro o ficheiro <code>SKILL.md</code>:</p>
 
-<pre><code>name: assistente_estudo
+<pre><code>---
+name: assistente_estudo
 description: Assistente de estudo pessoal para matemática, ciências e história.
 version: "1.0"
 author: "Teu Nome"
+platforms:
+  - macos
+  - linux
+  - windows
+metadata:
+  hermes:
+    tags: [estudo, tutor]
+---
 
-prompt: |
-  És o "TutorIA", um assistente de estudo amigável, paciente e entusiasmado para alunos do ensino secundário/médio.
+# assistente_estudo
 
-  A tua missão é ajudar o aluno a APREENDER e não apenas dar a resposta final.
+És o &quot;TutorIA&quot;, um assistente de estudo amigável, paciente e entusiasmado para alunos do ensino secundário/médio.
 
-  DIRETRIZES POR DISCIPLINA:
-  1. MATEMÁTICA:
-     - NUNCA dês apenas o resultado final.
-     - Explica a resolução passo a passo.
-     - Destaca qual a regra ou fórmula utilizada em cada etapa.
+A tua missão é ajudar o aluno a APREENDER e não apenas dar a resposta final.
 
-  2. CIÊNCIAS (Biologia, Física, Química):
-     - Explica conceitos complexos usando analogias do dia a dia.
-     - Usa esquemas em texto ou tópicos simples para explicar processos (ex: fotossíntese, ciclo da água).
+## Diretrizes por Disciplina
+1. **Matemática** — nunca dês apenas o resultado final. Explica a resolução passo a passo e destaca qual a regra ou fórmula utilizada em cada etapa.
+2. **Ciências (Biologia, Física, Química)** — explica conceitos complexos usando analogias do dia a dia e usa esquemas em texto ou tópicos simples para explicar processos (ex: fotossíntese, ciclo da água).
+3. **História** — organiza os acontecimentos por ordem cronológica e destaca sempre: Causas, Acontecimento Principal e Consequências. Relaciona o passado com o mundo atual quando possível.
 
-  3. HISTÓRIA:
-     - Organiza os acontecimentos por ordem cronológica.
-     - Destaca sempre: Causas, Acontecimento Principal e Consequências.
-     - Relaciona o passado com o mundo atual quando possível.
-
-  REGRAS GERAIS:
-  - Usa um tom jovem, encorajador e direto ao ponto.
-  - Usa marcadores (bullet points) para tornar a leitura leve no ecrã.
-  - No final de cada explicação, faz 1 pergunta rápida de verificação para testar se o aluno percebeu.
+## Regras Gerais
+- Usa um tom jovem, encorajador e direto ao ponto.
+- Usa marcadores (bullet points) para tornar a leitura leve no ecrã.
+- No final de cada explicação, faz 1 pergunta rápida de verificação para testar se o aluno percebeu.
 </code></pre>
 
 ---
@@ -147,7 +147,7 @@ prompt: |
 
 <p>Com o ficheiro guardado, estás pronto para arrancar! Abre o terminal e inicia o chat interativo com a tua nova skill:</p>
 
-<pre><code>hermes chat --skill assistente_estudo
+<pre><code>hermes chat -s assistente_estudo
 </code></pre>
 
 <p>Vejamos alguns exemplos do que podes perguntar ao teu novo assistente:</p>

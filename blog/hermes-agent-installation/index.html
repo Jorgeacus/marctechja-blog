@@ -64,41 +64,25 @@
           </ul>
 
           <h2>Instalação no macOS</h2>
-          <p>No macOS, tens duas opções: Homebrew ou instalação manual com pip.</p>
-          <p><strong>Opção 1 — Homebrew (recomendado):</strong></p>
-          <pre><code>brew tap hermes-agent/tap
-brew install hermes-agent</code></pre>
-          <p><strong>Opção 2 — Pip:</strong></p>
-          <pre><code>git clone https://github.com/HermesAgent/hermes-agent.git
-cd hermes-agent
-python3 -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
-pip install -e .</code></pre>
+          <p>O método oficial e recomendado usa o instalador de linha de comandos. Só precisas de ter o Bird (o HTML renderer) disponível e de abrir o Terminal:</p>
+          <pre><code>curl -fsSL https://hermes-agent.nousresearch.com/install.sh | bash</code></pre>
+          <p>O script descarrega o CLI, coloca-o em <code>~/.local/bin/hermes</code> e adiciona-o ao <code>PATH</code>. Confirma que ficou no sítio certo:</p>
+          <pre><code>which hermes
+hermes --version</code></pre>
 
           <h2>Instalação no Linux</h2>
-          <pre><code>git clone https://github.com/HermesAgent/hermes-agent.git
-cd hermes-agent
-python3 -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
-pip install -e .</code></pre>
-          <p>Para distribuições baseadas em Debian/Ubuntu, certifica-te de que tens o Python 3.10+ instalado:</p>
-          <pre><code>sudo apt update
-sudo apt install python3 python3-pip python3-venv git</code></pre>
+          <p>O processo é idêntico ao macOS, graças ao mesmo instalador oficial:</p>
+          <pre><code>curl -fsSL https://hermes-agent.nousresearch.com/install.sh | bash</code></pre>
+          <p>Para a maioria das distribuições (Debian/Ubuntu, Fedora, Arch) não são precisos pré-requisitos adicionais — o script trata das dependências. No caso de seres administrador da tua máquina, recomenda-se um ambiente virtual, mas o instalador já o configura por ti.</p>
 
           <h2>Instalação no Windows</h2>
           <ol>
-            <li>Instala o Python 3.10+ a partir do <a href="https://python.org">python.org</a> (marca "Add to PATH")</li>
-            <li>Instala o Git a partir do <a href="https://git-scm.com">git-scm.com</a></li>
-            <li>Abre o PowerShell como administrador e executa:</li>
+            <li>Abre o PowerShell como administrador.</li>
+            <li>Se a execução de scripts ainda não estiver permitida, executa primeiro: <code>Set-ExecutionPolicy RemoteSigned -Scope CurrentUser</code></li>
+            <li>Executa o instalador oficial nativo para Windows:</li>
           </ol>
-          <pre><code>git clone https://github.com/HermesAgent/hermes-agent.git
-cd hermes-agent
-python -m venv venv
-.\venv\Scripts\activate
-pip install -r requirements.txt
-pip install -e .</code></pre>
+          <pre><code>iex (irm https://hermes-agent.nousresearch.com/install.ps1)</code></pre>
+          <p>Isto instala o Hermes Agent nativamente e adiciona o comando <code>hermes</code> ao PATH das tuas sessões do PowerShell.</p>
 
           <h2>Configuração de Providers</h2>
           <p>Após a instalação, cria um ficheiro <code>.env</code> na raiz do projeto com as tuas chaves de API:</p>
@@ -106,28 +90,30 @@ pip install -e .</code></pre>
 ANTHROPIC_API_KEY=sk-ant-...
 GOOGLE_API_KEY=...
 DEEPSEEK_API_KEY=...</code></pre>
-          <p>Se quiseres usar modelos locais com Ollama:</p>
+          <p>Se quiseres usar modelos locais com Ollama (gratuitos e sem saída de dados):</p>
           <pre><code>brew install ollama  # macOS
 # ou: curl -fsSL https://ollama.ai/install.sh | sh  # Linux
-ollama pull llama3.1
-ollama pull hermes-agent  # modelo otimizado</code></pre>
+ollama pull llama3.1</code></pre>
 
           <h2>Verificar a Instalação</h2>
           <p>Executa o comando de teste:</p>
           <pre><code>hermes --version
 hermes --help</code></pre>
-          <p>Se vires a informação de versão e ajuda, a instalação está concluída. Recomenda-se também correr <code>hermes status</code> para confirmar que os providers configurados estão acessíveis antes de começares a trabalhar.</p>
+          <p>Se vires a informação de versão e ajuda, a instalação está concluída. Recomenda-se também correr <code>hermes doctor</code> — é o comando de diagnóstico oficial que confirma que os providers e componentes estão acessíveis antes de começares a trabalhar.</p>
 
           <h2>Resolução de Problemas Comuns</h2>
           <h3>"Comando não encontrado"</h3>
-          <p>Certifica-te de que o ambiente virtual está ativo (<code>source venv/bin/activate</code> no macOS/Linux, <code>venv\Scripts\activate</code> no Windows).</p>
-          <h3>Erro de dependências</h3>
-          <p>Algumas dependências podem exigir compilação. No macOS, instala as ferramentas de linha de comandos do Xcode: <code>xcode-select --install</code>. No Linux, <code>sudo apt install build-essential</code>.</p>
+          <p>O instalador coloca o binário em <code>~/.local/bin/hermes</code>. Se o comando não for encontrado, adiciona essa pasta ao PATH no teu <code>~/.zshrc</code> (ou equivalente) e abre um novo terminal:</p>
+          <pre><code>export PATH="$HOME/.local/bin:$PATH"</code></pre>
+          <h3>O instalador falhou a meio</h3>
+          <p>Verifica a ligação à internet e tenta de novo — o instalador é idempotente e pode ser reexecutado em segurança. No macOS, instala as ferramentas de linha de comandos do Xcode se a compilação falhar: <code>xcode-select --install</code>. No Linux, <code>sudo apt install build-essential</code>.</p>
+          <h3>Problemas com providers ou configuração</h3>
+          <p>Corre <code>hermes doctor</code> para um diagnóstico completo da configuração e das dependências.</p>
 
           <h2>Primeira Configuração</h2>
           <p>Com a instalação concluída, o próximo passo é fazer a configuração inicial. O Hermes Agent oferece um assistente que cria o ficheiro de configuração e te guia na escolha do provider:</p>
           <ol>
-            <li>Executa <code>hermes init</code> na pasta onde queres trabalhar — o comando cria a estrutura de diretórios e o ficheiro <code>.env</code> de exemplo.</li>
+            <li>Executa <code>hermes setup</code> — o assistente interativo cria a estrutura de diretórios e o ficheiro <code>~/.hermes/.env</code> de exemplo.</li>
             <li>Escolhe o provider principal (OpenAI, Anthropic, Gemini, DeepSeek ou local).</li>
             <li>Introduz a chave de API quando solicitado. O assistente guarda-a no <code>.env</code> e mantém-na fora do controlo de versões.</li>
             <li>Define o modelo predefinido. Podes deixar o valor padrão e alterar depois por tarefa.</li>
@@ -135,15 +121,14 @@ hermes --help</code></pre>
           <p>Se preferires editar manualmente, os ficheiros ficam em <code>~/.hermes/</code> e podes ajustar modelos, temperatura e tempo limite de cada pedido.</p>
 
           <h2>Primeiro Agente</h2>
-          <p>Para confirmares que tudo funciona, cria um agente simples e faz-lhe uma pergunta:</p>
-          <pre><code>hermes agent new boas-vindas
-hermes run boas-vindas "Olá, apresenta-te em duas frases"</code></pre>
+          <p>Para confirmares que tudo funciona, abre um chat com o agente e faz-lhe uma pergunta direta:</p>
+          <pre><code>hermes chat -q "Olá, apresenta-te em duas frases"</code></pre>
           <p>Se a resposta aparecer sem erros, tens o pipeline completo a funcionar: o Hermes Agent comunicou com o provider, recebeu a resposta e devolveu-a no terminal.</p>
 
           <h2>Manutenção e Atualizações</h2>
-          <p>Como é uma ferramenta em evolução rápida, é boa prática atualizar regularmente:</p>
-          <pre><code>brew update &amp;&amp; brew upgrade hermes-agent</code></pre>
-          <p>Para instalações via <code>git clone</code>, entra na pasta do projeto, faz <code>git pull</code> e reinstala as dependências com <code>pip install -r requirements.txt</code>.</p>
+          <p>Como é uma ferramenta em evolução rápida, é boa prática atualizar regularmente voltando a correr o mesmo instalador oficial (é idempotente):</p>
+          <pre><code>curl -fsSL https://hermes-agent.nousresearch.com/install.sh | bash</code></pre>
+          <p>No Windows, repete <code>iex (irm https://hermes-agent.nousresearch.com/install.ps1)</code>. O instalador substitui o binário antigo pela versão mais recente sem tocar na tua configuração em <code>~/.hermes/</code>.</p>
 
           <h2>Requisitos Mínimos</h2>
           <p>Para uma experiência fluida, recomenda-se: um processador de 64 bits, pelo menos 4 GB de RAM (8 GB se usares modelos locais) e 2 GB de espaço livre em disco. O Hermes Agent corre em macOS 11+, distribuições Linux recentes e Windows 10+.</p>
@@ -155,7 +140,7 @@ hermes run boas-vindas "Olá, apresenta-te em duas frases"</code></pre>
           <h3>E se não quiser pagar por uma API?</h3>
           <p>Usa modelos locais com o Ollama. A instalação local é gratuita e os teus dados nunca saem do teu computador — um bom ponto de partida para testar.</p>
           <h3>O que devo fazer se a instalação falhar a meio?</h3>
-          <p>Volta ao passo onde falhou e confirma os pré-requisitos (versão do Python, Git instalado e ambiente virtual ativo). Na maioria dos casos, o problema é uma dependência de sistema que falta instalar.</p>
+          <p>Volta ao passo onde falhou e confirma os pré-requisitos (ligação à internet e <code>xcode-select --install</code> no macOS). O instalador oficial é idempotente — basta reexecutá-lo.</p>
 
           <h2>Conclusão</h2>
           <p>Instalar o Hermes Agent é rápido em qualquer sistema operativo, e a configuração inicial demora poucos minutos. Com o agente funcional, estás pronto para o passo seguinte: <a href="/blog/hermes-agent-skills/">criar a tua primeira skill</a> e começar a automatizar tarefas do dia a dia.</p>

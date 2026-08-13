@@ -92,43 +92,41 @@
 - Output: resumo de 200 palavras com fontes</code></pre>
 
           <h2>Como Implementar</h2>
-          <p>Cada automação é uma skill no Hermes Agent. As skills são ficheiros YAML ou Python que definem o comportamento do agente: recebem entradas (<code>inputs</code>), executam uma sequência de passos (<code>steps</code>) e devolvem um resultado (<code>outputs</code>).</p>
+          <p>Cada automação é uma skill no Hermes Agent. Uma skill é um ficheiro <code>SKILL.md</code> em Markdown que define o comportamento do agente: descreve <em>o que fazer</em> num formato que o agente lê e executa — recebe as instruções do utilizador, decide o que fazer e usa as ferramentas nativas do Hermes (pesquisa na web, ficheiros, terminal).</p>
           <p>Um exemplo canónico para a automação de pesquisa e síntese:</p>
-          <pre><code>name: pesquisar-e-sintetizar
+          <pre><code>---
+name: pesquisar-e-sintetizar
 description: Pesquisa um tema na web e devolve um resumo executivo
-author: MarcTechJA
+author: MarctechJA
 version: "1.0"
+platforms:
+  - macos
+  - linux
+  - windows
+metadata:
+  hermes:
+    tags: [pesquisa, resumo]
+---
 
-inputs:
-  topico:
-    type: string
-    description: Tema a pesquisar
-    required: true
-  idioma:
-    type: string
-    description: Idioma do resumo
-    required: false
+# pesquisar-e-sintetizar
 
-steps:
-  - name: pesquisar_web
-    action: web_search
-    params:
-      query: "{{ inputs.topico }}"
-  - name: sintetizar
-    action: llm.generate
-    params:
-      prompt: |
-        Resume as fontes encontradas em {{ inputs.idioma | default("português") }}.
-        Fontes: {{ steps.pesquisar_web.output }}
-  - name: guardar_resumo
-    action: tools.file.write
-    params:
-      path: resumo.md
-      content: "{{ steps.sintetizar.output }}"
+Pesquisa um tema na web e devolve um resumo executivo.
 
-outputs:
-  resumo: "Caminho do ficheiro com o resumo"</code></pre>
-          <p>Guarda este ficheiro em <code>~/.hermes/skills/pesquisar-e-sintetizar.yaml</code> e executa com <code>hermes run pesquisar-e-sintetizar '{"topico": "agentes de IA"}'</code>.</p>
+## When to Use
+Quando o utilizador pede um resumo atualizado sobre um tema.
+
+## Instruções
+1. Escolhe o tema a pesquisar a partir do que o utilizador pediu (ou do tópico indicado).
+2. Usa a ferramenta de pesquisa na web para recolher 3-5 fontes relevantes sobre o tema.
+3. Escreve um resumo claro em português, com os pontos principais e as fontes.
+
+## Critérios de conclusão
+- O resumo cobre o tópico pedido, é claro e cita as fontes utilizadas.</code></pre>
+          <p>Guarda este ficheiro em <code>~/.hermes/skills/pesquisar-e-sintetizar/SKILL.md</code>. Depois usa a skill num chat; o agente segue as instruções e executa a pesquisa por ti:</p>
+          <pre><code>hermes skills list                # confirmar que a skill é visível
+hermes chat -s pesquisar-e-sintetizar "Resumo sobre agentes de IA"</code></pre>
+          <p>Ou, mais simples, pede ao agente para criar perto de ti:</p>
+          <pre><code>hermes chat -q "Cria uma skill pesquisar-e-sintetizar que pesquisa na web e devolve um resumo em português"</code></pre>
 
           <h2>Onde Cada Automação Brilha</h2>
           <ul>
@@ -151,7 +149,7 @@ outputs:
           <h3>Preciso de escrever código para criar skills?</h3>
           <p>Para a maioria das automações, basta YAML. Só em casos avançados (integrações complexas) é que recorres a skills em Python.</p>
           <h3>As skills funcionam em qualquer sistema operativo?</h3>
-          <p>Sim, desde que as ações que usam (por exemplo, <code>tools.shell.run</code>) existam no sistema. Comandos específicos de macOS/Linux/Windows devem ser adaptados.</p>
+          <p>Sim, desde que as ferramentas que usa (por exemplo, comandos de terminal) existam no sistema. Comandos específicos de macOS/Linux/Windows devem ser adaptados.</p>
           <h3>Quando é que NÃO devo automatizar?</h3>
           <p>Se a tarefa é rara, sensível ou exige julgamento humano (como responder a uma reclamação difícil), vale mais executá-la manualmente. Automatiza o repetitivo e de baixo risco — e mantém o humano nas decisões que importam.</p>
 

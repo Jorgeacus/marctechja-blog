@@ -79,47 +79,57 @@
 
 <p>Primeiro, certifica-te de que tens o Hermes Agent instalado no teu sistema. Se estás no macOS, podes utilizar o Homebrew:</p>
 
-<pre><code># Instalação no macOS via Homebrew
-brew install hermes-agent
+<pre><code># Instalação oficial (Linux e macOS) — sem Homebrew, sem pip
+curl -fsSL https://hermes-agent.nousresearch.com/install.sh | bash
+
+# No Windows, abre o PowerShell e corre:
+#   iex (irm https://hermes-agent.nousresearch.com/install.ps1)
 
 # Verificar se a instalação está funcional
 hermes --version</code></pre>
 
-<p>Este comando instala a CLI do Hermes Agent e confirma que o ambiente está pronto a ser utilizado com o teu provider de IA preferido (OpenAI, Anthropic, Gemini ou Ollama para execução local).</p>
+ <p>Este comando instala a CLI e o runtime do Hermes Agent (cuida do Python, Node e do resto) e confirma que o ambiente está pronto. Depois escolhes o teu provider de IA (OpenAI, Anthropic, Gemini, OpenRouter ou Ollama para execução local).</p>
 
-<h3>Passo 2: Criar a Skill YAML de automação</h3>
+ <h3>Passo 2: Ligar o Telegram (gateway real)</h3>
 
-<p>No Hermes Agent, as capacidades do agente são definidas através de <em>skills</em> declarativas em YAML. Cria um ficheiro chamado <code>telegram_manager.yaml</code> no teu diretório de skills (<code>~/.hermes/skills/telegram_manager.yaml</code>):</p>
+ <p>No Hermes Agent atual, o Telegram não se configura com uma skill YAML estática — é um <strong>gateway de mensagens</strong> integrado. Cria o teu bot no <a href="https://t.me/BotFather">@BotFather</a> e cola o token quando o agente o pedir:</p>
 
-<pre><code>name: telegram_manager
-description: Automatiza respostas a utilizadores e formatação de posts para o Telegram
-author: MarcTechJA
-version: "1.0"
-inputs:
-  mensagem_entrada: { type: string, description: Texto da pergunta recebida ou tema a publicar, required: true }
-  tipo_acao: { type: string, description: Tipo de tarefa (resposta ou post), required: true }
-steps:
-  - name: processar_telegram
-    action: llm.generate
-    params:
-      prompt: "Atua como um gestor de comunidade profissional no Telegram. Ação solicitada: { inputs.tipo_acao }. Conteúdo: { inputs.mensagem_entrada }. Gera uma resposta em português de Portugal, clara, amigável e bem formatada."
-outputs:
-  resultado_formatado: "{ steps.processar_telegram.output }"</code></pre>
+ <pre><code>hermes gateway setup        # escolher "telegram" e colar o token do @BotFather</code></pre>
 
-<p><strong>Como funciona este código:</strong></p>
-<ul>
-  <li>O bloco <code>inputs</code> declara os dados necessários (a mensagem e o tipo de ação).</li>
-  <li>O passo <code>processar_telegram</code> utiliza a ação <code>llm.generate</code> para passar as variáveis com a sintaxe <code>{ inputs.parametro }</code> ao modelo de linguagem.</li>
-  <li>O bloco <code>outputs</code> devolve o resultado final processado pelo agente, pronto a enviar via API do Telegram ou webhook.</li>
-</ul>
+ <p>O gateway passa a responder às tuas mensagens e aceitar agendamentos. Com o token guardado no ficheiro <code>~/.hermes/.env</code> (variável <code>TELEGRAM_BOT_TOKEN</code>), o agente envia e recebe no Telegram.</p>
 
-<h3>Passo 3: Executar a automação na linha de comandos</h3>
+ <h3>Passo 3: Skill de conteúdo para o canal (formato real)</h3>
 
-<p>Com a skill configurada, podes testar a geração de um post agendado diretamente do teu terminal:</p>
+ <p>Para dar ao agente o <em>tom</em> da tua comunidade, cria uma skill real em <code>~/.hermes/skills/telegram-editor/SKILL.md</code>:</p>
 
-<pre><code>hermes run telegram_manager --inputs '{"mensagem_entrada": "Lembrete: Webinar de IA amanhã às 19h", "tipo_acao": "post"}'</code></pre>
+ <pre><code>---
+name: telegram-editor
+description: Escreve e formata publicações para o canal Telegram em português de Portugal.
+version: 1.0.0
+author: Hermes Agent
+---
 
-<p>O Hermes Agent irá ler a skill, processar o prompt através do LLM configurado e devolver um texto perfeitamente estruturado, com marcadores e tom adequado para publicação direta no teu canal Telegram.</p>
+# Editor Telegram
+
+## When to Use
+Quando o utilizador pede para criar um post para o canal Telegram.
+
+## Instruções
+1. Recebe o tema ou a notícia do utilizador.
+2. Escreve o post em português de Portugal, claro e amigável, com emojis e quebras de linha.
+3. Devolve apenas o texto do post, pronto a publicar.</code></pre>
+
+ <p>Depois, ativa a skill num chat e pede o post em linguagem natural:</p>
+
+ <pre><code>hermes chat -s telegram-editor
+# No chat: "Escreve um post sobre o webinar de IA de amanhã às 19h"</code></pre>
+
+ <h3>Passo 4: Publicar de forma agendada (cron real)</h3>
+
+ <p>Para publicar automaticamente no canal em horário fixo, usa o agendador nativo do Hermes — ligando a skill e o Telegram:</p>
+
+ <pre><code># Todos os dias às 08:00, gera e publica o resumo das notícias no canal
+hermes cron create --name "post-manha" --deliver telegram --skill telegram-editor "0 8 * * *" "Resumo das notícias de hoje"</code></pre>
 
 <h2>Boas práticas para gerir comunidades no Telegram</h2>
 
