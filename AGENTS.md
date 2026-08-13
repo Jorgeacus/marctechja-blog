@@ -32,6 +32,7 @@
 | Contactos | `/contactos/` |
 
 **Páginas legais (Privacidade, Cookies, Termos, Contactos) são OBRIGATÓRIAS para a aprovação do Google AdSense** — não remover.
+- **Guia Destacado FIXO na Home (13 Ago):** a homepage tem um bloco `.featured-guide` (estilo `assets/css/style.css`) logo após o hero, que liga a `/blog/como-aproveitar-os-exemplos-praticos-do-blog-ao-maximo/`. Este bloco está **FORA do `<div class="blog-grid">`** e usa classes próprias (não `blog-card`), por isso o `post.sh` (que insere no grid e corta o card mais antigo) e o `sync-css-version.sh` **nunca o removem nem alteram**. Para atualizar o guia: editar o artigo (`blog/como-aproveitar-os-exemplos-praticos-do-blog-ao-maximo/index.html`) e, se mudar texto/ligação na Home, o bloco `<div class="featured-guide">` em `index.html`. Não mover o bloco para dentro do `blog-grid`.
 - **Banner de consentimento de cookies (CMP ligeiro):** `assets/js/cookie-consent.js` + CSS no fim de `style.css`. Adicionar a tag `<script src="/assets/js/cookie-consent.js"></script>` após `main.js` em **qualquer página nova**. O template em `scripts/post.sh` já a inclui.
 
 ## Artigos publicados (15)
