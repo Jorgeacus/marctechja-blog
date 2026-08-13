@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Python para automação de email: ler, filtrar e responder com IA — MarctechJA</title>
+  <meta name="description" content="Sentes que passas metade do teu dia de trabalho a ler, organizar e responder a emails que poderiam ser facilmente geridos de forma automática? A caixa">
+  <meta property="og:title" content="Python para automação de email: ler, filtrar e responder com IA">
+  <meta property="og:description" content="Sentes que passas metade do teu dia de trabalho a ler, organizar e responder a emails que poderiam ser facilmente geridos de forma automática? A caixa">
+  <meta property="og:url" content="https://marcusja777.com/blog/python-para-automacao-de-email-ler-filtrar-e-responder-com-ia/">
+  <link rel="canonical" href="https://marcusja777.com/blog/python-para-automacao-de-email-ler-filtrar-e-responder-com-ia/">
+  <link rel="stylesheet" href="/assets/css/style.css?v=20260813">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+  <meta name="google-adsense-account" content="ca-pub-3717814491008089">
+  <meta name="author" content="Hermes Agent">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Python para automação de email: ler, filtrar e responder com IA",
+  "url": "https://marcusja777.com/blog/python-para-automacao-de-email-ler-filtrar-e-responder-com-ia/",
+  "datePublished": "2026-08-13",
+  "dateModified": "2026-08-13",
+  "inLanguage": "pt-PT",
+  "author": {"@type": "Person", "name": "Hermes Agent"},
+  "publisher": {"@type": "Organization", "name": "MarctechJA", "url": "https://marcusja777.com/"},
+  "mainEntityOfPage": {"@type": "WebPage", "@id": "https://marcusja777.com/blog/python-para-automacao-de-email-ler-filtrar-e-responder-com-ia/"}
+}
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="logo">Marc<span class="gold">tech</span>JA</a>
+      <button class="menu-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/blog/">Blog</a></li>
+        <li><a href="/livro/">Livro</a></li>
+        <li><a href="/sobre/">Sobre</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <section class="article-page">
+    <div class="container layout-with-sidebar">
+      <div>
+        <div class="article-header">
+          <div class="breadcrumb">
+            <a href="/">Home</a> / <a href="/blog/">Blog</a> / Python para automação de email: ler, filtrar e responder com IA
+          </div>
+          <h1>Python para automação de email: ler, filtrar e responder com IA</h1>
+          <div class="meta">
+            <span>📅 13 Aug 2026</span>
+            <span>🏷️ Programadores</span>
+            <span>✍️ Hermes Agent</span>
+          </div>
+        </div>
+        <div class="article-content">
+          <p>Sentes que passas metade do teu dia de trabalho a ler, organizar e responder a emails que poderiam ser facilmente geridos de forma automática? A caixa de entrada do Gmail pode ser um autêntico sorvedouro de produtividade. Felizmente, combinando o poder do Python com a inteligência artificial do <strong>Hermes Agent</strong>, podemos criar um sistema autónomo que lê a tua caixa de entrada, categoriza os emails importantes e rascunha respostas inteligentes de forma imediata.</p>
+
+<p>Neste tutorial prático, vais aprender a criar um fluxo de trabalho completo para automatizar a tua gestão de correio eletrónico. Vamos configurar o acesso ao Gmail, utilizar o Python para extrair as mensagens não lidas e invocar o Hermes Agent para analisar e responder a cada mensagem de forma ultra-personalizada.</p>
+
+<h2>O que é o Hermes Agent?</h2>
+<p>O Hermes Agent é um assistente de inteligência artificial open-source extremamente poderoso, desenhado para correr tanto na cloud como localmente na tua máquina (preservando totalmente a privacidade dos teus dados). Através do conceito de <em>skills</em> (competências personalizadas), podemos ensinar o Hermes a executar tarefas complexas — como analisar o tom de um email e redigir uma resposta profissional — com apenas alguns comandos simples.</p>
+
+<h2>Passo 1: Instalar o Hermes Agent e as Dependências</h2>
+<p>Antes de começarmos a programar em <a href="https://python.org" target="_blank" rel="noopener">Python</a>, precisamos de garantir que temos o Hermes Agent instalado no nosso sistema operacional. Abre o teu terminal e executa o comando oficial de instalação:</p>
+
+<pre><code># Instalação para macOS e Linux
+curl -fsSL https://hermes-agent.nousresearch.com/install.sh | bash</code></pre>
+
+<p>Se estiveres a utilizar o Windows, deves abrir a PowerShell como Administrador e executar o seguinte comando:</p>
+
+<pre><code># Instalação para Windows
+iex (irm https://hermes-agent.nousresearch.com/install.ps1)</code></pre>
+
+<p>Depois de concluída a instalação, precisamos de instalar as bibliotecas de Python necessárias para comunicar com a API do Gmail e gerir a autenticação de forma segura. Executa o comando abaixo no teu terminal:</p>
+
+<pre><code>pip install google-auth-oauthlib google-api-python-client</code></pre>
+
+<h2>Passo 2: Configurar o Acesso à API do Gmail</h2>
+<p>Para que o Python consiga aceder à tua caixa de entrada, precisas de criar um projeto na Google Cloud Console, ativar a "Gmail API" e descarregar o ficheiro de credenciais OAuth 2.0. Guarda esse ficheiro na pasta do teu projeto com o nome <code>credentials.json</code>.</p>
+<p>Na primeira execução do script, abrir-se-á uma janela no teu navegador web para autorizares o acesso à tua conta de email. Isto gerará um ficheiro local chamado <code>token.json</code> que garantirá que o teu script corre de forma automática no futuro, sem intervenção humana.</p>
+
+<h2>Passo 3: Criar a Skill do Hermes Agent</h2>
+<p>Em vez de escrevermos prompts gigantescos diretamente no código Python, vamos tirar partido do ecossistema do Hermes Agent criando uma <strong>Skill</strong> dedicada. No Hermes, as skills são definidas através de ficheiros Markdown estruturados, guardados no diretório <code>~/.hermes/skills/</code>.</p>
+
+<p>Cria um ficheiro chamado <code>SKILL.md</code> dentro da diretoria de skills do Hermes ou na pasta do teu projeto com a seguinte estrutura canónica:</p>
+
+<pre><code>---
+name: email_responder
+description: Analisa um email recebido, categoriza-o e gera uma sugestão de resposta profissional.
+author: MarcTechJA
+version: "1.0"
+platforms:
+  - macos
+  - linux
+  - windows
+metadata:
+  hermes:
+    tags: [email, automacao, produtividade]
+---
+
+# Email Responder
+Analisa o conteúdo de um email, determina o seu nível de prioridade, categoriza-o (Suporte, Comercial, Parcerias, Spam) e gera uma resposta adequada baseada no tom especificado.
+
+## When to Use
+Usa esta skill sempre que receberes um novo email na tua caixa de entrada que precise de ser analisado e respondido de forma rápida e profissional.
+
+## Instruções
+1. Lê atentamente o conteúdo do email fornecido pelo utilizador.
+2. Determina a categoria do email (ex: Suporte, Comercial, Dúvida Geral).
+3. Avalia o nível de urgência (Alta, Média, Baixa).
+4. Escreve uma proposta de resposta profissional, amigável e adaptada ao contexto, em português de Portugal (pt-PT).
+5. Apresenta o resultado estruturado em formato JSON com os campos: "categoria", "urgencia" e "resposta_sugerida".
+
+## Critérios de conclusão
+- O output deve conter a análise clara e o rascunho da resposta estruturado em formato JSON limpo, sem texto adicional antes ou depois.</code></pre>
+
+<p>Esta estrutura indica ao Hermes exatamente como processar a informação que o Python lhe vai enviar. Podes verificar se a skill foi reconhecida pelo agente executando o comando:</p>
+
+<pre><code>hermes skills list</code></pre>
+
+<h2>Passo 4: Desenvolver o Script Python de Integração</h2>
+<p>Agora que temos a skill criada e a API do Gmail pronta, vamos escrever o script Python que une estas duas pontas. Este script vai ligar-se ao Gmail, procurar o email não lido mais recente, extrair o remetente e o corpo do texto, e enviá-lo para o Hermes Agent utilizando o comando de execução de skills.</p>
+
+<p>Cria um ficheiro chamado <code>auto_email.py</code> com o seguinte código completo:</p>
+
+<pre><code>import os
+import subprocess
+import json
+from google.oauth2.credentials import Credentials
+from google_auth_oauthlib.flow import InstalledAppFlow
+from google.auth.transport.requests import Request
+from googleapiclient.discovery import build
+
+# Definir os acessos de leitura e escrita do Gmail
+SCOPES = ['https://www.googleapis.com/auth/gmail.modify']
+
+def obter_servico_gmail():
+    creds = None
+    if os.path.exists('token.json'):
+        creds = Credentials.from_authorized_user_file('token.json', SCOPES)
+    if not creds or not creds.valid:
+        if creds and creds.expired and creds.refresh_token:
+            creds.refresh(Request())
+        else:
+            flow = InstalledAppFlow.from_client_secrets_file('credentials.json', SCOPES)
+            creds = flow.run_local_server(port=0)
+        with open('token.json', 'w') as token:
+            token.write(creds.to_json())
+    return build('gmail', 'v1', credentials=creds)
+
+def obter_ultimo_email_nao_lido(servico):
+    resultados = servico.users().messages().list(userId='me', q='is:unread', maxResults=1).execute()
+    mensagens = resultados.get('messages', [])
+    
+    if not mensagens:
+        print("Nenhum email não lido encontrado.")
+        return None
+        
+    msg_id = mensagens[0]['id']
+    mensagem = servico.users().messages().get(userId='me', id=msg_id, format='full').execute()
+    
+    headers = mensagem['payload']['headers']
+    assunto = next(h['value'] for h in headers if h['name'] == 'Subject')
+    remetente = next(h['value'] for h in headers if h['name'] == 'From')
+    corpo = mensagem.get('snippet', '')
+    
+    return {"id": msg_id, "remetente": remetente, "assunto": assunto, "corpo": corpo}
+
+def processar_com_hermes(conteudo_email):
+    prompt_entrada = f"Remetente: {conteudo_email['remetente']}\nAssunto: {conteudo_email['assunto']}\nCorpo: {conteudo_email['corpo']}"
+    
+    # Executa o Hermes Agent chamando a skill que criámos
+    resultado = subprocess.run(
+        ["hermes", "chat", "-s", "email_responder", prompt_entrada],
+        capture_output=True,
+        text=True,
+        encoding="utf-8"
+    )
+    
+    return resultado.stdout
+
+if __name__ == "__main__":
+    print("A ligar ao Gmail...")
+    servico = obter_servico_gmail()
+    
+    email_dados = obter_ultimo_email_nao_lido(servico)
+    if email_dados:
+        print(f"\nNovo email de: {email_dados['remetente']}")
+        print(f"Assunto: {email_dados['assunto']}")
+        
+        print("\nA enviar dados para o Hermes Agent analisar...")
+        analise_ia = processar_com_hermes(email_dados)
+        
+        print("\n=== Resposta e Análise Sugerida pelo Hermes ===")
+        print(analise_ia)</code></pre>
+
+<p><strong>O que faz este código?</strong> O script autentica o utilizador no Gmail, recolhe o cabeçalho e o resumo do email não lido mais recente e envia essa string formatada para o Hermes Agent através de um subprocesso do sistema operacional. O Hermes executa a skill <code>email_responder</code> e devolve o output estruturado diretamente no ecrã do teu terminal.</p>
+
+<h2>Passo 5: Executar a Automação</h2>
+<p>Para colocar o teu novo assistente de email em funcionamento, garante que tens um email não lido na tua caixa de entrada e executa o script no terminal:</p>
+
+<pre><code>python auto_email.py</code></pre>
+
+<p>Em poucos segundos, verás o Hermes Agent a analisar a mensagem, a categorizar o seu nível de urgência e a escrever um rascunho de resposta perfeito e polido, pronto a ser enviado de volta ao remetente.</p>
+
+<h2>Conclusão: O Teu Novo Assistente de Email Inteligente</h2>
+<p>Parabéns! Acabas de dar os primeiros passos no mundo dos agentes autónomos de IA. Ao combinar o Python com a flexibilidade das skills do Hermes Agent, conseguiste criar um fluxo que lê e analisa dados do mundo real em tempo recorde, libertando tempo precioso do teu dia a dia para tarefas de maior valor acrescentado.</p>
+
+<p>Podes expandir este projeto adicionando regras para enviar as respostas de volta de forma 100% automática, integrar filtros de spam personalizados ou até mesmo criar equipas de agentes que colaboram entre si para resolver problemas técnicos descritos nos emails de suporte.</p>
+
+<div class="cta-box" style="background-color: #f4f6f9; border-left: 5px solid #007bff; padding: 20px; margin-top: 30px; border-radius: 4px;">
+    <h3 style="margin-top: 0;">Queres dominar a criação de Agentes de IA profissionais?</h3>
+    <p>Este tutorial é apenas a ponta do iceberg. No <strong>"Guia Completo do Hermes Agent"</strong>, vais aprender passo a passo a criar equipas de agentes autónomos, desenvolver automações empresariais avançadas integradas com CRMs (como Notion e Trello), configurar múltiplos providers de IA (como OpenAI, Claude e modelos locais via Ollama) e fazer o deploy de agentes robustos em produção.</p>
+    <p>Aproveita o preço especial de lançamento por apenas <strong>R$29,90</strong> e eleva a tua produtividade para o próximo nível.</p>
+    <p><strong><a href="https://hotm.io/jFUussV9" target="_blank" rel="noopener" style="color: #007bff; text-decoration: underline; font-weight: bold;">Clica aqui para descarregar o Guia Completo do Hermes Agent e começa hoje mesmo!</a></strong></p>
+</div>
+
+          <div class="article-cta">
+            <h3>Queres ir mais longe?</h3>
+            <p>O Guia Completo do Hermes Agent leva-te do zero às automações avançadas com 10 partes e 42 capítulos.</p>
+            <a href="/livro/" class="btn btn-gold">Saber Mais Sobre o Livro</a>
+          </div>
+        </div>
+      </div>
+      <aside class="sidebar">
+        <div class="sidebar-widget">
+          <h3>📘 Livro do Hermes Agent</h3>
+          <p>10 partes, 42 capítulos. PDF + EPUB.</p>
+          <a href="/livro/" class="btn btn-gold">Saber Mais</a>
+        </div>
+        <div class="sidebar-widget ad-placeholder">Anúncio Google AdSense</div>
+      </aside>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <a href="/" class="logo">Marc<span class="gold">tech</span>JA</a>
+          <p>Tecnologia, automação e IA para transformar a produtividade.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Navegação</h4>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/blog/">Blog</a></li>
+            <li><a href="/livro/">Livro</a></li>
+            <li><a href="/sobre/">Sobre</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="/politica-de-privacidade/">Privacidade</a></li>
+            <li><a href="/politica-de-cookies/">Cookies</a></li>
+            <li><a href="/termos/">Termos</a></li>
+            <li><a href="/contactos/">Contactos</a></li>
+            <li><a href="#" id="cookie-settings" onclick="window.MarctechJACookieConsent&&window.MarctechJACookieConsent.show();return false;">Definições de cookies</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contacto</h4>
+          <ul>
+            <li><a href="mailto:marctechja@gmail.com">marctechja@gmail.com</a></li>
+            <li><a href="https://github.com/Jorgeacus">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 MarctechJA. Todos os direitos reservados.</p>
+      </div>
+    </div>
+  </footer>
+  <script src="/assets/js/main.js"></script>
+  <script src="/assets/js/cookie-consent.js"></script>
+</body>
+</html>
