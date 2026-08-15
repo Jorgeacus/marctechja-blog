@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Integrar Hermes Agent com APIs externas — MarctechJA</title>
+  <meta name="description" content="Sentes que a tua inteligência artificial vive isolada do resto do mundo digital? Imagina dar ao teu assistente a capacidade de consultar o tempo em te">
+  <meta property="og:title" content="Integrar Hermes Agent com APIs externas">
+  <meta property="og:description" content="Sentes que a tua inteligência artificial vive isolada do resto do mundo digital? Imagina dar ao teu assistente a capacidade de consultar o tempo em te">
+  <meta property="og:url" content="https://marcusja777.com/blog/integrar-hermes-agent-com-apis-externas/">
+  <link rel="canonical" href="https://marcusja777.com/blog/integrar-hermes-agent-com-apis-externas/">
+  <link rel="stylesheet" href="/assets/css/style.css?v=20260814">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+  <meta name="google-adsense-account" content="ca-pub-3717814491008089">
+  <meta name="author" content="Hermes Agent">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Integrar Hermes Agent com APIs externas",
+  "url": "https://marcusja777.com/blog/integrar-hermes-agent-com-apis-externas/",
+  "datePublished": "2026-08-15",
+  "dateModified": "2026-08-15",
+  "inLanguage": "pt-PT",
+  "author": {"@type": "Person", "name": "Hermes Agent"},
+  "publisher": {"@type": "Organization", "name": "MarctechJA", "url": "https://marcusja777.com/"},
+  "mainEntityOfPage": {"@type": "WebPage", "@id": "https://marcusja777.com/blog/integrar-hermes-agent-com-apis-externas/"}
+}
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="logo">Marc<span class="gold">tech</span>JA</a>
+      <button class="menu-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/blog/">Blog</a></li>
+        <li><a href="/livro/">Livro</a></li>
+        <li><a href="/sobre/">Sobre</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <section class="article-page">
+    <div class="container layout-with-sidebar">
+      <div>
+        <div class="article-header">
+          <div class="breadcrumb">
+            <a href="/">Home</a> / <a href="/blog/">Blog</a> / Integrar Hermes Agent com APIs externas
+          </div>
+          <h1>Integrar Hermes Agent com APIs externas</h1>
+          <div class="meta">
+            <span>📅 15 Aug 2026</span>
+            <span>🏷️ Programadores</span>
+            <span>✍️ Hermes Agent</span>
+          </div>
+        </div>
+        <div class="article-content">
+          <p>Sentes que a tua inteligência artificial vive isolada do resto do mundo digital? Imagina dar ao teu assistente a capacidade de consultar o tempo em tempo real, verificar a cotação de moedas, atualizar o teu CRM ou disparar notificações para um canal do Slack. Tudo isto é possível quando integramos o <strong>Hermes Agent</strong> com APIs REST externas.</p>
+
+<h2>O que é uma API REST e por que deves integrá-la com o Hermes Agent?</h2>
+
+<p>Uma API REST (<em>Representational State Transfer</em>) é a ponte que permite a diferentes aplicações comunicarem entre si. Através de pedidos HTTP (como GET, POST, PUT e DELETE), um sistema pode solicitar dados ou executar ações noutro serviço web, recebendo quase sempre uma resposta em formato <strong>JSON</strong>.</p>
+
+<p>Ao capacitar o Hermes Agent para interagir com APIs REST, transformas um modelo de linguagem estático num agente autónomo dinâmico. O Hermes passa a conseguir:</p>
+
+<ul>
+  <li><strong>Aceder a dados em tempo real:</strong> Notícias, dados financeiros, métricas de servidores ou estado de encomendas.</li>
+  <li><strong>Executar ações no mundo real:</strong> Criar tarefas no Trello/Notion, enviar e-mails ou publicar mensagens em redes sociais.</li>
+  <li><strong>Conectar ferramentas internas:</strong> Interagir com bases de dados privadas e microserviços da tua empresa.</li>
+</ul>
+
+<h2>Como funcionam as Skills de API no Hermes Agent</h2>
+
+<p>No ecossistema do Hermes Agent, a lógica de integração é estruturada através de <strong>Skills</strong>. Uma Skill é um ficheiro Markdown (<code>SKILL.md</code>) com metadados em YAML que ensina o agente quando e como executar determinada tarefa, incluindo chamadas a serviços externos e o devido processamento da resposta JSON.</p>
+
+<p>Vamos construir uma Skill prática do início ao fim para perceberes exatamente como tudo funciona na prática.</p>
+
+<h2>Passo a Passo: Criar uma Skill para Consumir uma API REST</h2>
+
+<p>Neste exemplo, vamos criar uma Skill chamada <code>previsao-tempo</code> que consulta a API pública e gratuita da Open-Meteo para obter a temperatura e condições meteorológicas de qualquer cidade.</p>
+
+<h3>Passo 1: Escrever a definição da Skill (SKILL.md)</h3>
+
+<p>Cria um ficheiro chamado <code>SKILL.md</code> e adiciona a estrutura oficial do Hermes Agent, definindo os metadados, o momento de uso e os passos detalhados de execução:</p>
+
+<pre><code>---
+name: previsao-tempo
+description: Obtém a previsão do tempo atual para qualquer localização utilizando a API REST da Open-Meteo.
+author: MarcTechJA
+version: "1.0"
+platforms:
+  - macos
+  - linux
+  - windows
+metadata:
+  hermes:
+    tags: [api, utilitarios, meteorologia]
+---
+
+# Previsão do Tempo
+
+Obtém dados meteorológicos em tempo real consultando a API pública Open-Meteo e formatando a resposta para o utilizador.
+
+## When to Use
+Utiliza esta skill sempre que o utilizador perguntar sobre o tempo, temperatura, vento ou condições atmosféricas para uma cidade ou região específica.
+
+## Instruções
+1. Identifica a cidade solicitada pelo utilizador e obtém as suas coordenadas (latitude e longitude).
+2. Executa um pedido GET à API REST da Open-Meteo:
+   `https://api.open-meteo.com/v1/forecast?latitude={lat}&amp;longitude={lon}&amp;current_weather=true`
+3. Analisa e processa a resposta em formato JSON retornada pelo serviço.
+4. Extrai a temperatura atual (`temperature`) e a velocidade do vento (`windspeed`).
+5. Responde ao utilizador em português de forma clara, amigável e resumida.
+
+## Critérios de conclusão
+- O pedido à API REST foi efetuado com sucesso.
+- O formato JSON foi interpretado corretamente.
+- A resposta final foi apresentada ao utilizador com os dados atualizados.
+</code></pre>
+
+<p><strong>O que o código faz:</strong> O cabeçalho em YAML regista a Skill no Hermes Agent com o nome <code>previsao-tempo</code>. As secções subsequentes explicam ao agente a intenção da tarefa, o ponto de terminação HTTP que deve consultar e a forma correta de extrair as propriedades do JSON retornado.</p>
+
+<h3>Passo 2: Guardar o ficheiro no diretório de Skills</h3>
+
+<p>Para que o Hermes Agent reconheça a nova integração, guarda o ficheiro no diretório pessoal de skills do teu sistema operativo. No macOS e Linux, a pasta padrão situa-se em <code>~/.hermes/skills/previsao-tempo/SKILL.md</code>.</p>
+
+<p>Podes verificar se a Skill foi detetada corretamente executando o seguinte comando no teu terminal:</p>
+
+<pre><code>hermes skills list</code></pre>
+
+<p><strong>O que o comando faz:</strong> Lista todas as automações e skills disponíveis no teu ambiente local, confirmando se o Hermes Agent carregou a tua nova Skill sem erros de sintaxe.</p>
+
+<h3>Passo 3: Executar o Hermes Agent com a nova Skill</h3>
+
+<p>Agora podes iniciar uma conversa com o Hermes Agent instruindo-o a utilizar a Skill que acabaste de configurar:</p>
+
+<pre><code>hermes chat -s previsao-tempo</code></pre>
+
+<p><strong>O que o comando faz:</strong> Abre a interface interativa do Hermes carregando o contexto da Skill <code>previsao-tempo</code>. Ao perguntares <em>"Qual é o tempo hoje em Lisboa?"</em>, o agente fará o pedido à API, processará o JSON recebido e entregará a resposta pronta no teu ecrã.</p>
+
+<h2>Tratamento de Autenticação (API Keys) e Segurança</h2>
+
+<p>A maioria das APIs REST empresariais (como OpenAI, Stripe, GitHub ou CRMs) exige autenticação via token ou <strong>API Key</strong>. Para manteres o teu ambiente seguro, nunca deves colocar chaves privadas diretamente no texto da Skill.</p>
+
+<p>Segue estas recomendações essenciais:</p>
+
+<ul>
+  <li><strong>Variáveis de Ambiente:</strong> Guarda as tuas chaves em variáveis de sistema (ex: <code>export MINHA_API_KEY="seu_token_aqui"</code>).</li>
+  <li><strong>Referência nas Instruções:</strong> Na tua Skill, indica ao Hermes para ler a chave a partir do ambiente do sistema antes de realizar o pedido HTTP com os cabeçalhos <code>Authorization: Bearer $MINHA_API_KEY</code>.</li>
+  <li><strong>Tratamento de Erros:</strong> Inclui sempre instruções na Skill para lidar com códigos de erro HTTP comuns, como <code>401 Unauthorized</code> (chave inválida) ou <code>404 Not Found</code> (recurso não encontrado).</li>
+</ul>
+
+<h2>Conclusão</h2>
+
+<p>Integrar o Hermes Agent com APIs REST abre um universo infinito de possibilidades para automatizar tarefas diárias, integrar sistemas complexos e construir fluxos de trabalho inteligentes sem necessidade de programar código pesado do zero. Com apenas um ficheiro de Skill bem estruturado, a tua IA passa a interagir diretamente com o ecossistema web.</p>
+
+<p>Quer seja para ler relatórios, enviar notificações ou sincronizar bases de dados, dominar a criação de Skills é o passo fundamental para tirares o máximo proveito desta ferramenta extraordinária.</p>
+
+<hr />
+
+<h3>Queres dominar o Hermes Agent e criar automações avançadas?</h3>
+
+<p>Se queres aprender a construir equipas de agentes, automatizar tarefas empresariais, conectar bases de dados e fazer o deploy do Hermes Agent em servidores de produção, descobre o <strong>Guia Completo do Hermes Agent</strong> de MarcTechJA.</p>
+
+<p>Um e-book prático com 42 capítulos detalhados que te vai guiar do nível iniciante ao avançado na criação de soluções de Inteligência Artificial autónomas.</p>
+
+<p>👉 <strong><a href="https://hotm.io/jFUussV9" target="_blank" rel="noopener noreferrer">Garante aqui o teu exemplar do Guia Completo do Hermes Agent</a></strong></p>
+
+          <div class="article-cta">
+            <h3>Queres ir mais longe?</h3>
+            <p>O Guia Completo do Hermes Agent leva-te do zero às automações avançadas com 10 partes e 42 capítulos.</p>
+            <a href="/livro/" class="btn btn-gold">Saber Mais Sobre o Livro</a>
+          </div>
+        </div>
+      </div>
+      <aside class="sidebar">
+        <div class="sidebar-widget">
+          <h3>📘 Livro do Hermes Agent</h3>
+          <p>10 partes, 42 capítulos. PDF + EPUB.</p>
+          <a href="/livro/" class="btn btn-gold">Saber Mais</a>
+        </div>
+        <div class="sidebar-widget ad-placeholder">Anúncio Google AdSense</div>
+      </aside>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <a href="/" class="logo">Marc<span class="gold">tech</span>JA</a>
+          <p>Tecnologia, automação e IA para transformar a produtividade.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Navegação</h4>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/blog/">Blog</a></li>
+            <li><a href="/livro/">Livro</a></li>
+            <li><a href="/sobre/">Sobre</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="/politica-de-privacidade/">Privacidade</a></li>
+            <li><a href="/politica-de-cookies/">Cookies</a></li>
+            <li><a href="/termos/">Termos</a></li>
+            <li><a href="/contactos/">Contactos</a></li>
+            <li><a href="#" id="cookie-settings" onclick="window.MarctechJACookieConsent&&window.MarctechJACookieConsent.show();return false;">Definições de cookies</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contacto</h4>
+          <ul>
+            <li><a href="mailto:marctechja@gmail.com">marctechja@gmail.com</a></li>
+            <li><a href="https://github.com/Jorgeacus">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 MarctechJA. Todos os direitos reservados.</p>
+      </div>
+    </div>
+  </footer>
+  <script src="/assets/js/main.js"></script>
+  <script src="/assets/js/cookie-consent.js"></script>
+</body>
+</html>
