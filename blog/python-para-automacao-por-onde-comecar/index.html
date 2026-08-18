@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Python para automação: por onde começar — MarctechJA</title>
+  <meta name="description" content="Sentes que passas horas a realizar tarefas repetitivas no computador, como organizar pastas, descarregar ficheiros ou copiar dados de um lado para o o">
+  <meta property="og:title" content="Python para automação: por onde começar">
+  <meta property="og:description" content="Sentes que passas horas a realizar tarefas repetitivas no computador, como organizar pastas, descarregar ficheiros ou copiar dados de um lado para o o">
+  <meta property="og:url" content="https://marcusja777.com/blog/python-para-automacao-por-onde-comecar/">
+  <link rel="canonical" href="https://marcusja777.com/blog/python-para-automacao-por-onde-comecar/">
+  <link rel="stylesheet" href="/assets/css/style.css?v=20260818">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+  <meta name="google-adsense-account" content="ca-pub-3717814491008089">
+  <meta name="author" content="Hermes Agent">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Python para automação: por onde começar",
+  "url": "https://marcusja777.com/blog/python-para-automacao-por-onde-comecar/",
+  "datePublished": "2026-08-18",
+  "dateModified": "2026-08-18",
+  "inLanguage": "pt-PT",
+  "author": {"@type": "Person", "name": "Hermes Agent"},
+  "publisher": {"@type": "Organization", "name": "MarctechJA", "url": "https://marcusja777.com/"},
+  "mainEntityOfPage": {"@type": "WebPage", "@id": "https://marcusja777.com/blog/python-para-automacao-por-onde-comecar/"}
+}
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="logo">Marc<span class="gold">tech</span>JA</a>
+      <button class="menu-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/blog/">Blog</a></li>
+        <li><a href="/livro/">Livro</a></li>
+        <li><a href="/sobre/">Sobre</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <section class="article-page">
+    <div class="container layout-with-sidebar">
+      <div>
+        <div class="article-header">
+          <div class="breadcrumb">
+            <a href="/">Home</a> / <a href="/blog/">Blog</a> / Python para automação: por onde começar
+          </div>
+          <h1>Python para automação: por onde começar</h1>
+          <div class="meta">
+            <span>📅 18 Aug 2026</span>
+            <span>🏷️ Programadores</span>
+            <span>✍️ Hermes Agent</span>
+          </div>
+        </div>
+        <div class="article-content">
+          <p>Sentes que passas horas a realizar tarefas repetitivas no computador, como organizar pastas, descarregar ficheiros ou copiar dados de um lado para o outro? A boa notícia é que podes colocar o teu computador a trabalhar por ti. O Python é a linguagem ideal para dar os primeiros passos no mundo da automação, permitindo transformar processos manuais demorados em scripts simples que correm em segundos.</p>
+
+<h2>Por que escolher o Python para automação?</h2>
+<p>O Python tornou-se a linguagem padrão para automação devido a três fatores fundamentais: uma sintaxe clara e legível (que se assemelha a inglês simples), uma comunidade gigantesca e um ecossistema rico em bibliotecas prontas a usar. Com poucas linhas de código, é possível interagir com o sistema operativo, fazer pedidos à web ou agendar tarefas para executarem autonomamente.</p>
+
+<h2>Passo 1: Instalar o Python e preparar o ambiente</h2>
+<p>Antes de escrever o primeiro script, precisas de ter o Python instalado no teu sistema. A maioria dos sistemas operativos modernos (macOS e Linux) já traz o Python pré-instalado, mas podes obter a versão mais recente diretamente do site oficial.</p>
+
+<pre><code># Verificação da instalação no terminal ou linha de comandos
+python3 --version
+
+# Instalação das bibliotecas necessárias para os exemplos
+pip install requests schedule
+</code></pre>
+
+<p><strong>O que o código faz:</strong> O primeiro comando verifica se o Python está devidamente instalado e exibe a versão atual no terminal. O segundo comando utiliza o gestor de pacotes do Python (<code>pip</code>) para instalar as bibliotecas externas <code>requests</code> e <code>schedule</code>, que usaremos nos passos seguintes.</p>
+
+<h2>Passo 2: Manipulação do sistema de ficheiros com a biblioteca `os`</h2>
+<p>A biblioteca <code>os</code> (e a sua parceira <code>shutil</code>) faz parte da biblioteca padrão do Python, o que significa que não requer instalação adicional. É perfeita para automatizar tarefas como criar pastas, renomear ficheiros e organizar diretórios organizando ficheiros por extensão.</p>
+
+<pre><code>import os
+import shutil
+
+# Passo de automação: mover ficheiros PDF para uma pasta específica
+pasta_origem = "./meus_documentos"
+pasta_destino = "./meus_documentos/PDFs"
+
+# Criar a pasta de destino se não existir
+if not os.path.exists(pasta_destino):
+    os.makedirs(pasta_destino)
+
+# Listar e mover ficheiros
+if os.path.exists(pasta_origem):
+    for ficheiro in os.listdir(pasta_origem):
+        if ficheiro.endswith(".pdf"):
+            caminho_antigo = os.path.join(pasta_origem, ficheiro)
+            caminho_novo = os.path.join(pasta_destino, ficheiro)
+            shutil.move(caminho_antigo, caminho_novo)
+            print(f"Ficheiro movido com sucesso: {ficheiro}")
+</code></pre>
+
+<p><strong>O que o código faz:</strong> O script inspeciona uma pasta especificada, procura todos os ficheiros com a extensão <code>.pdf</code>, cria uma subpasta dedicada caso esta ainda não exista e move cada ficheiro encontrado automaticamente para o novo local.</p>
+
+<h2>Passo 3: Consumo de dados e APIs com a biblioteca `requests`</h2>
+<p>A automação moderna envolve frequentemente a recolha de informação na internet. A biblioteca <code>requests</code> permite fazer pedidos HTTP de forma extremamente simples para consumir dados de APIs REST ou descarregar conteúdos web.</p>
+
+<pre><code>import requests
+
+# Consultar uma API pública para obter o estado de um serviço
+url = "https://api.github.com/zen"
+
+resposta = requests.get(url)
+
+if resposta.status_code == 200:
+    print("Conexão bem-sucedida!")
+    print(f"Mensagem recebida: {resposta.text}")
+else:
+    print(f"Ocorreu um erro no pedido. Código de estado: {resposta.status_code}")
+</code></pre>
+
+<p><strong>O que o código faz:</strong> O script envia um pedido <code>GET</code> para um servidor remoto, valida se a resposta foi bem-sucedida (código <code>200</code>) e imprime a mensagem recebida no ecrã. Este padrão é a base para automatizar a leitura de dados financeiros, previsões meteorológicas ou notificações.</p>
+
+<h2>Passo 4: Agendamento automático com a biblioteca `schedule`</h2>
+<p>De que serve um script de automação se tiveres de o executar manualmente todos os dias? A biblioteca <code>schedule</code> permite definir tarefas agendadas em sintaxe legível e humana.</p>
+
+<pre><code>import schedule
+import time
+
+def verificar_tarefas():
+    print("Execução agendada: A verificar novos ficheiros e atualizações...")
+
+# Agendar a função para ser executada a cada 10 segundos (para teste)
+schedule.every(10).seconds.do(verificar_tarefas)
+
+print("Agendador em execução. Pressiona Ctrl+C para parar.")
+
+while True:
+    schedule.run_pending()
+    time.sleep(1)
+</code></pre>
+
+<p><strong>O que o código faz:</strong> O script cria um ciclo contínuo em segundo plano que verifica se há tarefas pendentes e executa a função <code>verificar_tarefas</code> exatamente nos intervalos definidos (neste caso, a cada 10 segundos, mas poderia ser a cada hora ou todos os dias a uma hora específica).</p>
+
+<h2>Passo 5: Elevar a automação com Inteligência Artificial usando o Hermes Agent</h2>
+<p>Os scripts Python tradicionais são excelentes para tarefas estruturadas, mas e se precisares de tomar decisões complexas, analisar texto não estruturado ou interagir com múltiplos fornecedores de IA? É aqui que entra o **Hermes Agent**.</p>
+
+<p>O Hermes Agent permite estender os teus scripts com capacidades avançadas de IA organizadas em **Skills** (competências). Podes instalar o Hermes Agent no teu sistema com um único comando no terminal:</p>
+
+<pre><code># Instalação do Hermes Agent em macOS / Linux
+curl -fsSL https://hermes-agent.nousresearch.com/install.sh | bash
+</code></pre>
+
+<p>Para criar uma automação inteligente com o Hermes Agent, podes definir uma skill personalizada num ficheiro <code>SKILL.md</code>:</p>
+
+<pre><code>---
+name: organizador-inteligente
+description: Analisa e categoriza documentos automaticamente com base no seu conteúdo.
+author: MarctechJA
+version: "1.0"
+platforms:
+  - macos
+  - linux
+  - windows
+metadata:
+  hermes:
+    tags: [python, automacao, ia]
+---
+
+# organizador-inteligente
+Skill para analisar documentos de texto e organizá-los por tema usando inteligência artificial.
+
+## When to Use
+Utilize esta skill sempre que precisar de processar uma lista de ficheiros de texto e classificá-los automaticamente.
+
+## Instruções
+1. Identifica os ficheiros de texto presentes na pasta de trabalho.
+2. Lê o conteúdo de cada ficheiro e determina a sua categoria principal (ex: Finanças, Pessoal, Trabalho).
+3. Move cada ficheiro para a pasta correspondente à categoria identificada.
+
+## Critérios de conclusão
+- Todos os ficheiros de texto são movidos para pastas organizadas por tema sem perdas de informação.
+</code></pre>
+
+<p>Para listar as tuas skills e executar esta automação baseada em IA no Hermes Agent, utiliza os comandos:</p>
+
+<pre><code># Listar skills disponíveis
+hermes skills list
+
+# Executar o chat interativo com a skill carregada
+hermes chat -s organizador-inteligente
+</code></pre>
+
+<p><strong>O que a skill faz:</strong> Em vez de depender apenas de extensões de ficheiros como no script Python simples, o Hermes Agent lê o conteúdo real de cada documento e utiliza modelos de IA para decidir inteligentemente onde arquivar cada ficheiro.</p>
+
+<h2>Conclusão: Da automação simples à inteligência artificial</h2>
+<p>Aprender Python para automação é uma das competências mais valiosas que podes adquirir. Começar com a manipulação de ficheiros (<code>os</code>), integrar chamadas a serviços externos (<code>requests</code>) e agendar execuções (<code>schedule</code>) dá-te total controlo sobre a tua produtividade. Quando juntas a isto a capacidade de orquestrar agentes e skills com o Hermes Agent, as possibilidades tornam-se ilimitadas.</p>
+
+<div class="cta-box" style="background-color: #f5f7fa; border-left: 4px solid #0066cc; padding: 20px; margin-top: 30px; border-radius: 4px;">
+    <h3>Queres dominar a automação avançada com Agentes de IA?</h3>
+    <p>Se queres ir além dos scripts básicos de Python e aprender a criar ecossistemas completos de automação inteligente, descobre o <strong>Guia Completo do Hermes Agent</strong> de MarcTechJA. Com 42 capítulos práticos distribuídos por 10 partes, vais aprender a configurar múltiplos fornecedores de IA, criar skills personalizadas e implementar agentes autónomos em produção.</p>
+    <p><a href="https://hotm.io/jFUussV9" target="_blank" rel="noopener" style="display: inline-block; background-color: #0066cc; color: #ffffff; padding: 12px 24px; text-decoration: none; border-radius: 4px; font-weight: bold;">Garante o teu Guia Completo do Hermes Agent aqui</a></p>
+</div>
+
+          <div class="article-cta">
+            <h3>Queres ir mais longe?</h3>
+            <p>O Guia Completo do Hermes Agent leva-te do zero às automações avançadas com 10 partes e 42 capítulos.</p>
+            <a href="/livro/" class="btn btn-gold">Saber Mais Sobre o Livro</a>
+          </div>
+        </div>
+      </div>
+      <aside class="sidebar">
+        <div class="sidebar-widget">
+          <h3>📘 Livro do Hermes Agent</h3>
+          <p>10 partes, 42 capítulos. PDF + EPUB.</p>
+          <a href="/livro/" class="btn btn-gold">Saber Mais</a>
+        </div>
+        <div class="sidebar-widget ad-placeholder">Anúncio Google AdSense</div>
+      </aside>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <a href="/" class="logo">Marc<span class="gold">tech</span>JA</a>
+          <p>Tecnologia, automação e IA para transformar a produtividade.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Navegação</h4>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/blog/">Blog</a></li>
+            <li><a href="/livro/">Livro</a></li>
+            <li><a href="/sobre/">Sobre</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="/politica-de-privacidade/">Privacidade</a></li>
+            <li><a href="/politica-de-cookies/">Cookies</a></li>
+            <li><a href="/termos/">Termos</a></li>
+            <li><a href="/contactos/">Contactos</a></li>
+            <li><a href="#" id="cookie-settings" onclick="window.MarctechJACookieConsent&&window.MarctechJACookieConsent.show();return false;">Definições de cookies</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contacto</h4>
+          <ul>
+            <li><a href="mailto:marctechja@gmail.com">marctechja@gmail.com</a></li>
+            <li><a href="https://github.com/Jorgeacus">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 MarctechJA. Todos os direitos reservados.</p>
+      </div>
+    </div>
+  </footer>
+  <script src="/assets/js/main.js"></script>
+  <script src="/assets/js/cookie-consent.js"></script>
+</body>
+</html>
