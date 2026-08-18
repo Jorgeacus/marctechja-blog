@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Construir o teu próprio agente de IA com Python — MarctechJA</title>
+  <meta name="description" content="Sentes que os chatbots tradicionais são limitados porque apenas conversam, sem conseguir realizar ações reais no teu computador? Imagina ter um assist">
+  <meta property="og:title" content="Construir o teu próprio agente de IA com Python">
+  <meta property="og:description" content="Sentes que os chatbots tradicionais são limitados porque apenas conversam, sem conseguir realizar ações reais no teu computador? Imagina ter um assist">
+  <meta property="og:url" content="https://marcusja777.com/blog/construir-o-teu-proprio-agente-de-ia-com-python/">
+  <link rel="canonical" href="https://marcusja777.com/blog/construir-o-teu-proprio-agente-de-ia-com-python/">
+  <link rel="stylesheet" href="/assets/css/style.css?v=20260818">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+  <meta name="google-adsense-account" content="ca-pub-3717814491008089">
+  <meta name="author" content="Hermes Agent">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Construir o teu próprio agente de IA com Python",
+  "url": "https://marcusja777.com/blog/construir-o-teu-proprio-agente-de-ia-com-python/",
+  "datePublished": "2026-08-18",
+  "dateModified": "2026-08-18",
+  "inLanguage": "pt-PT",
+  "author": {"@type": "Person", "name": "Hermes Agent"},
+  "publisher": {"@type": "Organization", "name": "MarctechJA", "url": "https://marcusja777.com/"},
+  "mainEntityOfPage": {"@type": "WebPage", "@id": "https://marcusja777.com/blog/construir-o-teu-proprio-agente-de-ia-com-python/"}
+}
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="logo">Marc<span class="gold">tech</span>JA</a>
+      <button class="menu-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/blog/">Blog</a></li>
+        <li><a href="/livro/">Livro</a></li>
+        <li><a href="/sobre/">Sobre</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <section class="article-page">
+    <div class="container layout-with-sidebar">
+      <div>
+        <div class="article-header">
+          <div class="breadcrumb">
+            <a href="/">Home</a> / <a href="/blog/">Blog</a> / Construir o teu próprio agente de IA com Python
+          </div>
+          <h1>Construir o teu próprio agente de IA com Python</h1>
+          <div class="meta">
+            <span>📅 18 Aug 2026</span>
+            <span>🏷️ Programadores</span>
+            <span>✍️ Hermes Agent</span>
+          </div>
+        </div>
+        <div class="article-content">
+          <p>Sentes que os chatbots tradicionais são limitados porque apenas conversam, sem conseguir realizar ações reais no teu computador? Imagina ter um assistente inteligente que não só compreende as tuas instruções, mas que também executa scripts em Python, manipula ficheiros locais e interage com APIs externas de forma totalmente autónoma. Criar o teu próprio agente de IA é muito mais simples do que parece, especialmente quando combinamos a flexibilidade de programação do Python com o ecossistema do Hermes Agent.</p>
+
+<h2>O que é um Agente de IA com Ferramentas?</h2>
+<p>Diferente de um modelo de linguagem comum (LLM) que apenas responde a perguntas com base no seu treino, um <strong>Agente de IA</strong> consegue interagir com o mundo real através de ferramentas. No nosso caso, o Hermes Agent funciona como o "cérebro" que toma decisões e coordena as tarefas, enquanto o Python fornece os "músculos" (as ferramentas) para ler ficheiros, executar comandos no terminal e processar dados locais.</p>
+
+<h2>Passo 1: Preparar o Ambiente e Instalar o Hermes Agent</h2>
+<p>Antes de começarmos a programar, precisamos de garantir que temos o Python instalado na nossa máquina e o Hermes Agent configurado globalmente no sistema.</p>
+
+<p>Se ainda não tens o Python, podes descarregá-lo diretamente do site oficial em <a href="https://python.org" target="_blank" rel="noopener noreferrer">python.org</a>. Com o Python pronto, instala o Hermes Agent utilizando o comando oficial para o teu sistema operativo:</p>
+
+<p><strong>No macOS ou Linux:</strong></p>
+<pre><code>curl -fsSL https://hermes-agent.nousresearch.com/install.sh | bash</code></pre>
+
+<p><strong>No Windows (via PowerShell como Administrador):</strong></p>
+<pre><code>iex (irm https://hermes-agent.nousresearch.com/install.ps1)</code></pre>
+
+<p>Estes comandos instalam a interface de linha de comandos (CLI) do Hermes Agent de forma global, permitindo-te gerir skills e interagir com agentes diretamente a partir do terminal.</p>
+
+<h2>Passo 2: Construir o Script Python (A nossa Ferramenta)</h2>
+<p>Vamos criar uma ferramenta prática em Python: um script que analisa um ficheiro de texto local, procura por uma palavra-chave específica e devolve um resumo detalhado em formato JSON. Cria um ficheiro chamado <code>analisador.py</code> e adiciona o código abaixo:</p>
+
+<pre><code>import sys
+import json
+import os
+
+def analisar_ficheiro(caminho_ficheiro, palavra_chave):
+    if not os.path.exists(caminho_ficheiro):
+        return {"erro": f"O ficheiro '{caminho_ficheiro}' nao existe."}
+    
+    try:
+        with open(caminho_ficheiro, 'r', encoding='utf-8') as f:
+            conteudo = f.read()
+        
+        contagem = conteudo.lower().count(palavra_chave.lower())
+        total_palavras = len(conteudo.split())
+        
+        return {
+            "sucesso": True,
+            "ficheiro": caminho_ficheiro,
+            "palavra_chave": palavra_chave,
+            "ocorrencias": contagem,
+            "total_palavras": total_palavras,
+            "tamanho_caracteres": len(conteudo)
+        }
+    except Exception as e:
+        return {"erro": str(e)}
+
+if __name__ == "__main__":
+    if len(sys.argv) &lt; 3:
+        print(json.dumps({"erro": "Argumentos insuficientes. Uso: python analisador.py &lt;caminho&gt; &lt;palavra&gt;"}))
+        sys.exit(1)
+    
+    caminho = sys.argv[1]
+    palavra = sys.argv[2]
+    resultado = analisar_ficheiro(caminho, palavra)
+    print(json.dumps(resultado, indent=2))</code></pre>
+
+<p><strong>O que faz este código?</strong> Ele recebe dois argumentos via terminal (o caminho de um ficheiro e uma palavra-chave), abre o ficheiro de forma segura, faz a contagem de palavras e imprime um objeto JSON estruturado. Este formato JSON é ideal para que o Hermes Agent consiga ler e interpretar os dados de forma precisa.</p>
+
+<h2>Passo 3: Criar a Skill do Hermes Agent (SKILL.md)</h2>
+<p>Agora que temos o nosso script Python funcional, precisamos de explicar ao Hermes Agent como e quando deve utilizá-lo. No Hermes, as regras e instruções de ferramentas são escritas num ficheiro especial chamado <code>SKILL.md</code>, que combina metadados em YAML com instruções em Markdown.</p>
+
+<p>Cria uma pasta chamada <code>analisador-documentos</code> dentro do diretório de skills do Hermes (geralmente localizado em <code>~/.hermes/skills/</code>) e adiciona lá o ficheiro <code>SKILL.md</code> com a seguinte estrutura oficial:</p>
+
+<pre><code>---
+name: analisador-documentos
+description: Analisa ficheiros de texto locais para contar ocorrencias de palavras-chave usando um script Python.
+author: MarctechJA
+version: "1.0"
+platforms:
+  - macos
+  - linux
+  - windows
+metadata:
+  hermes:
+    tags: [automacao, python, analise]
+---
+
+# analisador-documentos
+Esta skill permite ao Hermes Agent executar um script Python local para analisar documentos de texto de forma automatizada.
+
+## When to Use
+Usa esta skill sempre que o utilizador pedir para contar palavras, analisar o conteudo de um ficheiro de texto especifico ou procurar termos dentro de um documento local.
+
+## Instruções
+1. Identifica o caminho do ficheiro fornecido pelo utilizador e a palavra-chave a pesquisar.
+2. Executa o script Python local com o comando: `python analisador.py &lt;caminho_do_ficheiro&gt; &lt;palavra_chave&gt;`.
+3. Le o output em formato JSON gerado pelo script.
+4. Apresenta um resumo claro, amigavel e estruturado para o utilizador com os resultados obtidos.
+
+## Critérios de conclusão
+- O script Python foi executado com sucesso e retornou dados validos.
+- O resultado JSON foi interpretado e traduzido numa resposta legivel em portugues.</code></pre>
+
+<p>Este ficheiro <code>SKILL.md</code> define o contrato entre o modelo de IA e o teu sistema operativo. O Hermes Agent lê estas instruções em tempo de execução e compreende perfeitamente como invocar o teu script Python.</p>
+
+<h2>Passo 4: Validar e Executar o teu Agente de IA</h2>
+<p>Com a skill colocada na pasta de skills do Hermes, podes verificar se ela foi reconhecida corretamente pelo sistema listando todas as ferramentas disponíveis no teu terminal:</p>
+
+<pre><code>hermes skills list</code></pre>
+
+<p>Agora, podes iniciar um chat interativo diretamente com o teu novo agente de IA focado em análise de documentos executando o seguinte comando:</p>
+
+<pre><code>hermes chat -s analisador-documentos</code></pre>
+
+<p>Durante a sessão de chat, podes dar ordens naturais como: <em>"Analisa o ficheiro relatorio_vendas.txt e diz-me quantas vezes aparece a palavra 'lucro'"</em>. O Hermes Agent irá ler a tua instrução, mapear para a skill configurada, executar o script Python em segundo plano e apresentar-te a resposta final formatada de forma inteligente!</p>
+
+<h2>Conclusão</h2>
+<p>Ao integrar scripts simples em Python com o Hermes Agent, abres as portas para um mundo infinito de automações personalizadas. Podes expandir este exemplo para ler bases de dados SQL, interagir com APIs de marketing, enviar e-mails automatizados ou gerir ficheiros do teu sistema — tudo controlado por linguagem natural através de IA local ou na cloud.</p>
+
+<p>Se queres dominar por completo a criação de agentes inteligentes, configurar múltiplos providers (OpenAI, Anthropic, Gemini, Ollama) e aprender a desenhar equipas inteiras de agentes autónomos a colaborar entre si, precisas de dar o próximo passo.</p>
+
+<p>Adquire o <strong>"Guia Completo do Hermes Agent"</strong> de MarcTechJA. Com 124 páginas práticas e 42 capítulos detalhados, este livro digital é o recurso definitivo para programadores, empreendedores e entusiastas que querem liderar a revolução da automação com inteligência artificial.</p>
+
+<p style="text-align: center; margin-top: 30px;">
+  <a href="https://hotm.io/jFUussV9" target="_blank" rel="noopener noreferrer" style="background-color: #007bff; color: white; padding: 12px 24px; text-decoration: none; border-radius: 5px; font-weight: bold; display: inline-block;">Garante o teu Guia Completo do Hermes Agent Aqui</a>
+</p>
+
+          <div class="article-cta">
+            <h3>Queres ir mais longe?</h3>
+            <p>O Guia Completo do Hermes Agent leva-te do zero às automações avançadas com 10 partes e 42 capítulos.</p>
+            <a href="/livro/" class="btn btn-gold">Saber Mais Sobre o Livro</a>
+          </div>
+        </div>
+      </div>
+      <aside class="sidebar">
+        <div class="sidebar-widget">
+          <h3>📘 Livro do Hermes Agent</h3>
+          <p>10 partes, 42 capítulos. PDF + EPUB.</p>
+          <a href="/livro/" class="btn btn-gold">Saber Mais</a>
+        </div>
+        <div class="sidebar-widget ad-placeholder">Anúncio Google AdSense</div>
+      </aside>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <a href="/" class="logo">Marc<span class="gold">tech</span>JA</a>
+          <p>Tecnologia, automação e IA para transformar a produtividade.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Navegação</h4>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/blog/">Blog</a></li>
+            <li><a href="/livro/">Livro</a></li>
+            <li><a href="/sobre/">Sobre</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="/politica-de-privacidade/">Privacidade</a></li>
+            <li><a href="/politica-de-cookies/">Cookies</a></li>
+            <li><a href="/termos/">Termos</a></li>
+            <li><a href="/contactos/">Contactos</a></li>
+            <li><a href="#" id="cookie-settings" onclick="window.MarctechJACookieConsent&&window.MarctechJACookieConsent.show();return false;">Definições de cookies</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contacto</h4>
+          <ul>
+            <li><a href="mailto:marctechja@gmail.com">marctechja@gmail.com</a></li>
+            <li><a href="https://github.com/Jorgeacus">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 MarctechJA. Todos os direitos reservados.</p>
+      </div>
+    </div>
+  </footer>
+  <script src="/assets/js/main.js"></script>
+  <script src="/assets/js/cookie-consent.js"></script>
+</body>
+</html>
