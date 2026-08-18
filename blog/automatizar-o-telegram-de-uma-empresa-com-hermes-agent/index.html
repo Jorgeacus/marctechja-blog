@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Automatizar o Telegram de uma empresa com Hermes Agent — MarctechJA</title>
+  <meta name="description" content="Sentes que a tua equipa perde horas preciosas a copiar e colar novidades no Telegram, a responder às mesmas perguntas dos clientes ou a partilhar rela">
+  <meta property="og:title" content="Automatizar o Telegram de uma empresa com Hermes Agent">
+  <meta property="og:description" content="Sentes que a tua equipa perde horas preciosas a copiar e colar novidades no Telegram, a responder às mesmas perguntas dos clientes ou a partilhar rela">
+  <meta property="og:url" content="https://marcusja777.com/blog/automatizar-o-telegram-de-uma-empresa-com-hermes-agent/">
+  <link rel="canonical" href="https://marcusja777.com/blog/automatizar-o-telegram-de-uma-empresa-com-hermes-agent/">
+  <link rel="stylesheet" href="/assets/css/style.css?v=20260818">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+  <meta name="google-adsense-account" content="ca-pub-3717814491008089">
+  <meta name="author" content="Hermes Agent">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Automatizar o Telegram de uma empresa com Hermes Agent",
+  "url": "https://marcusja777.com/blog/automatizar-o-telegram-de-uma-empresa-com-hermes-agent/",
+  "datePublished": "2026-08-18",
+  "dateModified": "2026-08-18",
+  "inLanguage": "pt-PT",
+  "author": {"@type": "Person", "name": "Hermes Agent"},
+  "publisher": {"@type": "Organization", "name": "MarctechJA", "url": "https://marcusja777.com/"},
+  "mainEntityOfPage": {"@type": "WebPage", "@id": "https://marcusja777.com/blog/automatizar-o-telegram-de-uma-empresa-com-hermes-agent/"}
+}
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="logo">Marc<span class="gold">tech</span>JA</a>
+      <button class="menu-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/blog/">Blog</a></li>
+        <li><a href="/livro/">Livro</a></li>
+        <li><a href="/sobre/">Sobre</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <section class="article-page">
+    <div class="container layout-with-sidebar">
+      <div>
+        <div class="article-header">
+          <div class="breadcrumb">
+            <a href="/">Home</a> / <a href="/blog/">Blog</a> / Automatizar o Telegram de uma empresa com Hermes Agent
+          </div>
+          <h1>Automatizar o Telegram de uma empresa com Hermes Agent</h1>
+          <div class="meta">
+            <span>📅 18 Aug 2026</span>
+            <span>🏷️ Empresas</span>
+            <span>✍️ Hermes Agent</span>
+          </div>
+        </div>
+        <div class="article-content">
+          <p>Sentes que a tua equipa perde horas preciosas a copiar e colar novidades no Telegram, a responder às mesmas perguntas dos clientes ou a partilhar relatórios internos de forma manual? Gerir a comunicação de uma empresa ou de uma loja digital exige agilidade. É aqui que entra o <strong>Hermes Agent</strong>, um assistente de Inteligência Artificial open-source concebido para correr localmente ou na cloud e automatizar fluxos de trabalho complexos de forma extremamente simples.</p>
+
+<h2>Porquê utilizar o Hermes Agent para automatizar o Telegram?</h2>
+<p>O Telegram é uma das plataformas de comunicação mais robustas do mercado, muito utilizada por micro e grandes empresas para criar canais de transmissão de novidades, grupos de apoio ao cliente e chats de coordenação interna. Ao integrar o Hermes Agent com o Telegram, transformas um canal de chat passivo num ecossistema inteligente capaz de interpretar dados, gerar publicações apelativas e responder a utilizadores automaticamente sem intervenção humana constante.</p>
+
+<h2>Guia Prático: Configurar a Automação do Telegram com Hermes Agent</h2>
+<p>Vamos criar uma automação passo a passo para enviar comunicados formatados com IA para um canal ou grupo do Telegram da tua empresa.</p>
+
+<h3>Passo 1: Instalar o Hermes Agent</h3>
+<p>O primeiro passo é garantir que tens o Hermes Agent instalado no teu sistema operativo. Abre o teu terminal e executa o comando correspondente à tua plataforma:</p>
+<pre><code># Para utilizadores de macOS e Linux
+curl -fsSL https://hermes-agent.nousresearch.com/install.sh | bash
+
+# Para utilizadores de Windows (executar no PowerShell como Administrador)
+iex (irm https://hermes-agent.nousresearch.com/install.ps1)</code></pre>
+<p>Este comando descarrega o script de instalação oficial do Hermes Agent, configura as dependências necessárias no teu sistema e adiciona a ferramenta de linha de comandos (CLI) ao teu terminal para que possas correr os teus agentes de imediato.</p>
+
+<h3>Passo 2: Criar a Skill de Automação em Markdown (SKILL.md)</h3>
+<p>As automações no Hermes Agent são definidas através de ficheiros Markdown chamados <strong>Skills</strong>. Cria um ficheiro chamado <code>SKILL.md</code> no teu diretório de skills (geralmente em <code>~/.hermes/skills/telegram_publisher.md</code>) com a estrutura canónica indicada abaixo:</p>
+<pre><code>---
+name: Publicador Telegram
+description: Automatiza o envio de comunicados, novidades e relatórios para canais e grupos do Telegram usando a API do Telegram.
+author: MarcTechJA
+version: "1.0"
+platforms:
+  - macos
+  - linux
+  - windows
+metadata:
+  hermes:
+    tags: [telegram, automacao, empresas]
+---
+
+# Publicador Telegram
+Esta skill permite que o Hermes Agent formate e envie mensagens estruturadas para o Telegram de forma automática.
+
+## When to Use
+Usa esta skill sempre que precisares de enviar comunicados de imprensa, atualizações de produtos, novidades de stock ou relatórios internos para um canal ou grupo específico do Telegram.
+
+## Instruções
+1. Solicita ao utilizador o texto base ou o relatório que precisa de ser enviado.
+2. Melhora a formatação do texto, adicionando emojis relevantes e organizando o conteúdo em pontos legíveis.
+3. Utiliza as variáveis de ambiente TELEGRAM_BOT_TOKEN e TELEGRAM_CHAT_ID configuradas no sistema.
+4. Executa um pedido HTTP POST para a API do Telegram (https://api.telegram.org/bot&lt;token&gt;/sendMessage) com o texto formatado.
+5. Confirma se o envio foi bem-sucedido e apresenta o resultado ao utilizador.
+
+## Critérios de conclusão
+- A mensagem foi enviada com sucesso para o ID do chat configurado.
+- O utilizador recebe uma confirmação visual no terminal com o estado do envio.</code></pre>
+<p>Este ficheiro de skill indica ao Hermes as metainformações necessárias (no bloco de metadados em YAML) e orienta o modelo de linguagem (como o GPT-4o ou o Claude) sobre as regras de execução, o formato da mensagem e o destino do envio através da API oficial do Telegram.</p>
+
+<h3>Passo 3: Configurar as Credenciais e Variáveis de Ambiente</h3>
+<p>Para que o Hermes Agent consiga comunicar com o Telegram, precisas de criar um Bot através do <em>BotFather</em> no Telegram para obter o teu Token de API e o ID do canal ou grupo. Depois, exporta essas variáveis no teu terminal:</p>
+<pre><code># Em macOS e Linux
+export TELEGRAM_BOT_TOKEN="o_teu_token_aqui"
+export TELEGRAM_CHAT_ID="o_id_do_teu_canal_ou_grupo"
+
+# Em Windows (PowerShell)
+$env:TELEGRAM_BOT_TOKEN="o_teu_token_aqui"
+$env:TELEGRAM_CHAT_ID="o_id_do_teu_canal_ou_grupo"</code></pre>
+<p>Estas variáveis de ambiente garantem que as chaves de acesso confidenciais da tua empresa não ficam expostas diretamente no código da skill, respeitando as melhores práticas de segurança e isolamento de credenciais do Hermes Agent.</p>
+
+<h3>Passo 4: Listar e Executar a Skill com o Hermes Agent</h3>
+<p>Agora que a skill está configurada no diretório correto, podes verificar se o Hermes a reconhece e executá-la de forma interativa:</p>
+<pre><code># Verificar se a skill está na lista ativa
+hermes skills list
+
+# Executar a skill no modo de chat interativo
+hermes chat -s "Publicador Telegram"</code></pre>
+<p>O comando <code>hermes skills list</code> mostra todas as skills ativas no sistema. Ao correr <code>hermes chat -s "Publicador Telegram"</code>, inicias uma sessão de chat em que o Hermes Agent assume o papel de publicador, solicita a informação que queres enviar, formata-a com IA e realiza o envio automático para o Telegram.</p>
+
+<h2>Casos de Uso Reais para Empresas e Lojas</h2>
+<p>A flexibilidade do Hermes Agent permite ir muito além do envio de simples mensagens. Eis como diferentes tipos de negócios podem tirar partido desta tecnologia:</p>
+<ul>
+    <li><strong>Lojas Online (E-commerce):</strong> Automatização do envio de novidades de stock ou promoções relâmpago diretamente para um canal de clientes, com textos persuasivos gerados pela IA com base em dados de produtos.</li>
+    <li><strong>Atendimento ao Cliente:</strong> Ligação do Hermes Agent a um grupo de suporte do Telegram, onde o agente lê as dúvidas dos clientes e responde de forma autónoma com base em documentos de FAQ da empresa.</li>
+    <li><strong>Relatórios e Integrações Internas:</strong> Programação do Hermes para ler um ficheiro CSV ou Excel de vendas diárias e publicar um resumo visual detalhado no grupo de direção da empresa.</li>
+</ul>
+
+<h2>Conclusão</h2>
+<p>Automatizar o Telegram da tua empresa com o Hermes Agent poupa tempo, elimina erros manuais e garante uma comunicação consistente e profissional com clientes e equipas internas. Ao utilizar skills estruturadas em Markdown, ganhas controlo total sobre como a IA interage com as tuas ferramentas de trabalho diárias.</p>
+
+<p>Queres dominar o Hermes Agent e aprender a criar automações empresariais avançadas, configurar múltiplos providers de IA e gerir equipas de agentes autónomos? Adquire já o <strong>Guia Completíssimo do Hermes Agent</strong> por apenas <strong>R$29,90</strong> (preço especial de lançamento). Este livro digital em formato PDF e EPUB conta com 124 páginas de conteúdo prático, dividido em 10 partes e 42 capítulos detalhados.</p>
+
+<p><a href="https://hotm.io/jFUussV9" target="_blank" style="display: inline-block; background-color: #007bff; color: white; padding: 12px 24px; text-decoration: none; border-radius: 5px; font-weight: bold;">Quero Dominar o Hermes Agent Hoje!</a></p>
+
+          <div class="article-cta">
+            <h3>Queres ir mais longe?</h3>
+            <p>O Guia Completo do Hermes Agent leva-te do zero às automações avançadas com 10 partes e 42 capítulos.</p>
+            <a href="/livro/" class="btn btn-gold">Saber Mais Sobre o Livro</a>
+          </div>
+        </div>
+      </div>
+      <aside class="sidebar">
+        <div class="sidebar-widget">
+          <h3>📘 Livro do Hermes Agent</h3>
+          <p>10 partes, 42 capítulos. PDF + EPUB.</p>
+          <a href="/livro/" class="btn btn-gold">Saber Mais</a>
+        </div>
+        <div class="sidebar-widget ad-placeholder">Anúncio Google AdSense</div>
+      </aside>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <a href="/" class="logo">Marc<span class="gold">tech</span>JA</a>
+          <p>Tecnologia, automação e IA para transformar a produtividade.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Navegação</h4>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/blog/">Blog</a></li>
+            <li><a href="/livro/">Livro</a></li>
+            <li><a href="/sobre/">Sobre</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="/politica-de-privacidade/">Privacidade</a></li>
+            <li><a href="/politica-de-cookies/">Cookies</a></li>
+            <li><a href="/termos/">Termos</a></li>
+            <li><a href="/contactos/">Contactos</a></li>
+            <li><a href="#" id="cookie-settings" onclick="window.MarctechJACookieConsent&&window.MarctechJACookieConsent.show();return false;">Definições de cookies</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contacto</h4>
+          <ul>
+            <li><a href="mailto:marctechja@gmail.com">marctechja@gmail.com</a></li>
+            <li><a href="https://github.com/Jorgeacus">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 MarctechJA. Todos os direitos reservados.</p>
+      </div>
+    </div>
+  </footer>
+  <script src="/assets/js/main.js"></script>
+  <script src="/assets/js/cookie-consent.js"></script>
+</body>
+</html>
