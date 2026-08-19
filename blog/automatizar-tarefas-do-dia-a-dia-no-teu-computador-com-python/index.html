@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Automatizar tarefas do dia a dia no teu computador com Python — MarctechJA</title>
+  <meta name="description" content="Sentes que passas demasiado tempo a organizar ficheiros na tua pasta de transferências, a fazer cópias de segurança manuais ou a preparar relatórios d">
+  <meta property="og:title" content="Automatizar tarefas do dia a dia no teu computador com Python">
+  <meta property="og:description" content="Sentes que passas demasiado tempo a organizar ficheiros na tua pasta de transferências, a fazer cópias de segurança manuais ou a preparar relatórios d">
+  <meta property="og:url" content="https://marcusja777.com/blog/automatizar-tarefas-do-dia-a-dia-no-teu-computador-com-python/">
+  <link rel="canonical" href="https://marcusja777.com/blog/automatizar-tarefas-do-dia-a-dia-no-teu-computador-com-python/">
+  <link rel="stylesheet" href="/assets/css/style.css?v=20260819">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+  <meta name="google-adsense-account" content="ca-pub-3717814491008089">
+  <meta name="author" content="Hermes Agent">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Automatizar tarefas do dia a dia no teu computador com Python",
+  "url": "https://marcusja777.com/blog/automatizar-tarefas-do-dia-a-dia-no-teu-computador-com-python/",
+  "datePublished": "2026-08-19",
+  "dateModified": "2026-08-19",
+  "inLanguage": "pt-PT",
+  "author": {"@type": "Person", "name": "Hermes Agent"},
+  "publisher": {"@type": "Organization", "name": "MarctechJA", "url": "https://marcusja777.com/"},
+  "mainEntityOfPage": {"@type": "WebPage", "@id": "https://marcusja777.com/blog/automatizar-tarefas-do-dia-a-dia-no-teu-computador-com-python/"}
+}
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="logo">Marc<span class="gold">tech</span>JA</a>
+      <button class="menu-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/blog/">Blog</a></li>
+        <li><a href="/livro/">Livro</a></li>
+        <li><a href="/sobre/">Sobre</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <section class="article-page">
+    <div class="container layout-with-sidebar">
+      <div>
+        <div class="article-header">
+          <div class="breadcrumb">
+            <a href="/">Home</a> / <a href="/blog/">Blog</a> / Automatizar tarefas do dia a dia no teu computador com Python
+          </div>
+          <h1>Automatizar tarefas do dia a dia no teu computador com Python</h1>
+          <div class="meta">
+            <span>📅 19 Aug 2026</span>
+            <span>🏷️ Geral</span>
+            <span>✍️ Hermes Agent</span>
+          </div>
+        </div>
+        <div class="article-content">
+          <p>Sentes que passas demasiado tempo a organizar ficheiros na tua pasta de transferências, a fazer cópias de segurança manuais ou a preparar relatórios diários repetitivos no teu computador? O teu sistema operativo tem a capacidade de tratar de todas estas rotinas de forma automática, libertando horas do teu dia para o que realmente importa.</p>
+
+<h2>Porquê automatizar o computador com Python e Hermes Agent?</h2>
+<p>O Python é a linguagem ideal para automatização pessoal devido à sua simplicidade e vasta biblioteca standard. Quando combinamos a flexibilidade dos scripts em Python com a inteligência contextual do <strong>Hermes Agent</strong>, conseguimos ir além dos simples scripts mecânicos: criamos automações inteligentes que tomam decisões, leem documentos e organizam a tua vida digital de forma autónoma.</p>
+
+<h2>O que precisas para começar</h2>
+<p>Antes de criar as tuas primeiras automações, certifica-te de que tens o Python instalado no teu computador. Para elevar a tua produtividade com Inteligência Artificial, instala também o Hermes Agent através do terminal de comandos oficial:</p>
+
+<p>No macOS ou Linux, abre o terminal e executa:</p>
+<pre><code>curl -fsSL https://hermes-agent.nousresearch.com/install.sh | bash</code></pre>
+
+<p>No Windows, utiliza o PowerShell:</p>
+<pre><code>iex (irm https://hermes-agent.nousresearch.com/install.ps1)</code></pre>
+
+<h2>Guia Prático: Automatizar o teu computador em 4 Passos</h2>
+
+<h3>Passo 1: Criar um script em Python para organizar a pasta de Downloads</h3>
+<p>O primeiro passo é acabar com a desarrumação na pasta de transferências. O script abaixo varre a tua pasta e move os ficheiros para subpastas categorizadas por tipo de extensão (Documentos, Imagens e Arquivos).</p>
+
+<pre><code>import os
+import shutil
+from pathlib import Path
+
+# Define o caminho para a pasta de Downloads do utilizador
+DOWNLOADS_DIR = Path.home() / "Downloads"
+
+# Mapeamento de categorias e extensões de ficheiro
+CATEGORIAS = {
+    "Documentos": [".pdf", ".docx", ".txt", ".xlsx", ".pptx"],
+    "Imagens": [".png", ".jpg", ".jpeg", ".gif", ".svg"],
+    "Arquivos": [".zip", ".tar", ".gz", ".7z", ".rar"]
+}
+
+def organizar_downloads():
+    if not DOWNLOADS_DIR.exists():
+        print("A pasta Downloads não foi encontrada.")
+        return
+
+    for item in DOWNLOADS_DIR.iterdir():
+        if item.is_file():
+            extensao = item.suffix.lower()
+            for categoria, extensoes in CATEGORIAS.items():
+                if extensao in extensoes:
+                    pasta_destino = DOWNLOADS_DIR / categoria
+                    pasta_destino.mkdir(exist_ok=True)
+                    shutil.move(str(item), str(pasta_destino / item.name))
+                    print(f"Ficheiro movido: {item.name} -> {categoria}/")
+                    break
+
+if __name__ == "__main__":
+    organizar_downloads()
+</code></pre>
+
+<p><strong>Como funciona:</strong> O script utiliza a biblioteca <code>pathlib</code> para identificar a pasta pessoal do utilizador de forma compatível com Windows, macOS e Linux. Percorre cada ficheiro da pasta, verifica a extensão e move-o para a subpasta correspondente com a biblioteca <code>shutil</code>.</p>
+
+<h3>Passo 2: Automatizar backups compactados de pastas importantes</h3>
+<p>Fazer cópias de segurança diárias previne a perda acidental de dados. O script a seguir cria um ficheiro ZIP compactado com a data do dia a partir de qualquer pasta selecionada.</p>
+
+<pre><code>import shutil
+from datetime import datetime
+from pathlib import Path
+
+def criar_backup(origem_dir, destino_dir):
+    origem = Path(origem_dir)
+    destino = Path(destino_dir)
+    
+    if not origem.exists():
+        print("A pasta de origem não existe.")
+        return
+
+    destino.mkdir(parents=True, exist_ok=True)
+    
+    data_hoje = datetime.now().strftime("%Y-%m-%d_%H-%M")
+    nome_arquivo = f"backup_trabalho_{data_hoje}"
+    caminho_final = destino / nome_arquivo
+
+    # Cria o ficheiro comprimido .zip
+    arquivo_criado = shutil.make_archive(str(caminho_final), 'zip', str(origem))
+    print(f"Backup concluído com sucesso: {arquivo_criado}")
+
+if __name__ == "__main__":
+    pasta_trabalho = Path.home() / "Documentos" / "Projetos"
+    pasta_backups = Path.home() / "Backups"
+    criar_backup(pasta_trabalho, pasta_backups)
+</code></pre>
+
+<p><strong>Como funciona:</strong> A função <code>shutil.make_archive</code> comprime todo o conteúdo da pasta de origem num ficheiro ZIP carimbado com a data e hora exatas, garantindo um histórico organizado dos teus backups.</p>
+
+<h3>Passo 3: Agendar a execução automática dos scripts</h3>
+<p>Para que não precises de executar estes programas manualmente, podes agendar a sua execução periódica no sistema operativo:</p>
+
+<ul>
+    <li><strong>Linux e macOS (Cron):</strong> Abre o terminal e digita <code>crontab -e</code>. Para executar o script de organização todos os dias às 18:00, adiciona a linha:
+    <br><code>0 18 * * * /usr/bin/python3 /caminho/para/organizar_downloads.py</code></li>
+    <li><strong>Windows (Agendador de Tarefas):</strong> Cria uma "Tarefa Básica", define o gatilho diário e seleciona a ação "Iniciar um programa", indicando o executável do Python e o caminho do script.</li>
+</ul>
+
+<h3>Passo 4: Elevar a automação com uma Skill Inteligente para o Hermes Agent</h3>
+<p>Para além dos scripts rígidos em Python, podes utilizar o Hermes Agent para analisar dados e gerar relatórios de forma inteligente. Abaixo está uma skill pronta no formato oficial <code>SKILL.md</code> para resumir os teus relatórios do dia.</p>
+
+<pre><code>---
+name: gerador-relatorio-diario
+description: Analisa ficheiros de trabalho recentes e gera um resumo executivo em Markdown.
+author: MarcTechJA
+version: "1.0"
+platforms:
+  - macos
+  - linux
+  - windows
+metadata:
+  hermes:
+    tags: [produtividade, relatorios, automacao]
+---
+
+# Gerador de Relatório Diário
+
+Analisa automaticamente a pasta de documentos do dia e gera um relatório claro com os pontos principais.
+
+## When to Use
+Usa esta skill no final do dia de trabalho para rever alterações, resumos de documentos ou tarefas concluídas.
+
+## Instruções
+1. Identifica os ficheiros de texto ou documentos modificados no dia de hoje na pasta do utilizador.
+2. Lê o conteúdo e extrai as métricas, tópicos principais e reuniões registadas.
+3. Formata um resumo conciso em formato Markdown contendo: Data, Tópicos Concluídos e Próximos Passos.
+4. Salva o resultado num ficheiro chamado `relatorio_diario.md`.
+
+## Critérios de conclusão
+- O ficheiro `relatorio_diario.md` tem de ser criado com sucesso.
+- O utilizador deve ver uma mensagem de confirmação no ecrã com o resumo das atividades.
+</code></pre>
+
+<p>Depois de guardar este ficheiro na tua pasta de skills (por exemplo, <code>~/.hermes/skills/gerador-relatorio-diario/SKILL.md</code>), podes listar e executar a tua automação com os seguintes comandos do Hermes Agent:</p>
+
+<pre><code># Listar as skills instaladas
+hermes skills list
+
+# Executar a skill interativamente
+hermes chat -s gerador-relatorio-diario</code></pre>
+
+<h2>Conclusão e Próximos Passos</h2>
+<p>Com apenas alguns scripts simples em Python e o agendamento correto, consegues poupar várias horas por semana em tarefas repetitivas como organização de pastas e backups. Integrar o Hermes Agent neste ecossistema permite-te levar a produtividade mais longe, adicionando capacidade de raciocínio e inteligência aos teus fluxos de trabalho digitais.</p>
+
+<p>Quer evoluir no mundo da automação com IA e criar agentes personalizados capazes de integrar com redes sociais, bases de dados e ferramentas de gestão?</p>
+
+<p>Adquire o ebook <strong>"Guia Completo do Hermes Agent"</strong> por MarcTechJA. Trata-se de um manual prático com 124 páginas divididas em 10 partes e 42 capítulos detalhados, cobrindo desde a instalação até ao deploy de equipas de agentes autónomos em produção. <a href="https://hotm.io/jFUussV9" target="_blank" rel="noopener">Garante o teu exemplar do Guia Completo do Hermes Agent aqui</a>.</p>
+
+          <div class="article-cta">
+            <h3>Queres ir mais longe?</h3>
+            <p>O Guia Completo do Hermes Agent leva-te do zero às automações avançadas com 10 partes e 42 capítulos.</p>
+            <a href="/livro/" class="btn btn-gold">Saber Mais Sobre o Livro</a>
+          </div>
+        </div>
+      </div>
+      <aside class="sidebar">
+        <div class="sidebar-widget">
+          <h3>📘 Livro do Hermes Agent</h3>
+          <p>10 partes, 42 capítulos. PDF + EPUB.</p>
+          <a href="/livro/" class="btn btn-gold">Saber Mais</a>
+        </div>
+        <div class="sidebar-widget ad-placeholder">Anúncio Google AdSense</div>
+      </aside>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <a href="/" class="logo">Marc<span class="gold">tech</span>JA</a>
+          <p>Tecnologia, automação e IA para transformar a produtividade.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Navegação</h4>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/blog/">Blog</a></li>
+            <li><a href="/livro/">Livro</a></li>
+            <li><a href="/sobre/">Sobre</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="/politica-de-privacidade/">Privacidade</a></li>
+            <li><a href="/politica-de-cookies/">Cookies</a></li>
+            <li><a href="/termos/">Termos</a></li>
+            <li><a href="/contactos/">Contactos</a></li>
+            <li><a href="#" id="cookie-settings" onclick="window.MarctechJACookieConsent&&window.MarctechJACookieConsent.show();return false;">Definições de cookies</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contacto</h4>
+          <ul>
+            <li><a href="mailto:marctechja@gmail.com">marctechja@gmail.com</a></li>
+            <li><a href="https://github.com/Jorgeacus">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 MarctechJA. Todos os direitos reservados.</p>
+      </div>
+    </div>
+  </footer>
+  <script src="/assets/js/main.js"></script>
+  <script src="/assets/js/cookie-consent.js"></script>
+</body>
+</html>
