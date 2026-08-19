@@ -168,6 +168,66 @@ TOPICS = [
         "title": "Construir o teu próprio agente de IA com Python",
         "focus": "Guia para criar um agente de IA simples em Python que usa ferramentas (API calls, ficheiros, shell) e pode ser integrado com Hermes Agent."
     },
+    # 23 — SEO
+    {
+        "audience": "Criadores de Conteúdo",
+        "title": "SEO para o teu blog ou site com Python e Hermes Agent",
+        "focus": "Como usar Python e o Hermes Agent para melhorar o SEO: auditoria de palavras-chave, otimização de títulos e metas, análise de backlinks e relatórios de desempenho."
+    },
+    # 24 — Agendamento de tarefas
+    {
+        "audience": "Geral",
+        "title": "Automatizar tarefas do dia a dia no teu computador com Python",
+        "focus": "Guia prático para automatizar tarefas diárias no computador: organização de ficheiros, backups, lembretes e relatórios, com scripts Python agendados."
+    },
+    # 25 — WhatsApp em empresas
+    {
+        "audience": "Empresas",
+        "title": "CRM simples no WhatsApp com Python e Hermes Agent",
+        "focus": "Como construir um CRM simples para gerir clientes no WhatsApp: etiquetar conversas, registar notas, acompanhar follow-ups e gerar relatórios, com Python e Hermes Agent."
+    },
+    # 26 — Web scraping
+    {
+        "audience": "Programadores",
+        "title": "Web scraping com Python: recolher dados da web com ética e dentro da lei",
+        "focus": "Tutorial de web scraping com Python (requests e BeautifulSoup): recolher dados públicos, respeitar robots.txt e boas práticas legais, e integrar com Hermes Agent."
+    },
+    # 27 — E-mail marketing
+    {
+        "audience": "Empresários",
+        "title": "E-mail marketing automatizado para a tua empresa com Python",
+        "focus": "Como criar campanhas de e-mail marketing automatizadas: listas, sequências, personalização com Python e integração com Hermes Agent para gerar conteúdo."
+    },
+    # 28 — Relatórios financeiros
+    {
+        "audience": "Empresas",
+        "title": "Relatórios financeiros automáticos para micro e grandes empresas com Python",
+        "focus": "Como gerar relatórios financeiros automaticamente com Python: importar extratos, categorizar despesas, calcular métricas e enviar resumos por email com Hermes Agent."
+    },
+    # 29 — Sites pessoais
+    {
+        "audience": "Criadores de Conteúdo",
+        "title": "Criar um site pessoal ou portfólio com HTML, CSS e Python",
+        "focus": "Como criar um site pessoal ou portfólio profissional: estrutura, secções, domínio gratuito e publicação automática com Python e GitHub Actions."
+    },
+    # 30 — Gestão de projetos
+    {
+        "audience": "Geral",
+        "title": "Gerir projetos com Python e Hermes Agent: do planeamento à entrega",
+        "focus": "Como usar o Hermes Agent e Python para gerir projetos: criar listas de tarefas, acompanhar prazos, gerar relatórios de progresso e integrar com ferramentas de gestão."
+    },
+    # 31 — Segurança e privacidade
+    {
+        "audience": "Programadores",
+        "title": "Segurança e privacidade na automação: boas práticas com Python e Hermes Agent",
+        "focus": "Boas práticas de segurança ao automatizar: gestão segura de credenciais, evitar expor dados sensíveis, proteger scripts e APIs com Python e Hermes Agent."
+    },
+    # 32 — Newsletter
+    {
+        "audience": "Criadores de Conteúdo",
+        "title": "Criar e automatizar uma newsletter com Python e Hermes Agent",
+        "focus": "Como montar uma newsletter do zero: captar subscritores, gerar conteúdo automaticamente com IA, enviar edições e medir resultados com Python e Hermes Agent."
+    },
 ]
 
 REFERENCE_FILE = "assets/reference/ebook-summary.md"
@@ -430,8 +490,8 @@ def main():
             topic = candidate
             break
     if topic is None:
-        topic = TOPICS[today_index % len(TOPICS)]
-        print("   ⚠️ Todos os tópicos já foram publicados; a usar o da rotação de hoje.")
+        print("   ⚠️ Todos os tópicos da rotação já foram publicados. Nada novo a gerar hoje.")
+        sys.exit(0)
 
     print(f"📝 A gerar artigo: {topic['title']}")
     print(f"   Público: {topic['audience']}")
