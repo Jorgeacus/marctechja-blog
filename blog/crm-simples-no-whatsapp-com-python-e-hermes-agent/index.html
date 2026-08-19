@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CRM simples no WhatsApp com Python e Hermes Agent — MarctechJA</title>
+  <meta name="description" content="Sentes que a caixa de entrada do WhatsApp do teu negócio se está a transformar num caos difícil de gerir? Deixar passar o prazo de um orçamento penden">
+  <meta property="og:title" content="CRM simples no WhatsApp com Python e Hermes Agent">
+  <meta property="og:description" content="Sentes que a caixa de entrada do WhatsApp do teu negócio se está a transformar num caos difícil de gerir? Deixar passar o prazo de um orçamento penden">
+  <meta property="og:url" content="https://marcusja777.com/blog/crm-simples-no-whatsapp-com-python-e-hermes-agent/">
+  <link rel="canonical" href="https://marcusja777.com/blog/crm-simples-no-whatsapp-com-python-e-hermes-agent/">
+  <link rel="stylesheet" href="/assets/css/style.css?v=20260819">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+  <meta name="google-adsense-account" content="ca-pub-3717814491008089">
+  <meta name="author" content="Marcus">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "CRM simples no WhatsApp com Python e Hermes Agent",
+  "url": "https://marcusja777.com/blog/crm-simples-no-whatsapp-com-python-e-hermes-agent/",
+  "datePublished": "2026-08-19",
+  "dateModified": "2026-08-19",
+  "inLanguage": "pt-PT",
+  "author": {"@type": "Person", "name": "Marcus", "url": "https://github.com/Jorgeacus"},
+  "publisher": {"@type": "Organization", "name": "MarctechJA", "url": "https://marcusja777.com/"},
+  "mainEntityOfPage": {"@type": "WebPage", "@id": "https://marcusja777.com/blog/crm-simples-no-whatsapp-com-python-e-hermes-agent/"}
+}
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="logo">Marc<span class="gold">tech</span>JA</a>
+      <button class="menu-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/blog/">Blog</a></li>
+        <li><a href="/livro/">Livro</a></li>
+        <li><a href="/sobre/">Sobre</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <section class="article-page">
+    <div class="container layout-with-sidebar">
+      <div>
+        <div class="article-header">
+          <div class="breadcrumb">
+            <a href="/">Home</a> / <a href="/blog/">Blog</a> / CRM simples no WhatsApp com Python e Hermes Agent
+          </div>
+          <h1>CRM simples no WhatsApp com Python e Hermes Agent</h1>
+          <div class="meta">
+            <span>📅 19 Aug 2026</span>
+            <span>🏷️ Empresas</span>
+            <span>✍️ Marcus</span>
+          </div>
+        </div>
+        <div class="article-content">
+          <p>Sentes que a caixa de entrada do WhatsApp do teu negócio se está a transformar num caos difícil de gerir? Deixar passar o prazo de um orçamento pendente ou perder o histórico de conversa de um cliente habitual é um problema comum em micro e grandes empresas, bem como em lojas físicas e online. No entanto, implementar um sistema avançado de CRM não precisa de significar subscrições caríssimas ou software complexo.</p>
+
+<p>Combinando a simplicidade da linguagem <strong>Python</strong> com o poder do <strong>Hermes Agent</strong>, podes estruturar um CRM prático e automatizado no WhatsApp. Neste artigo, explicamos como criar uma solução que etiqueta conversas, regista notas importantes de forma automática, agenda acompanhamentos (follow-ups) e gera relatórios claros para a tua equipa.</p>
+
+<h2>Porquê construir um CRM no WhatsApp com o Hermes Agent?</h2>
+
+<p>O WhatsApp é o canal de comunicação preferido pela grande maioria dos clientes. Contudo, a interface padrão da aplicação não foi pensada para gerir pipelines de vendas nem o ciclo de vida do cliente. É aqui que entra a automação inteligente:</p>
+
+<ul>
+  <li><strong>Etiquetagem automática:</strong> Identificação instantânea da fase em que o cliente se encontra (ex.: <em>Lead</em>, <em>Aguarda Proposta</em>, <em>Cliente Ativo</em>).</li>
+  <li><strong>Histórico centralizado e notas:</strong> O Hermes Agent lê a conversa e extrai resumos ou pedidos específicos, registando-os na base de dados sem intervenção manual.</li>
+  <li><strong>Acompanhamento rigoroso:</strong> Definição de alertas para lembretes de follow-up e datas de contacto.</li>
+  <li><strong>Relatórios executivos:</strong> Geração de resumos diários ou semanais com as métricas essenciais das tuas interações.</li>
+</ul>
+
+<h2>Arquitetura do Sistema</h2>
+
+<p>A arquitetura desta solução é leve e eficiente. Utilizamos o Python para interagir com uma base de dados local (SQLite) e gerir o fluxo de dados, enquanto o Hermes Agent atua como a inteligência central encarregada de interpretar o texto das conversas, classificar o estado do cliente e invocar as rotas necessárias para guardar a informação.</p>
+
+<h2>Passo a Passo: Construir o CRM no WhatsApp</h2>
+
+<h3>Passo 1: Instalação do Hermes Agent e preparação do ambiente</h3>
+
+<p>Para começar, instala o Hermes Agent no teu ambiente de trabalho ou servidor. O assistente funciona em macOS, Linux e Windows.</p>
+
+<p>Em macOS e Linux, executa o comando oficial de instalação no terminal:</p>
+
+<pre><code>curl -fsSL https://hermes-agent.nousresearch.com/install.sh | bash</code></pre>
+
+<p>Se estás a utilizar o Windows no PowerShell, o comando correspondente é:</p>
+
+<pre><code>iex (irm https://hermes-agent.nousresearch.com/install.ps1)</code></pre>
+
+<p>Após a instalação, confirma que o agente está operacional e verifica a lista de skills disponíveis:</p>
+
+<pre><code>hermes skills list</code></pre>
+
+<h3>Passo 2: Criar o script de gestão de dados em Python</h3>
+
+<p>Vamos criar o ficheiro <code>crm_manager.py</code>. Este script serve de conector para armazenar e consultar a informação dos contactos na base de dados SQLite.</p>
+
+<pre><code>import sqlite3
+from datetime import datetime
+
+def init_db():
+    conn = sqlite3.connect("whatsapp_crm.db")
+    cursor = conn.cursor()
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS clientes (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            telefone TEXT UNIQUE,
+            nome TEXT,
+            etiqueta TEXT,
+            notas TEXT,
+            ultimo_contacto DATETIME,
+            proximo_followup DATE
+        )
+    ''')
+    conn.commit()
+    conn.close()
+
+def registar_ou_atualizar_cliente(telefone, nome, etiqueta, nota, followup):
+    conn = sqlite3.connect("whatsapp_crm.db")
+    cursor = conn.cursor()
+    
+    agora = datetime.now().isoformat()
+    
+    cursor.execute('''
+        INSERT INTO clientes (telefone, nome, etiqueta, notas, ultimo_contacto, proximo_followup)
+        VALUES (?, ?, ?, ?, ?, ?)
+        ON CONFLICT(telefone) DO UPDATE SET
+            nome=COALESCE(EXCLUDED.nome, clientes.nome),
+            etiqueta=EXCLUDED.etiqueta,
+            notas=clientes.notas || '\n[' || EXCLUDED.ultimo_contacto || '] ' || EXCLUDED.notas,
+            ultimo_contacto=EXCLUDED.ultimo_contacto,
+            proximo_followup=EXCLUDED.proximo_followup
+    ''', (telefone, nome, etiqueta, f"[{agora}] {nota}", agora, followup))
+    
+    conn.commit()
+    conn.close()
+
+def listar_clientes():
+    conn = sqlite3.connect("whatsapp_crm.db")
+    cursor = conn.cursor()
+    cursor.execute("SELECT telefone, nome, etiqueta, notas, proximo_followup FROM clientes")
+    registos = cursor.fetchall()
+    conn.close()
+    return registos
+
+if __name__ == "__main__":
+    init_db()
+    print("Base de dados do CRM no WhatsApp inicializada com sucesso.")
+</code></pre>
+
+<p>Este script cria a tabela de clientes, lida com atualizações automáticas de registos sem duplicar contactos e acumula o histórico de notas com data e hora.</p>
+
+<h3>Passo 3: Criar a Skill personalizada do Hermes Agent</h3>
+
+<p>O Hermes Agent utiliza ficheiros no formato <code>SKILL.md</code> para executar tarefas específicas. Vamos criar a diretoria da skill e definir o ficheiro de configuração.</p>
+
+<p>Cria o ficheiro <code>~/.hermes/skills/crm-whatsapp/SKILL.md</code> com a seguinte estrutura oficial:</p>
+
+<pre><code>---
+name: crm-whatsapp
+description: Analisa conversas do WhatsApp, atribui etiquetas, regista notas de atendimento e agenda follow-ups no CRM.
+author: MarctechJA
+version: "1.0"
+platforms:
+  - macos
+  - linux
+  - windows
+metadata:
+  hermes:
+    tags: [crm, whatsapp, python, automacao]
+---
+
+# CRM WhatsApp Assistant
+
+Esta skill permite ao Hermes Agent analisar o conteúdo de mensagens e conversas recebidas via WhatsApp, extrair informações relevantes do cliente e registá-las na base de dados SQLite local através do script Python.
+
+## When to Use
+Utilize esta skill sempre que precisar de:
+- Processar o texto de uma nova conversa do WhatsApp.
+- Etiquetar um cliente conforme a sua intenção de compra.
+- Registar notas de reunião ou pedidos de orçamento.
+- Agendar datas de acompanhamento (follow-up).
+
+## Instruções
+1. Analise o texto da mensagem fornecida e extraia o número de telefone, o nome do contacto (se disponível) e o ponto principal da conversa.
+2. Determine a etiqueta adequada entre: `Novo Lead`, `Orcamento Solicitado`, `Aguardar Resposta` ou `Venda Concluida`.
+3. Identifique se existe a necessidade de um follow-up e defina uma data estimada no formato AAAA-MM-DD.
+4. Execute o script `crm_manager.py` invocando a função de registo de clientes com os parâmetros extraídos.
+5. Retorne um resumo estruturado e profissional da operação realizada.
+
+## Critérios de conclusão
+- O contacto foi registado ou atualizado com sucesso na base de dados.
+- As etiquetas e notas foram atribuídas corretamente.
+- Foi emitido um resumo claro das ações executadas para o utilizador.
+</code></pre>
+
+<h3>Passo 4: Executar a automação com o Hermes Agent</h3>
+
+<p>Com a skill configurada, podes iniciar uma sessão interativa no Hermes Agent para processar conversas recentes. Executa o comando:</p>
+
+<pre><code>hermes chat -s crm-whatsapp</code></pre>
+
+<p>No chat interativo, podes simplesmente colar o registo de uma conversa do WhatsApp:</p>
+
+<pre><code>Olá, o meu nome é João Silva (912345678). Gostava de pedir um orçamento para 10 unidades do vosso produto. Podem ligar-me na próxima terça-feira?</code></pre>
+
+<p>O Hermes Agent analisa o texto, invoca a função de registo Python e responde instantaneamente:</p>
+
+<pre><code>Cliente registado com sucesso!
+- Nome: João Silva
+- Telefone: 912345678
+- Etiqueta: Orcamento Solicitado
+- Nota: Solicitou orçamento para 10 unidades do produto.
+- Follow-up agendado: 2026-08-25
+</code></pre>
+
+<h2>Geração de Relatórios e Acompanhamento</h2>
+
+<p>Para além do registo individual, podes pedir ao Hermes Agent para consultar a base de dados através da skill e gerar relatórios executivos das vendas. Pedidos como <em>"Lista todos os clientes com etiqueta 'Orcamento Solicitado' e indica os follow-ups pendentes para esta semana"</em> são processados em segundos, mantendo a tua equipa focada nas vendas e não em tarefas administrativas penosas.</p>
+
+<h2>Conclusão</h2>
+
+<p>Criar um CRM simples para o WhatsApp utilizando Python e o Hermes Agent é uma excelente forma de profissionalizar o atendimento do teu negócio sem custos excessivos nem soluções sob medida complexas. Ganhas controlo sobre os leads, garantes que nenhum contacto fica esquecido e manténs o histórico da empresa devidamente organizado.</p>
+
+<p>Se queres aprofundar o teu conhecimento sobre a criação de skills avançadas, integração com APIs e automação de processos de negócio, consulta o <a href="/livro/">Guia Completo do Hermes Agent</a> para aceder a exemplos práticos e guias passo a passo detalhados.</p>
+        </div>
+        <div class="comments-section">
+          <h2>Comentários</h2>
+          <script src="https://giscus.app/client.js"
+                  data-repo="Jorgeacus/marctechja-blog"
+                  data-repo-id="R_kgDOTnRVjw"
+                  data-category="General"
+                  data-category-id="DIC_kwDOTnRVj84DDt4R"
+                  data-mapping="pathname"
+                  data-strict="0"
+                  data-reactions-enabled="1"
+                  data-emit-metadata="0"
+                  data-input-position="bottom"
+                  data-theme="preferred_color_scheme"
+                  data-lang="pt"
+                  crossorigin="anonymous"
+                  async>
+          </script>
+          <noscript>Ativa o JavaScript para veres e deixares comentários.</noscript>
+        </div>
+      </div>
+      <aside class="sidebar">
+        <div class="sidebar-widget">
+          <h3>📘 Livro do Hermes Agent</h3>
+          <p>10 partes, 42 capítulos. PDF + EPUB.</p>
+          <a href="/livro/" class="btn btn-gold">Saber Mais</a>
+        </div>
+        <div class="sidebar-widget ad-placeholder">Anúncio Google AdSense</div>
+      </aside>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <a href="/" class="logo">Marc<span class="gold">tech</span>JA</a>
+          <p>Tecnologia, automação e IA para transformar a produtividade.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Navegação</h4>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/blog/">Blog</a></li>
+            <li><a href="/livro/">Livro</a></li>
+            <li><a href="/sobre/">Sobre</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="/politica-de-privacidade/">Privacidade</a></li>
+            <li><a href="/politica-de-cookies/">Cookies</a></li>
+            <li><a href="/termos/">Termos</a></li>
+            <li><a href="/contactos/">Contactos</a></li>
+            <li><a href="#" id="cookie-settings" onclick="window.MarctechJACookieConsent&&window.MarctechJACookieConsent.show();return false;">Definições de cookies</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contacto</h4>
+          <ul>
+            <li><a href="mailto:marctechja@gmail.com">marctechja@gmail.com</a></li>
+            <li><a href="https://github.com/Jorgeacus">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 MarctechJA. Todos os direitos reservados.</p>
+      </div>
+    </div>
+  </footer>
+  <script src="/assets/js/main.js"></script>
+  <script src="/assets/js/cookie-consent.js"></script>
+</body>
+</html>
