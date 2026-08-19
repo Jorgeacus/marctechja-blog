@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Gestão de redes sociais para empreendedores com Hermes Agent — MarctechJA</title>
-  <meta name="description" content="Sentes que passas mais tempo a planear, escrever e agendar publicações para as redes sociais do que a focar-te no crescimento estratégico do teu negóc">
+  <meta name="description" content="Sentes que passas mais tempo a planear, escrever e agendar publicações para as redes sociais do que a focar-te no crescimento estratégico do teu negócio? Automatiza tudo com o Hermes Agent.">
   <meta property="og:title" content="Gestão de redes sociais para empreendedores com Hermes Agent">
-  <meta property="og:description" content="Sentes que passas mais tempo a planear, escrever e agendar publicações para as redes sociais do que a focar-te no crescimento estratégico do teu negóc">
+  <meta property="og:description" content="Sentes que passas mais tempo a planear, escrever e agendar publicações para as redes sociais do que a focar-te no crescimento estratégico do teu negócio? Automatiza tudo com o Hermes Agent.">
   <meta property="og:url" content="https://marcusja777.com/blog/gestao-de-redes-sociais-para-empreendedores-com-hermes-agent/">
   <link rel="canonical" href="https://marcusja777.com/blog/gestao-de-redes-sociais-para-empreendedores-com-hermes-agent/">
   <link rel="stylesheet" href="/assets/css/style.css?v=20260819">
@@ -86,7 +86,7 @@ iex (irm https://hermes-agent.nousresearch.com/install.ps1)</code></pre>
 <pre><code>---
 name: planeador-redes-sociais
 description: Criação de calendários de conteúdo e redação de publicações otimizadas.
-author: MarcTechJA
+author: MarctechJA
 version: "1.0"
 platforms:
   - macos
@@ -128,7 +128,50 @@ hermes chat -s planeador-redes-sociais</code></pre>
 
 <h2>Agendamento Autónomo e Análise de Resultados</h2>
 
-<p>Além de gerar o conteúdo, podes expandir o ecossistema do Hermes Agent para conectar as tuas contas de redes sociais. Ao criar skills avançadas em Python que se ligam a APIs de ferramentas de agendamento (como o Buffer ou a Meta Graph API), o Hermes pode pegar nas legendas geradas e programar automaticamente as publicações para os dias e horas corretos.</p>
+<p>Além de gerar o conteúdo, podes ligar o Hermes Agent a um script Python que agenda as publicações automaticamente. O exemplo abaixo usa a API de publicação do Instagram (Meta Graph API) com um agendador local — a API do Instagram não permite agendamento nativo (ao contrário do Facebook), por isso o script espera até à hora marcada e só depois publica o conteúdo:</p>
+
+<pre><code>import csv
+import time
+from datetime import datetime
+
+import requests
+
+ACCESS_TOKEN = "YOUR_PAGE_ACCESS_TOKEN"
+INSTAGRAM_ACCOUNT_ID = "YOUR_IG_ACCOUNT_ID"
+BASE_URL = "https://graph.facebook.com/v19.0"
+
+def publicar_instagram(imagem_url, legenda):
+    # 1. Cria o "container" de mídia (a publicação ainda não é visível)
+    resp = requests.post(
+        f"{BASE_URL}/{INSTAGRAM_ACCOUNT_ID}/media",
+        params={"image_url": imagem_url, "caption": legenda, "access_token": ACCESS_TOKEN},
+    )
+    resp.raise_for_status()
+    container_id = resp.json()["id"]
+
+    # 2. Publica o container — só neste momento o post fica visível
+    resp = requests.post(
+        f"{BASE_URL}/{INSTAGRAM_ACCOUNT_ID}/media_publish",
+        params={"creation_id": container_id, "access_token": ACCESS_TOKEN},
+    )
+    resp.raise_for_status()
+    return resp.json()["id"]
+
+if __name__ == "__main__":
+    with open("plano_semanal.csv", encoding="utf-8") as f:
+        for linha in csv.DictReader(f):
+            if linha["plataforma"].lower() != "instagram":
+                continue
+            # A coluna "timestamp" contém a data/hora no formato ISO 8601
+            alvo = datetime.fromisoformat(linha["timestamp"]).timestamp()
+            print(f"A aguardar até {linha['timestamp']} para publicar {linha['imagem_url']}...")
+            while time.time() &lt; alvo:
+                time.sleep(60)
+            publicar_instagram(linha["imagem_url"], linha["legenda"])
+            print("Publicado com sucesso!")
+</code></pre>
+
+<p><strong>O que este código faz:</strong> Lê o calendário gerado pela skill (guardado em <code>plano_semanal.csv</code> com as colunas <code>plataforma</code>, <code>imagem_url</code>, <code>legenda</code> e <code>timestamp</code>), espera até à hora marcada e agenda cada publicação do Instagram através da Meta Graph API (cria o container e depois publica-o). Para que o script corra em segundo plano, podes executá-lo com <code>nohup python3 agendador_instagram.py &amp;</code> ou registá-lo como tarefa do sistema (cron/launchd).</p>
 
 <p>No final do mês, podes alimentar o Hermes com um ficheiro CSV exportado das tuas métricas do Instagram ou LinkedIn. Com uma skill de análise de dados, o agente lerá o documento, identificará quais foram as publicações com melhor desempenho e dir-te-á exatamente que tipo de conteúdo deves produzir no mês seguinte para maximizar o teu alcance e conversão.</p>
 

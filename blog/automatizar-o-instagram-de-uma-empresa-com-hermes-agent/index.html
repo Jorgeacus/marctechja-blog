@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Automatizar o Instagram de uma empresa com Hermes Agent — MarctechJA</title>
-  <meta name="description" content="Sentes que o Instagram da tua empresa consome demasiado tempo? Entre planear o calendário editorial, escrever legendas criativas, pesquisar hashtags r">
+  <meta name="description" content="Sentes que o Instagram da tua empresa consome demasiado tempo? Aprende a automatizar legendas, hashtags e respostas a clientes com o Hermes Agent.">
   <meta property="og:title" content="Automatizar o Instagram de uma empresa com Hermes Agent">
-  <meta property="og:description" content="Sentes que o Instagram da tua empresa consome demasiado tempo? Entre planear o calendário editorial, escrever legendas criativas, pesquisar hashtags r">
+  <meta property="og:description" content="Sentes que o Instagram da tua empresa consome demasiado tempo? Aprende a automatizar legendas, hashtags e respostas a clientes com o Hermes Agent.">
   <meta property="og:url" content="https://marcusja777.com/blog/automatizar-o-instagram-de-uma-empresa-com-hermes-agent/">
   <link rel="canonical" href="https://marcusja777.com/blog/automatizar-o-instagram-de-uma-empresa-com-hermes-agent/">
   <link rel="stylesheet" href="/assets/css/style.css?v=20260819">
@@ -125,17 +125,18 @@ hermes chat -s instagram_generator</code></pre>
 <h2>Passo 4: Automação Avançada - Responder a Mensagens Directas (DMs)</h2>
 <p>Para além de gerar textos, podes integrar o Hermes Agent com scripts ou ferramentas de automação para monitorizar a tua caixa de entrada do Instagram. Sempre que um cliente enviar uma mensagem direta (DM) com dúvidas comuns, o teu sistema pode passar essa pergunta ao Hermes Agent para receber uma resposta natural e humanizada em segundos.</p>
 
-<p>O exemplo abaixo mostra como um script simples em Python pode interagir com o Hermes Agent para processar e responder a uma dúvida de um cliente de forma automática:</p>
+<p>O exemplo abaixo mostra como um script simples em Python pode interagir com o Hermes Agent para processar e responder a uma dúvida de um cliente de forma automática, enviando a pergunta pelo terminal (stdin) e usando o modo de consulta única (<code>--query-file</code>), que executa o Hermes sem precisar de uma sessão interativa:</p>
 
 <pre><code>import subprocess
 
 def responder_cliente(mensagem_cliente):
-    # Comando para invocar o Hermes Agent com uma instrução direta
-    comando = f"hermes chat -s instagram_generator --prompt 'Responde à seguinte dúvida de um cliente de forma simpática: {mensagem_cliente}'"
-    
-    # Executa o comando no terminal do sistema
-    resultado = subprocess.run(comando, shell=True, capture_output=True, text=True)
-    
+    # Usa o modo de consulta única do Hermes Agent: lê a pergunta do stdin
+    # e executa a skill sem precisar de uma sessão de chat interativa
+    comando = ["hermes", "chat", "-s", "instagram_generator", "--query-file", "-"]
+
+    # Executa o comando no terminal do sistema e passa a pergunta pelo stdin
+    resultado = subprocess.run(comando, input=mensagem_cliente, capture_output=True, text=True)
+
     if resultado.returncode == 0:
         return resultado.stdout.strip()
     else:
@@ -147,7 +148,7 @@ resposta_final = responder_cliente(pergunta)
 print("Resposta gerada pelo Hermes Agent:")
 print(resposta_final)</code></pre>
 
-<p>Este script em Python utiliza o módulo <code>subprocess</code> para enviar de forma programática a dúvida do cliente para o Hermes Agent no teu servidor. O agente processa a questão usando o contexto da skill e devolve uma resposta perfeitamente redigida, que pode depois ser enviada de volta ao utilizador através da API do Instagram ou de plataformas de integração como o n8n ou o Make.</p>
+<p>Este script em Python utiliza o módulo <code>subprocess</code> para chamar o Hermes Agent de forma programática, passando a dúvida do cliente pela entrada padrão (<code>--query-file -</code>) sem abrir uma sessão interativa. Para que a resposta seja útil a uma pergunta de atendimento (como envios ou horários), a skill <code>instagram_generator</code> deve incluir também as respostas às perguntas mais frequentes da tua marca — basta adicionar essa secção às <strong>Instruções</strong> da skill. A resposta gerada pode depois ser enviada de volta ao utilizador através da API do Instagram ou de plataformas de integração como o n8n ou o Make.</p>
 
 <h2>Conclusão</h2>
 <p>Automatizar o Instagram da tua empresa com o Hermes Agent não só poupa horas preciosas de trabalho semanal, como garante uma presença digital consistente, profissional e altamente otimizada para conversão. Desde a geração rápida de ideias e legendas com a skill <code>instagram_generator</code> até à integração com scripts para responder a clientes, as possibilidades são infinitas. O controlo da IA está totalmente nas tuas mãos, sem depender de subscrições mensais caras de plataformas de terceiros.</p>

@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Automatizar o teu workflow de GitHub com Python — MarctechJA</title>
-  <meta name="description" content="Sentes que passas demasiado tempo a realizar tarefas repetitivas no GitHub, como rever Pull Requests pendentes, categorizar issues ou preparar notas d">
+  <meta name="description" content="Sentes que passas demasiado tempo a realizar tarefas repetitivas no GitHub, como rever Pull Requests pendentes, categorizar issues ou preparar notas de lançamento? Automatiza tudo com Python e Hermes Agent.">
   <meta property="og:title" content="Automatizar o teu workflow de GitHub com Python">
-  <meta property="og:description" content="Sentes que passas demasiado tempo a realizar tarefas repetitivas no GitHub, como rever Pull Requests pendentes, categorizar issues ou preparar notas d">
+  <meta property="og:description" content="Sentes que passas demasiado tempo a realizar tarefas repetitivas no GitHub, como rever Pull Requests pendentes, categorizar issues ou preparar notas de lançamento? Automatiza tudo com Python e Hermes Agent.">
   <meta property="og:url" content="https://marcusja777.com/blog/automatizar-o-teu-workflow-de-github-com-python/">
   <link rel="canonical" href="https://marcusja777.com/blog/automatizar-o-teu-workflow-de-github-com-python/">
   <link rel="stylesheet" href="/assets/css/style.css?v=20260819">
@@ -114,7 +114,7 @@ def processar_repositorio(repo_name):
     print(f"\nTriagem de Issues:")
     for issue in issues:
         # Garantir que é um Issue e não um Pull Request
-        if not issue.pull_request and len(issue.labels) == 0:
+        if not issue.pull_request and issue.labels.totalCount == 0:
             print(f"- Issue #{issue.number} sem etiqueta. A adicionar 'necessita-triagem'...")
             issue.add_to_labels("necessita-triagem")
 

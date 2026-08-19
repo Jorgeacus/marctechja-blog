@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SEO para o teu blog ou site com Python e Hermes Agent — MarctechJA</title>
-  <meta name="description" content="Sentes que passas horas a analisar palavras-chave, a redigir meta descriptions e a tentar perceber porque é que os teus artigos não alcançam as primei">
+  <meta name="description" content="Sentes que passas horas a analisar palavras-chave, a redigir meta descriptions e a tentar perceber porque é que os teus artigos não alcançam as primeiras posições do Google? Automatiza o SEO com Python e Hermes Agent.">
   <meta property="og:title" content="SEO para o teu blog ou site com Python e Hermes Agent">
-  <meta property="og:description" content="Sentes que passas horas a analisar palavras-chave, a redigir meta descriptions e a tentar perceber porque é que os teus artigos não alcançam as primei">
+  <meta property="og:description" content="Sentes que passas horas a analisar palavras-chave, a redigir meta descriptions e a tentar perceber porque é que os teus artigos não alcançam as primeiras posições do Google? Automatiza o SEO com Python e Hermes Agent.">
   <meta property="og:url" content="https://marcusja777.com/blog/seo-para-o-teu-blog-ou-site-com-python-e-hermes-agent/">
   <link rel="canonical" href="https://marcusja777.com/blog/seo-para-o-teu-blog-ou-site-com-python-e-hermes-agent/">
   <link rel="stylesheet" href="/assets/css/style.css?v=20260819">
@@ -62,7 +62,18 @@
 <h2>Porquê automatizar o SEO com o Hermes Agent e Python?</h2>
 <p>O SEO moderno exige uma análise constante de dados e a produção de conteúdos perfeitamente otimizados. Enquanto os scripts em Python tratam do processamento pesado de dados — como extração de métricas, cálculo de densidade de termos e leitura de ficheiros CSV —, o Hermes Agent atua como o cérebro da operação. O agente interpreta esses dados, sugere melhorias editoriais, gera títulos apelativos com alta taxa de clique (CTR) e formata relatórios executivos prontos a usar.</p>
 
-<h2>Passo 1: Criar uma Skill de Otimização SEO no Hermes Agent</h2>
+<h2>Passo 1: Instalar o Hermes Agent</h2>
+<p>Se ainda não tens o Hermes Agent instalado, começa por instalar a ferramenta no teu sistema com um único comando no terminal:</p>
+
+<pre><code># macOS / Linux
+curl -fsSL https://hermes-agent.nousresearch.com/install.sh | bash
+
+# Windows (PowerShell como Administrador)
+iex (irm https://hermes-agent.nousresearch.com/install.ps1)</code></pre>
+
+<p>Este comando descarrega e instala o executável oficial do Hermes Agent e adiciona o comando <code>hermes</code> ao teu terminal.</p>
+
+<h2>Passo 2: Criar uma Skill de Otimização SEO no Hermes Agent</h2>
 <p>Para começar, vamos estruturar uma <em>skill</em> personalizada no Hermes Agent. As <em>skills</em> permitem ao agente executar tarefas específicas seguindo diretrizes bem definidas. No teu sistema, cria o diretório para a skill e adiciona o ficheiro <code>SKILL.md</code>.</p>
 
 <p>Guarda o ficheiro em <code>~/.hermes/skills/seo_optimizer/SKILL.md</code> com a seguinte estrutura oficial:</p>
@@ -90,23 +101,25 @@ Utiliza esta skill quando precisares de rever rascunhos de artigos, gerar títul
 
 ## Instruções
 1. Analisa o texto ou rascunho fornecido pelo utilizador.
-2. Identifica a palavra-chave principal e termos secundários (cauda longa).
-3. Gera 3 opções de Títulos SEO (H1) com menos de 60 caracteres, apelativos e focados na intenção de busca.
-4. Cria 2 opções de Meta Description (entre 140 e 155 caracteres) com uma chamada à ação (CTA) clara.
-5. Revisa a estrutura de cabeçalhos (H2, H3) para garantir uma leitura fluida e semanticamente correta.
-6. Fornece recomendações de links internos e termos relacionados a incluir.
+2. Se o utilizador pedir uma análise técnica do artigo, executa o script Python <code>seo_analyzer.py</code> (na mesma pasta da skill) com o ficheiro do artigo como argumento: <code>python3 seo_analyzer.py artigo.md</code> — o script devolve um relatório JSON com a contagem de palavras e as palavras-chave mais frequentes.
+3. Identifica a palavra-chave principal e termos secundários (cauda longa).
+4. Gera 3 opções de Títulos SEO (H1) com menos de 60 caracteres, apelativos e focados na intenção de busca.
+5. Cria 2 opções de Meta Description (entre 140 e 155 caracteres) com uma chamada à ação (CTA) clara.
+6. Revisa a estrutura de cabeçalhos (H2, H3) para garantir uma leitura fluida e semanticamente correta.
+7. Fornece recomendações de links internos e termos relacionados a incluir.
 
 ## Critérios de conclusão
 - Apresentar sugestões claras de títulos e metadados com contagem de caracteres.
+- Se o script Python foi executado, citar a palavra-chave mais frequente e a densidade percentual calculada.
 - Entregar um resumo de otimização estruturado e pronto a aplicar no CMS.
 </code></pre>
 
 <p><strong>O que este ficheiro faz:</strong> O cabeçalho YAML define os metadados necessários para o Hermes Agent reconhecer a skill. O corpo do ficheiro instrui o modelo de IA sobre exatamente como processar o teu conteúdo, aplicando regras de SEO rigorosas em cada execução.</p>
 
-<h2>Passo 2: Desenvolver o Script Python para Auditoria de Conteúdo</h2>
+<h2>Passo 3: Desenvolver o Script Python para Auditoria de Conteúdo</h2>
 <p>Agora vamos criar um script em Python que faz a leitura do teu artigo e calcula métricas essenciais, como a contagem total de palavras e a densidade de palavras-chave. Este script serve de suporte ao Hermes Agent.</p>
 
-<p>Cria um ficheiro chamado <code>seo_analyzer.py</code>:</p>
+<p>Cria um ficheiro chamado <code>seo_analyzer.py</code> dentro da pasta da skill (<code>~/.hermes/skills/seo_optimizer/seo_analyzer.py</code>), para que o Hermes Agent consiga encontrar e executar o script quando a skill for ativada:</p>
 
 <pre><code>import re
 import json
@@ -149,7 +162,7 @@ if __name__ == "__main__":
 
 <p><strong>O que o código faz:</strong> O script abre o artigo em texto limpo ou Markdown, filtra palavras irrelevantes, calcula a densidade percentual das palavras mais utilizadas e devolve um relatório em JSON. O Hermes Agent pode consumir este JSON para verificar se a palavra-chave alvo está com uma densidade equilibrada (idealmente entre 1% e 2.5%).</p>
 
-<h2>Passo 3: Executar a Automação e Gerar Relatórios no Hermes Agent</h2>
+<h2>Passo 4: Executar a Automação e Gerar Relatórios no Hermes Agent</h2>
 <p>Com a skill configurada e o script Python pronto, podes verificar se a skill está ativa no teu ambiente e iniciar a sessão de otimização.</p>
 
 <p>Primeiro, confirma que o Hermes Agent detetou a tua nova skill:</p>
@@ -166,12 +179,65 @@ if __name__ == "__main__":
 
 <p>O Hermes Agent executará a análise técnica e aplicará a inteligência contextual para entregar o título perfeito e os metadados prontos a publicar no teu blog.</p>
 
+<h2>Análise de Dados do Google Search Console com Python</h2>
+<p>Para analisar o desempenho global do teu site, cria um script chamado <code>gsv_analyzer.py</code> que lê o CSV exportado do Google Search Console e devolve um resumo JSON:</p>
+
+<pre><code>import csv
+import json
+import sys
+
+def processar_csv_gsv(caminho_csv):
+    """Processa um CSV exportado do Google Search Console e devolve um resumo JSON.
+
+    Colunas esperadas: Query, Clicks, Impressions, CTR, Position.
+    """
+    total_impressoes = 0
+    linhas = []
+    with open(caminho_csv, "r", encoding="utf-8") as f:
+        leitor = csv.DictReader(f)
+        for row in leitor:
+            try:
+                impressoes = int(row.get("Impressions", 0) or 0)
+                cliques = int(row.get("Clicks", 0) or 0)
+                posicao = float(row.get("Position", 0) or 0)
+                total_impressoes += impressoes
+                linhas.append({
+                    "query": row.get("Query", "").strip(),
+                    "cliques": cliques,
+                    "impressoes": impressoes,
+                    "ctr": round((cliques / impressoes * 100), 2) if impressoes else 0,
+                    "posicao_media": round(posicao, 2),
+                })
+            except ValueError:
+                continue
+
+    if not linhas:
+        return json.dumps({"erro": "Ficheiro CSV vazio ou com formato inesperado."})
+
+    linhas.sort(key=lambda x: x["impressoes"], reverse=True)
+
+    # Oportunidades: muitas impressões mas baixa CTR (ideal para novos títulos)
+    oportunidades = [l for l in linhas if l["impressoes"] >= 1000 and l["ctr"] < 2.0]
+
+    resumo = {
+        "total_queries": len(linhas),
+        "total_impressoes": total_impressoes,
+        "melhores_queries": linhas[:10],
+        "oportunidades_ctr": oportunidades[:10],
+    }
+    return json.dumps(resumo, ensure_ascii=False, indent=2)
+
+if __name__ == "__main__":
+    print(processar_csv_gsv(sys.argv[1] if len(sys.argv) > 1 else "dados.csv"))</code></pre>
+
+<p><strong>O que este código faz:</strong> O script <code>processar_csv_gsv</code> lê o CSV exportado do Google Search Console, calcula a taxa de clique (CTR) de cada pesquisa, ordena pelas impressões e devolve um relatório JSON com as queries de melhor desempenho e as oportunidades de melhoria (muitas impressões, pouca CTR) — dados que o Hermes Agent pode depois transformar em novos títulos e metadados.</p>
+
 <h2>Análise de Backlinks e Relatórios de Desempenho</h2>
-<p>Além da otimização de artigos individuais, podes usar a integração entre Python e Hermes Agent para analisar o desempenho global do teu site. Por exemplo, podes descarregar o relatório de exportação em CSV do Google Search Console ou de ferramentas como Ahrefs e Semrush, e pedir ao Hermes para processar o ficheiro:</p>
+<p>Com o script <code>gsv_analyzer.py</code> a tratar os dados do Google Search Console, podes agora usar o Hermes Agent para interpretar os resultados e aplicar otimizações concretas:</p>
 
 <ul>
   <li><strong>Identificação de Oportunidades:</strong> Pede ao Hermes Agent para cruzar palavras-chave com muitas impressões mas pouca taxa de clique (CTR), gerando novas ideias de títulos.</li>
-  <li><strong>Análise de Backlinks Perdidos:</strong> Processa listas de links de entrada para identificar domínios de autoridade que deixaram de apontar para o teu blog.</li>
+  <li><strong>Análise de Backlinks Perdidos:</strong> Processa listas de links de entrada (exportadas de Ahrefs ou Semrush) para identificar domínios de autoridade que deixaram de apontar para o teu blog.</li>
   <li><strong>Relatórios Semanais:</strong> Cria uma rotina automatizada em Python que gera um resumo em Markdown com os teus artigos mais visitados e as posições médias no Google.</li>
 </ul>
 

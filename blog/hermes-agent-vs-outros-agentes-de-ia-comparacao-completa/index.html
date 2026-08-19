@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Hermes Agent vs outros agentes de IA: comparação completa — MarctechJA</title>
-  <meta name="description" content="Título SEO: Hermes Agent vs Outros Agentes de IA: A Comparação Definitiva (2026) Meta Description: Comparamos o Hermes Agent com o Claude Code, Codex">
+  <meta name="description" content="Comparamos o Hermes Agent com o Claude Code, Codex CLI e OpenAI Agents. Descubra as vantagens, desvantagens e como criar a primeira Skill local.">
   <meta property="og:title" content="Hermes Agent vs outros agentes de IA: comparação completa">
-  <meta property="og:description" content="Título SEO: Hermes Agent vs Outros Agentes de IA: A Comparação Definitiva (2026) Meta Description: Comparamos o Hermes Agent com o Claude Code, Codex">
+  <meta property="og:description" content="Comparamos o Hermes Agent com o Claude Code, Codex CLI e OpenAI Agents. Descubra as vantagens, desvantagens e como criar a primeira Skill local.">
   <meta property="og:url" content="https://marcusja777.com/blog/hermes-agent-vs-outros-agentes-de-ia-comparacao-completa/">
   <link rel="canonical" href="https://marcusja777.com/blog/hermes-agent-vs-outros-agentes-de-ia-comparacao-completa/">
   <link rel="stylesheet" href="/assets/css/style.css?v=20260819">
@@ -57,10 +57,7 @@
           </div>
         </div>
         <div class="article-content">
-          <p><em><strong>Título SEO:</strong> Hermes Agent vs Outros Agentes de IA: A Comparação Definitiva (2026)</em></p>
-<p><em><strong>Meta Description:</strong> Comparamos o Hermes Agent com o Claude Code, Codex CLI e OpenAI Agents. Descubra as vantagens, desvantagens e como criar a sua primeira Skill local em pt-PT.</em></p>
-
-<p>Sentes que o ecossistema de inteligência artificial está a mover-se a uma velocidade estonteante e que é difícil escolher a ferramenta certa para automatizar o teu dia a dia? Imagina poderes executar tarefas complexas diretamente no teu terminal, alternando entre modelos de IA na cloud e modelos 100% locais que protegem a privacidade dos teus dados. Em 2026, a escolha do agente de IA ideal tornou-se uma decisão estratégica para programadores, empreendedores e criadores de conteúdo.</p>
+          <p>Sentes que o ecossistema de inteligência artificial está a mover-se a uma velocidade estonteante e que é difícil escolher a ferramenta certa para automatizar o teu dia a dia? Imagina poderes executar tarefas complexas diretamente no teu terminal, alternando entre modelos de IA na cloud e modelos 100% locais que protegem a privacidade dos teus dados. Em 2026, a escolha do agente de IA ideal tornou-se uma decisão estratégica para programadores, empreendedores e criadores de conteúdo.</p>
 
 <p>Neste artigo prático, vamos analisar detalhadamente o <strong>Hermes Agent</strong> e compará-lo com os seus principais concorrentes: <strong>Claude Code</strong>, <strong>Codex CLI</strong> e os <strong>OpenAI Agents</strong>. No final, vais perceber exatamente qual deles se adapta melhor ao teu fluxo de trabalho e como dar os primeiros passos práticos.</p>
 
@@ -83,15 +80,15 @@
   <li><strong>Desvantagens:</strong> Totalmente dependente da cloud, custos associados ao consumo de tokens da Anthropic e impossibilidade de correr offline com modelos locais.</li>
 </ul>
 
-<h3>3. Codex CLI: O Assistente de Terminal Clássico</h3>
-<p>O Codex CLI foca-se na tradução de linguagem natural para comandos de terminal. É útil para quem se esquece frequentemente da sintaxe de comandos complexos do Linux ou macOS.</p>
+<h3>3. Codex CLI: O Assistente de Programação da OpenAI</h3>
+<p>O Codex CLI é um agente de programação open-source da OpenAI que corre no terminal. É útil para gerar e editar código, executar testes e automatizar tarefas de desenvolvimento diretamente na linha de comandos.</p>
 <ul>
-  <li><strong>Vantagens:</strong> Leve, rápido e focado em comandos rápidos de sistema.</li>
-  <li><strong>Desvantagens:</strong> Muito limitado comparado com agentes modernos; não possui capacidades de raciocínio multi-step nem suporte para equipas de agentes.</li>
+  <li><strong>Vantagens:</strong> Leve, rápido e focado em tarefas de programação, com suporte para múltiplos modelos da OpenAI.</li>
+  <li><strong>Desvantagens:</strong> Concentrado sobretudo em cenários de desenvolvimento de software, com menos ênfase em skills reutilizáveis e personalizadas para fluxos de trabalho não técnicos.</li>
 </ul>
 
 <h3>4. OpenAI Agents: O Ecossistema Corporativo</h3>
-<p>A suite de agentes da OpenAI oferece soluções poderosas ligadas à infraestrutura da empresa, ideais para integrações empresariais de larga escala e assistentes personalizados (GPTs).</p>
+<p>A suite de agentes da OpenAI (como o SDK open-source Agents SDK) oferece soluções poderosas ligadas à infraestrutura da empresa, ideais para integrações empresariais de larga escala e assistentes personalizados (GPTs).</p>
 <ul>
   <li><strong>Vantagens:</strong> Acesso aos modelos GPT mais recentes, ferramentas integradas de pesquisa web e análise avançada de dados.</li>
   <li><strong>Desvantagens:</strong> Custos elevados à escala, dependência absoluta do ecossistema OpenAI e preocupações com a soberania e privacidade de dados sensíveis.</li>
@@ -113,8 +110,8 @@
       <td><strong>Código Aberto</strong></td>
       <td>Sim (Open-source)</td>
       <td>Não</td>
-      <td>Não</td>
-      <td>Não</td>
+      <td>Sim (Open-source)</td>
+      <td>Parcial (SDK open-source; serviços cloud proprietários)</td>
     </tr>
     <tr>
       <td><strong>Modelos Locais (Ollama)</strong></td>
@@ -155,7 +152,7 @@
 
 <h3>Passo 2: Criar uma Skill Personalizada</h3>
 <p>As Skills do Hermes Agent são definidas utilizando o formato canónico <code>SKILL.md</code>. Vamos criar uma Skill chamada <code>analise_feedback</code> que lê comentários de utilizadores e gera um relatório estruturado.</p>
-<p>Cria um ficheiro no caminho <code>~/.hermes/skills/analise_feedback.md</code> e adiciona o seguinte conteúdo:</p>
+<p>Cria uma pasta chamada <code>analise_feedback</code> dentro do diretório de skills do Hermes e, dentro dela, um ficheiro chamado <code>SKILL.md</code> (ou seja, <code>~/.hermes/skills/analise_feedback/SKILL.md</code>) e adiciona o seguinte conteúdo:</p>
 
 <pre><code>---
 name: analise_feedback
