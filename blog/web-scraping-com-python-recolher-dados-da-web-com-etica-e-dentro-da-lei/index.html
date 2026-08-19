@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Web scraping com Python: recolher dados da web com ética e dentro da lei — MarctechJA</title>
+  <meta name="description" content="A internet é o maior repositório de dados do planeta, mas transformar milhões de páginas web em informação estruturada e útil exige as ferramentas cer">
+  <meta property="og:title" content="Web scraping com Python: recolher dados da web com ética e dentro da lei">
+  <meta property="og:description" content="A internet é o maior repositório de dados do planeta, mas transformar milhões de páginas web em informação estruturada e útil exige as ferramentas cer">
+  <meta property="og:url" content="https://marcusja777.com/blog/web-scraping-com-python-recolher-dados-da-web-com-etica-e-dentro-da-lei/">
+  <link rel="canonical" href="https://marcusja777.com/blog/web-scraping-com-python-recolher-dados-da-web-com-etica-e-dentro-da-lei/">
+  <link rel="stylesheet" href="/assets/css/style.css?v=20260819">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+  <meta name="google-adsense-account" content="ca-pub-3717814491008089">
+  <meta name="author" content="Marcus">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Web scraping com Python: recolher dados da web com ética e dentro da lei",
+  "url": "https://marcusja777.com/blog/web-scraping-com-python-recolher-dados-da-web-com-etica-e-dentro-da-lei/",
+  "datePublished": "2026-08-19",
+  "dateModified": "2026-08-19",
+  "inLanguage": "pt-PT",
+  "author": {"@type": "Person", "name": "Marcus", "url": "https://github.com/Jorgeacus"},
+  "publisher": {"@type": "Organization", "name": "MarctechJA", "url": "https://marcusja777.com/"},
+  "mainEntityOfPage": {"@type": "WebPage", "@id": "https://marcusja777.com/blog/web-scraping-com-python-recolher-dados-da-web-com-etica-e-dentro-da-lei/"}
+}
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="logo">Marc<span class="gold">tech</span>JA</a>
+      <button class="menu-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/blog/">Blog</a></li>
+        <li><a href="/livro/">Livro</a></li>
+        <li><a href="/sobre/">Sobre</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <section class="article-page">
+    <div class="container layout-with-sidebar">
+      <div>
+        <div class="article-header">
+          <div class="breadcrumb">
+            <a href="/">Home</a> / <a href="/blog/">Blog</a> / Web scraping com Python: recolher dados da web com ética e dentro da lei
+          </div>
+          <h1>Web scraping com Python: recolher dados da web com ética e dentro da lei</h1>
+          <div class="meta">
+            <span>📅 19 Aug 2026</span>
+            <span>📖 6 min de leitura</span>
+            <span>🏷️ Programadores</span>
+            <span>✍️ Marcus</span>
+          </div>
+        </div>
+        <div class="article-content">
+          <p>A internet é o maior repositório de dados do planeta, mas transformar milhões de páginas web em informação estruturada e útil exige as ferramentas certas. O <em>web scraping</em> permite automatizar a recolha de dados públicos para pesquisas de mercado, análise de preços ou acompanhamento de notícias, sem a necessidade de copiar e colar manualmente.</p>
+
+<p>Contudo, extrair informação da web não é um processo sem regras. Fazer <em>scraping</em> de forma irresponsável pode sobrecarregar servidores alheios, violar termos de serviço ou descumprir normas de proteção de dados, como o RGPD. Neste artigo, vais aprender a construir um extrator em Python com as bibliotecas <code>requests</code> e <code>BeautifulSoup</code>, respeitando os princípios éticos e legais, e como automatizar todo o processo através do <strong>Hermes Agent</strong>.</p>
+
+<h2>A ética e a legalidade no Web Scraping</h2>
+
+<p>Antes de escrever qualquer linha de código para extrair conteúdos, é fundamental compreender as boas práticas que distinguem uma recolha legítima de um ataque automatizado. Respeitar a infraestrutura e a privacidade dos sites alvo garante que as tuas automações funcionem de forma sustentável e dentro da lei.</p>
+
+<ul>
+    <li><strong>Ficheiro <code>robots.txt</code>:</strong> É o padrão utilizado pelos sites para indicar quais as secções que podem ou não ser visitadas por bots e <em>crawlers</em>. Antes de fazer qualquer pedido, deve ser verificada a permissão neste ficheiro.</li>
+    <li><strong>Termos de Serviço (ToS):</strong> Muitos sites proíbem expressamente a recolha automatizada de dados nos seus termos de utilização. É essencial rever essas condições antes de iniciar um projeto.</li>
+    <li><strong>Frequência de requisições (Rate Limiting):</strong> Enviar centenas de pedidos por segundo pode derrubar um servidor. Incluir pausas (delays) entre requisições evita causar indisponibilidade no serviço.</li>
+    <li><strong>Identificação clara (User-Agent):</strong> Identificar o teu script através de um cabeçalho <code>User-Agent</code> personalizado com um contacto válido demonstra transparência.</li>
+    <li><strong>Dados Pessoais e RGPD:</strong> Evita recolher dados pessoais (como emails, nomes ou números de telefone) sem base legal. Foca-te exclusivamente em dados públicos não sensíveis.</li>
+</ul>
+
+<h2>Tutorial prático: Extrair dados públicos com Python</h2>
+
+<p>Para criar o nosso extrator responsável, vamos utilizar duas das bibliotecas mais populares do ecossistema Python: o <code>requests</code> para efetuar chamadas HTTP e o <code>BeautifulSoup</code> (da suite <code>bs4</code>) para analisar o HTML retornado.</p>
+
+<h3>Passo 1: Instalar as bibliotecas necessárias</h3>
+
+<p>Abre o teu terminal e instala as dependências necessárias executando o seguinte comando:</p>
+
+<pre><code>pip install requests beautifulsoup4</code></pre>
+
+<p>Este comando descarrega as ferramentas necessárias para realizar pedidos à web e para navegar pela estrutura HTML das páginas.</p>
+
+<h3>Passo 2: Criar o script Python com verificação de ética</h3>
+
+<p>Vamos escrever um script Python completo que verifica as permissões do ficheiro <code>robots.txt</code> antes de aceder à página e extrai os títulos das notícias disponíveis.</p>
+
+<pre><code>import time
+import urllib.parse
+import urllib.robotparser
+import requests
+from bs4 import BeautifulSoup
+
+def pode_raspar(url_alvo, user_agent="MeuBotEtico/1.0"):
+    """Verifica se o ficheiro robots.txt permite o acesso à URL."""
+    parsed = urllib.parse.urlparse(url_alvo)
+    robots_url = f"{parsed.scheme}://{parsed.netloc}/robots.txt"
+    
+    rp = urllib.robotparser.RobotFileParser()
+    rp.set_url(robots_url)
+    try:
+        rp.read()
+        return rp.can_fetch(user_agent, url_alvo)
+    except Exception as e:
+        print(f"Aviso: Não foi possível ler o robots.txt ({e}). A prosseguir com cautela.")
+        return True
+
+def extrair_titulos(url_alvo):
+    user_agent = "MeuBotEtico/1.0 (+https://meusite.pt/contacto)"
+    headers = {"User-Agent": user_agent}
+
+    print(f"A verificar permissões para: {url_alvo}")
+    if not pode_raspar(url_alvo, user_agent):
+        print("Acesso negado pelas regras do robots.txt.")
+        return
+
+    print("A enviar requisição HTTP...")
+    resposta = requests.get(url_alvo, headers=headers)
+
+    if resposta.status_code == 200:
+        soup = BeautifulSoup(resposta.text, "html.parser")
+        # Procura por todos os elementos h2 na página
+        titulos = soup.find_all("h2")
+        
+        print(f"\n--- Títulos Encontrados ({len(titulos)}) ---")
+        for idx, titulo in enumerate(titulos, 1):
+            texto = titulo.get_text(strip=True)
+            if texto:
+                print(f"{idx}. {texto}")
+        
+        # Pausa respeitosa de 2 segundos após a recolha
+        time.sleep(2)
+    else:
+        print(f"Falha ao aceder à página. Código de estado: {resposta.status_code}")
+
+if __name__ == "__main__":
+    # Exemplo com uma página de teste
+    url_exemplo = "https://news.ycombinator.com/"
+    extrair_titulos(url_exemplo)
+</code></pre>
+
+<p>O código acima define uma função de verificação automática do <code>robots.txt</code> recorrendo ao módulo nativo <code>urllib.robotparser</code>. Se a recolha for permitida, o script faz a requisição adicionando um <code>User-Agent</code> identificável, extrai o texto de todos os elementos <code>&lt;h2&gt;</code> com o <code>BeautifulSoup</code> e aguarda 2 segundos antes de encerrar, respeitando a carga do servidor.</p>
+
+<h2>Integrar a recolha de dados com o Hermes Agent</h2>
+
+<p>O <strong>Hermes Agent</strong> permite transformar scripts simples em automações inteligentes que podem ser executadas sob procura ou integradas em fluxos de trabalho complexos com Inteligência Artificial.</p>
+
+<h3>Passo 3: Criar uma Skill personalizada no Hermes Agent</h3>
+
+<p>Para disponibilizar esta capacidade ao teu agente, cria o ficheiro de definição da skill em formato Markdown no diretório correspondente do Hermes. Salva o ficheiro abaixo como <code>SKILL.md</code>:</p>
+
+<pre><code>---
+name: web-scraper-etico
+description: Extrai dados públicos de websites respeitando as regras éticas e o ficheiro robots.txt.
+author: MarctechJA
+version: "1.0"
+platforms:
+  - macos
+  - linux
+  - windows
+metadata:
+  hermes:
+    tags: [web-scraping, python, automacao]
+---
+
+# web-scraper-etico
+Skill para recolha automatizada e responsável de conteúdos públicos na web.
+
+## When to Use
+Utiliza esta skill sempre que for necessário recolher informações, notícias, preços ou dados estruturados de páginas web públicas mantendo total conformidade com boas práticas legais e éticas.
+
+## Instruções
+1. Recebe o URL de destino e os seletores HTML pretendidos fornecidos pelo utilizador.
+2. Executa a verificação prévia das regras do ficheiro `robots.txt` do domínio correspondente.
+3. Utiliza o script Python com as bibliotecas `requests` e `BeautifulSoup` para descarregar o conteúdo.
+4. Aplica um intervalo mínimo de 2 segundos entre pedidos sequenciais.
+5. Apresenta os dados recolhidos num formato limpo e estruturado (JSON ou lista organizada).
+
+## Critérios de conclusão
+- Confirmação de autorização concedida pelo `robots.txt`.
+- Extração bem-sucedida dos dados sem erros de rede.
+- Apresentação clara do resultado final no terminal ou guardado em ficheiro.
+</code></pre>
+
+<p>Esta estrutura padronizada informa o Hermes Agent sobre as regras de funcionamento da ferramenta, os cenários de aplicação e os passos exatos que deve seguir na hora de executar a automação.</p>
+
+<h3>Passo 4: Executar a Skill no Hermes Agent</h3>
+
+<p>Depois de guardar a skill, podes verificar se ela foi reconhecida corretamente pelo sistema listando as skills ativas:</p>
+
+<pre><code>hermes skills list</code></pre>
+
+<p>Para iniciar uma sessão interativa e pedir ao agente que efetue a recolha de dados utilizando a tua nova skill, executa o comando:</p>
+
+<pre><code>hermes chat -s web-scraper-etico</code></pre>
+
+<p>Dentro do chat, podes fornecer um URL e indicar ao Hermes Agent exatamente que dados pretendes extrair e resumir. O agente tratará da execução do código Python e da organização da informação recolhida.</p>
+
+<h2>Conclusão</h2>
+
+<p>O <em>web scraping</em> é uma técnica indispensável para quem trabalha com análise de dados e automação digital. Ao adotar uma postura ética — consultando o <code>robots.txt</code>, identificando a origem dos pedidos e controlando o ritmo das requisições —, garantes que a tua recolha de informação é feita de forma sustentável e transparente.</p>
+
+<p>Combinar scripts Python eficientes com o poder do <strong>Hermes Agent</strong> eleva estas tarefas a um novo nível, permitindo agendar, processar e analisar dados de forma totalmente autónoma.</p>
+
+<p>Se queres aprofundar os teus conhecimentos na criação de agentes inteligentes, automações avançadas e construção de skills personalizadas em Python, podes consultar o <a href="/livro/">Guia Completo do Hermes Agent</a>, um recurso prático para dominar esta plataforma de automação.</p>
+        </div>
+        <div class="comments-section">
+          <h2>Comentários</h2>
+          <script src="https://giscus.app/client.js"
+                  data-repo="Jorgeacus/marctechja-blog"
+                  data-repo-id="R_kgDOTnRVjw"
+                  data-category="General"
+                  data-category-id="DIC_kwDOTnRVj84DDt4R"
+                  data-mapping="pathname"
+                  data-strict="0"
+                  data-reactions-enabled="1"
+                  data-emit-metadata="0"
+                  data-input-position="bottom"
+                  data-theme="preferred_color_scheme"
+                  data-lang="pt"
+                  crossorigin="anonymous"
+                  async>
+          </script>
+          <noscript>Ativa o JavaScript para veres e deixares comentários.</noscript>
+        </div>
+      </div>
+      <aside class="sidebar">
+        <div class="sidebar-widget">
+          <h3>📘 Livro do Hermes Agent</h3>
+          <p>10 partes, 42 capítulos. PDF + EPUB.</p>
+          <a href="/livro/" class="btn btn-gold">Saber Mais</a>
+        </div>
+        <div class="sidebar-widget ad-placeholder">Anúncio Google AdSense</div>
+      </aside>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <a href="/" class="logo">Marc<span class="gold">tech</span>JA</a>
+          <p>Tecnologia, automação e IA para transformar a produtividade.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Navegação</h4>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/blog/">Blog</a></li>
+            <li><a href="/livro/">Livro</a></li>
+            <li><a href="/sobre/">Sobre</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="/politica-de-privacidade/">Privacidade</a></li>
+            <li><a href="/politica-de-cookies/">Cookies</a></li>
+            <li><a href="/termos/">Termos</a></li>
+            <li><a href="/contactos/">Contactos</a></li>
+            <li><a href="#" id="cookie-settings" onclick="window.MarctechJACookieConsent&&window.MarctechJACookieConsent.show();return false;">Definições de cookies</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contacto</h4>
+          <ul>
+            <li><a href="mailto:marctechja@gmail.com">marctechja@gmail.com</a></li>
+            <li><a href="https://github.com/Jorgeacus">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 MarctechJA. Todos os direitos reservados.</p>
+      </div>
+    </div>
+  </footer>
+  <script src="/assets/js/main.js"></script>
+  <script src="/assets/js/cookie-consent.js"></script>
+</body>
+</html>
