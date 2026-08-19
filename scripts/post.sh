@@ -74,6 +74,17 @@ text = " ".join(raw.split())
 print(text[:150].rstrip())
 ' <<< "$ARTICLE_CONTENT")
 
+# Reading time (word count of visible text / 200 wpm, min 1)
+READ_MIN=$(python3 -c '
+import re, html, sys
+raw = sys.stdin.read()
+raw = re.sub(r"<!--.*?-->", "", raw, flags=re.DOTALL)
+raw = re.sub(r"<[^>]+>", "", raw)
+text = html.unescape(raw)
+words = len(text.split())
+print(max(1, round(words / 200)))
+' <<< "$ARTICLE_CONTENT")
+
 cat > "$POST_DIR/index.html" << HTMLEOF
 <!DOCTYPE html>
 <html lang="pt-PT">
@@ -129,6 +140,7 @@ cat > "$POST_DIR/index.html" << HTMLEOF
           <h1>${TITLE}</h1>
           <div class="meta">
             <span>📅 ${DATE}</span>
+            <span>📖 ${READ_MIN} min de leitura</span>
             <span>🏷️ ${CATEGORY}</span>
             <span>✍️ ${AUTHOR}</span>
           </div>

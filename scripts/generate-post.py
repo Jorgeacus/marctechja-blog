@@ -395,7 +395,7 @@ O artigo HTML deve ter:
 REGRAS DE QUALIDADE OBRIGATÓRIAS:
 
 1. ESTRUTURA DIDÁTICA:
-   - Começa com um parágrafo de introdução curto que desperta interesse (ex: "Imagina...", "Sentes que...") antes do primeiro heading.
+   - Começa com um parágrafo de introdução curto que desperta interesse antes do primeiro heading. VARIA o gancho: alterna entre perguntas ("Já pensaste..."), declarações diretas ("Organizar ficheiros...", "A gestão de..."), cenários concretos ("Imagina...") e dados práticos. NUNCA uses "Sentes que..." como abertura — já foi usado em demasiados artigos.
    - Usa passos numerados ("Passo 1:", "Passo 2:", ...) para tutoriais práticos.
    - Cada passo tem: explicação breve + bloco de código + explicação do que o código faz.
    - Termina com uma conclusão que resuma o que o leitor aprendeu e o próximo passo sugerido.
