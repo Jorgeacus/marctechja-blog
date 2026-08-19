@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Automatizar o teu workflow de GitHub com Python — MarctechJA</title>
-  <meta name="description" content="Sentes que passas mais tempo a rever Pull Requests, a etiquetar issues e a organizar releases no GitHub do que propriamente a escrever código? A gestã">
+  <meta name="description" content="Sentes que passas demasiado tempo a realizar tarefas repetitivas no GitHub, como rever Pull Requests pendentes, categorizar issues ou preparar notas d">
   <meta property="og:title" content="Automatizar o teu workflow de GitHub com Python">
-  <meta property="og:description" content="Sentes que passas mais tempo a rever Pull Requests, a etiquetar issues e a organizar releases no GitHub do que propriamente a escrever código? A gestã">
+  <meta property="og:description" content="Sentes que passas demasiado tempo a realizar tarefas repetitivas no GitHub, como rever Pull Requests pendentes, categorizar issues ou preparar notas d">
   <meta property="og:url" content="https://marcusja777.com/blog/automatizar-o-teu-workflow-de-github-com-python/">
   <link rel="canonical" href="https://marcusja777.com/blog/automatizar-o-teu-workflow-de-github-com-python/">
   <link rel="stylesheet" href="/assets/css/style.css?v=20260818">
@@ -19,8 +19,8 @@
   "@type": "BlogPosting",
   "headline": "Automatizar o teu workflow de GitHub com Python",
   "url": "https://marcusja777.com/blog/automatizar-o-teu-workflow-de-github-com-python/",
-  "datePublished": "2026-08-17",
-  "dateModified": "2026-08-17",
+  "datePublished": "2026-08-19",
+  "dateModified": "2026-08-19",
   "inLanguage": "pt-PT",
   "author": {"@type": "Person", "name": "Hermes Agent"},
   "publisher": {"@type": "Organization", "name": "MarctechJA", "url": "https://marcusja777.com/"},
@@ -51,87 +51,86 @@
           </div>
           <h1>Automatizar o teu workflow de GitHub com Python</h1>
           <div class="meta">
-            <span>📅 17 Aug 2026</span>
+            <span>📅 19 Aug 2026</span>
             <span>🏷️ Programadores</span>
             <span>✍️ Hermes Agent</span>
           </div>
         </div>
         <div class="article-content">
-          <p>Sentes que passas mais tempo a rever Pull Requests, a etiquetar <em>issues</em> e a organizar <em>releases</em> no GitHub do que propriamente a escrever código? A gestão manual de repositórios consome horas preciosas de qualquer equipa de desenvolvimento. A boa notícia é que podes combinar a flexibilidade da linguagem Python com o poder do <strong>Hermes Agent</strong> para automatizar todo o teu <em>workflow</em> do GitHub de forma rápida, inteligente e segura.</p>
+          <p>Sentes que passas demasiado tempo a realizar tarefas repetitivas no GitHub, como rever Pull Requests pendentes, categorizar <em>issues</em> ou preparar notas de lançamento para novos <em>releases</em>? A combinação da linguagem Python com a biblioteca PyGithub e a capacidade autónoma do <strong>Hermes Agent</strong> permite transformar o teu fluxo de trabalho diário numa máquina de produtividade automatizada.</p>
 
-<h2>O Poder do PyGithub Integrado com o Hermes Agent</h2>
+<h2>Porquê automatizar o workflow do GitHub com o Hermes Agent?</h2>
 
-<p>A biblioteca <code>PyGithub</code> é uma das ferramentas mais robustas para interagir com a API REST do GitHub através de Python. Ela permite gerir repositórios, pull requests, commits, organizações e fluxos de CI/CD programmaticamente.</p>
+<p>O GitHub é o centro de gravidade do desenvolvimento de software moderno, mas a gestão manual de repositórios consome horas preciosas de programação. Ao utilizar a biblioteca <code>PyGithub</code> para interagir com a API REST do GitHub e integrar essa lógica numa <strong>Skill do Hermes Agent</strong>, ganhas um assistente inteligente no teu terminal capaz de executar operações complexas sob comando ou de forma totalmente autónoma.</p>
 
-<p>No entanto, quando aliamos o Python ao <strong>Hermes Agent</strong>, elevamos a automação a outro nível. Em vez de criares scripts isolados que requerem execução manual constante, o Hermes Agent atua como um orquestrador inteligente capaz de interpretar instruções em linguagem natural, tomar decisões com base no contexto do projeto e executar as tuas automações no momento certo.</p>
-
-<p>Com esta combinação, podes automatizar facilmente:</p>
+<p>Com esta abordagem podes:</p>
 <ul>
-  <li><strong>Triagem de Issues:</strong> Classificação e atribuição automática de tarefas com base no conteúdo das mensagens.</li>
-  <li><strong>Revisão de PRs:</strong> Análise preliminar de código e verificação de regras de estilo.</li>
-  <li><strong>Gestão de Releases:</strong> Compilação automática de registos de alterações (<em>changelogs</em>) e criação de etiquetas de versão.</li>
-  <li><strong>Acompanhamento de CI/CD:</strong> Monitorização do estado dos testes automatizados e notificação imediata de falhas.</li>
+  <li><strong>Simplificar a triagem de bugs:</strong> Identificar automaticamente <em>issues</em> sem etiquetas e atribuir categorias ou responsáveis.</li>
+  <li><strong>Acelerar code reviews:</strong> Resumir as alterações de Pull Requests antes de abrires o navegador.</li>
+  <li><strong>Automatizar CI/CD e Releases:</strong> Gerar notas de lançamento estruturadas com base nos commits e PRs aprovados.</li>
 </ul>
 
-<h2>Tutorial Prático: Automatizar o Workflow de GitHub</h2>
+<h2>Passo a passo: Construir a tua automação do GitHub</h2>
 
-<p>Vamos construir um fluxo prático passo a passo para integrares o teu repositório com o Python e o Hermes Agent.</p>
+<p>Acompanha os passos abaixo para criar um sistema completo de automação integrado com o Hermes Agent.</p>
 
-<h3>Passo 1: Instalar as dependências e configurar o acesso</h3>
+<h3>Passo 1: Instalar o Hermes Agent e a biblioteca PyGithub</h3>
+<p>Antes de criar os scripts, precisamos de ter o ambiente pronto. Começa por instalar o Hermes Agent no teu sistema operativo e a biblioteca <code>pygithub</code> no teu ambiente Python.</p>
 
-<p>Primeiro, precisamos de instalar a biblioteca <code>PyGithub</code> no ambiente de desenvolvimento e definir um token de acesso pessoal (Personal Access Token) do GitHub com permissões de leitura e escrita nos teus repositórios.</p>
+<pre><code># Instalação do Hermes Agent (macOS / Linux)
+curl -fsSL https://hermes-agent.nousresearch.com/install.sh | bash
 
-<pre><code>pip install PyGithub
-export GITHUB_TOKEN="ghp_seu_token_pessoal_aqui"</code></pre>
+# Instalação da biblioteca PyGithub via pip
+pip install pygithub</code></pre>
 
-<p>O comando <code>pip install PyGithub</code> instala a biblioteca de integração com o GitHub. O comando <code>export</code> guarda o teu token numa variável de ambiente segura, garantindo que as tuas credenciais nunca fiquem expostas diretamente no código da aplicação.</p>
+<p>O comando acima descarrega e configura o executável principal do Hermes Agent no teu sistema e instala a biblioteca oficial do Python para interagir com a API do GitHub.</p>
 
-<h3>Passo 2: Criar o script Python de automação</h3>
-
-<p>Cria um ficheiro chamado <code>github_manager.py</code> no teu projeto. Este script consulta as <em>issues</em> abertas e cria um resumo automático das tarefas pendentes no repositório.</p>
+<h3>Passo 2: Criar o script Python para gestão do repositório</h3>
+<p>Cria um ficheiro chamado <code>github_automator.py</code>. Este script liga-se ao GitHub através de um Personal Access Token (PAT) guardado na variável de ambiente <code>GITHUB_TOKEN</code>, analisa os PRs abertos e adiciona etiquetas automáticas às <em>issues</em> que precisem de triagem.</p>
 
 <pre><code>import os
 from github import Github
 
-def analisar_repositorio(repo_name):
-    token = os.getenv("GITHUB_TOKEN")
+def processar_repositorio(repo_name):
+    # Obter o token de acesso das variáveis de ambiente
+    token = os.environ.get("GITHUB_TOKEN")
     if not token:
         raise ValueError("A variável de ambiente GITHUB_TOKEN não está definida.")
 
+    # Inicializar o cliente do GitHub
     g = Github(token)
     repo = g.get_repo(repo_name)
 
-    issues_abertas = repo.get_issues(state="open")
-    prs_abertos = repo.get_pulls(state="open")
+    print(f"--- Repositório: {repo.full_name} ---")
 
-    relatorio = []
-    relatorio.append(f"--- Relatório do Repositório: {repo.full_name} ---")
-    relatorio.append(f"Total de Issues Abertas: {issues_abertas.totalCount}")
-    
-    for issue in issues_abertas:
-        if not issue.pull_request:
-            relatorio.append(f"  - Issue #{issue.number}: {issue.title}")
+    # 1. Listar Pull Requests pendentes
+    prs = repo.get_pulls(state='open')
+    print(f"\nPull Requests Abertos ({prs.totalCount}):")
+    for pr in prs:
+        print(f"- [#{pr.number}] {pr.title} (Autor: {pr.user.login})")
 
-    relatorio.append(f"\nTotal de PRs Abertos: {prs_abertos.totalCount}")
-    for pr in prs_abertos:
-        relatorio.append(f"  - PR #{pr.number}: {pr.title} (Autor: {pr.user.login})")
-
-    return "\n".join(relatorio)
+    # 2. Triagem automática de Issues sem etiqueta
+    issues = repo.get_issues(state='open')
+    print(f"\nTriagem de Issues:")
+    for issue in issues:
+        # Garantir que é um Issue e não um Pull Request
+        if not issue.pull_request and len(issue.labels) == 0:
+            print(f"- Issue #{issue.number} sem etiqueta. A adicionar 'necessita-triagem'...")
+            issue.add_to_labels("necessita-triagem")
 
 if __name__ == "__main__":
     # Substitui pelo teu utilizador e repositório
-    resultado = analisar_repositorio("utilizador/meu-projeto")
-    print(resultado)</code></pre>
+    target_repo = os.environ.get("TARGET_REPO", "utilizador/meu-projeto")
+    processar_repositorio(target_repo)</code></pre>
 
-<p>O código acima importa o módulo <code>Github</code>, autentica-se com o token configurado e acede aos dados do repositório indicado. Em seguida, percorre a lista de <em>issues</em> e <em>pull requests</em> ativos, gerando um relatório formatado em texto legível.</p>
+<p>Este código acede à API do GitHub com autenticação segura, percorre a lista de PRs ativos para dar visibilidade ao programador e insere a etiqueta <code>necessita-triagem</code> em qualquer <em>issue</em> nova que ainda não possua classificações.</p>
 
-<h3>Passo 3: Criar a Skill para o Hermes Agent</h3>
-
-<p>Para que o Hermes Agent possa utilizar este script e automatizar o processo de forma autónoma, vamos definir uma <em>skill</em> personalizada. Cria um ficheiro chamado <code>SKILL.md</code> no diretório de skills do Hermes (geralmente em <code>~/.hermes/skills/github-automation/SKILL.md</code>).</p>
+<h3>Passo 3: Transformar o script numa Skill do Hermes Agent</h3>
+<p>Para que o Hermes Agent saiba como e quando usar este script, devemos registá-lo como uma Skill. As skills do Hermes utilizam a estrutura canónica <code>SKILL.md</code>. Cria o ficheiro <code>~/.hermes/skills/github-workflow/SKILL.md</code> com o seguinte conteúdo:</p>
 
 <pre><code>---
-name: github-automation
-description: Automatiza a análise e triagem de issues, PRs e releases no GitHub utilizando Python e PyGithub.
+name: github-workflow
+description: Automatiza a triagem de issues e a listagem de Pull Requests em repositórios do GitHub usando PyGithub.
 author: MarcTechJA
 version: "1.0"
 platforms:
@@ -140,56 +139,62 @@ platforms:
   - windows
 metadata:
   hermes:
-    tags: [github, python, automacao, ci-cd]
+    tags: [github, python, automation, ci-cd]
 ---
 
-# github-automation
-Skill para gerir e automatizar tarefas do GitHub através de scripts Python e da API do GitHub.
+# github-workflow
+Esta skill permite ao Hermes Agent analisar o estado atual de um repositório GitHub, listar PRs pendentes e etiquetar automaticamente novas issues.
 
 ## When to Use
-Utiliza esta skill quando for necessário analisar o estado do repositório, fazer triagem de issues abertas, verificar Pull Requests pendentes ou gerar relatórios de versão.
+Utiliza esta skill quando o utilizador pedir para analisar o estado do repositório GitHub, verificar Pull Requests abertos ou fazer a triagem automática de issues.
 
 ## Instruções
-1. Certifica-te de que a variável de ambiente GITHUB_TOKEN está configurada corretamente no sistema.
-2. Executa o script Python `github_manager.py` para recolher o estado atual das issues e PRs.
-3. Analisa as informações obtidas e identifica quais os itens que necessitam de atenção urgente.
-4. Apresenta um resumo estruturado ao utilizador com sugestões de próximos passos para o fluxo de CI/CD.
+1. Garante que a variável de ambiente `GITHUB_TOKEN` está disponível no ambiente de execução.
+2. Executa o script Python `github_automator.py` para recolher os dados e aplicar as etiquetas necessárias.
+3. Apresenta ao utilizador um resumo claro dos Pull Requests abertos e das issues que foram etiquetadas.
 
 ## Critérios de conclusão
-- Leitura do repositório efetuada com sucesso sem erros de autenticação.
-- Relatório de issues e PRs apresentado com clareza.
-- Ações recomendadas disponibilizadas ao utilizador.</code></pre>
+- O script Python executou sem erros.
+- As issues sem etiqueta foram atualizadas no GitHub.
+- O relatório com os PRs abertos foi exibido no terminal.</code></pre>
 
-<p>Este ficheiro <code>SKILL.md</code> contém os metadados em formato YAML e as instruções em Markdown que o Hermes Agent interpreta. A secção <code>metadata</code> categoriza a skill, enquanto a secção de instruções detalha exatamente a ordem de execução do agente.</p>
+<p>O ficheiro de configuração define os metadados da skill em YAML e fornece instruções em Markdown para o Hermes Agent saber exatamente que passos executar ao lidar com automações do GitHub.</p>
 
 <h3>Passo 4: Executar a Skill com o Hermes Agent</h3>
+<p>Depois de teres o ficheiro <code>SKILL.md</code> no diretório de skills do Hermes, podes listar as tuas skills e executar a automação diretamente no terminal através do comando de interatividade com skills do Hermes:</p>
 
-<p>Com a skill configurada, podes verificar se ela está disponível e iniciá-la através do terminal interativo do Hermes Agent.</p>
+<pre><code># Verificar se a skill foi reconhecida pelo Hermes Agent
+hermes skills list
 
-<pre><code>hermes skills list
-hermes chat -s github-automation</code></pre>
+# Executar a skill interativamente através do chat do Hermes
+export GITHUB_TOKEN="o_teu_token_aqui"
+export TARGET_REPO="teu-utilizador/teu-repositorio"
+hermes chat -s github-workflow</code></pre>
 
-<p>O comando <code>hermes skills list</code> mostra todas as automações registadas no teu sistema. Ao executar <code>hermes chat -s github-automation</code>, inicias uma sessão interativa onde o agente carrega o contexto do teu projeto e executa a tarefa definida na skill.</p>
+<p>Ao correr este comando, o Hermes Agent carrega o contexto da skill <code>github-workflow</code>, executa a rotina em Python e devolve uma síntese perfeita no teu ecrã com todas as ações efetuadas no GitHub.</p>
 
-<h2>Boas Práticas na Automação de CI/CD e Segurança</h2>
+<h2>Casos de uso avançados: CI/CD e Release Notes inteligentes</h2>
 
-<p>Ao automatizar rotinas no GitHub com scripts e agentes de Inteligência Artificial, é fundamental ter em conta alguns aspetos de segurança e otimização:</p>
+<p>Depois de dominares a triagem básica, podes expandir esta integração para casos mais complexos de integração e entrega contínuas (CI/CD):</p>
 
 <ul>
-  <li><strong>Princípio do Menor Privilégio:</strong> Configura o teu <em>GitHub Personal Access Token</em> apenas com as permissões estritamente necessárias (por exemplo, acesso apenas a leitura se a skill apenas gerar relatórios).</li>
-  <li><strong>Gestão de Rate Limits:</strong> A API do GitHub impõe limites de requisições por hora. Certifica-te de que os teus scripts guardam resultados em <em>cache</em> sempre que possível.</li>
-  <li><strong>Ambiente de Testes (Sandbox):</strong> Antes de permitir que o agente feche <em>issues</em> ou aprove <em>PRs</em> automaticamente, testa o fluxo num repositório secundário de testes.</li>
+  <li><strong>Geração automática de Release Notes:</strong> Configura o script para ler todos os PRs associados à última <em>milestone</em> e gerar um ficheiro <code>CHANGELOG.md</code> formatado.</li>
+  <li><strong>Disparo de Workflows do GitHub Actions:</strong> Utiliza o PyGithub para disparar eventos do tipo <code>repository_dispatch</code>, ativando pipelines de testes no GitHub Actions a partir do teu terminal com o Hermes Agent.</li>
+  <li><strong>Alertas de Segurança:</strong> Analisa dependências e pull requests de bots de segurança (como o Dependabot) para resumir vulnerabilidades críticas da tua equipa.</li>
 </ul>
 
 <h2>Conclusão</h2>
 
-<p>Automatizar o teu fluxo de trabalho no GitHub utilizando Python e o Hermes Agent transforma tarefas repetitivas numa experiência fluida e sem esforço. Ao integrar scripts focados com a capacidade decisória do agente, ganhas tempo para o que realmente importa: escrever código de alta qualidade e desenvolver novas funcionalidades.</p>
+<p>Automatizar o teu workflow de GitHub com Python e o Hermes Agent transforma tarefas administrativas longas em rotinas de poucos segundos. Com a biblioteca PyGithub a tratar da comunicação com a API e o Hermes Agent a orquestrar as execuções, geres o teu código com muito mais eficiência e menos esforço manual.</p>
 
-<h2>Desejas Aprofundar os Teus Conhecimentos em Hermes Agent?</h2>
+<p>Quer pretendas aprofundar a criação de skills avançadas em Python, configurar equipas de agentes autónomos ou integrar o Hermes Agent em pipelines de produção e CI/CD, existe um guia completo à tua espera.</p>
 
-<p>Se queres dominar a criação de automações avançadas, integrar múltiplos fornecedores de IA (como OpenAI, Claude ou modelos locais com Ollama) e publicar agentes em produção com total segurança, explora o recurso definitivo sobre o tema.</p>
+<hr />
 
-<p>Adquire o ebook <strong><a href="https://hotm.io/jFUussV9" target="_blank" rel="noopener">Guia Completo do Hermes Agent</a></strong> de MarcTechJA — um manual prático com 124 páginas, dividido em 10 partes e 42 capítulos repletos de exemplos reais de código, arquitetura de equipas de agentes e estratégias para programadores e empresas.</p>
+<h3>Queres dominar o Hermes Agent e a Automação com IA?</h3>
+<p>Adquire o ebook <strong>"Guia Completo do Hermes Agent"</strong> de MarcTechJA. Um guia prático com 10 partes e 42 capítulos detalhados sobre instalação, criação de skills em Python/YAML, integração de modelos de IA e deploy em produção.</p>
+
+<p>👉 <strong><a href="https://hotm.io/jFUussV9" target="_blank" rel="noopener noreferrer">Garante já o teu exemplar do Guia Completo do Hermes Agent aqui</a></strong></p>
 
           <div class="article-cta">
             <h3>Queres ir mais longe?</h3>
