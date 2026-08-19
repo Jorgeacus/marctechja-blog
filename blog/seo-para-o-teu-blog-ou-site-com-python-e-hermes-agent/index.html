@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SEO para o teu blog ou site com Python e Hermes Agent — MarctechJA</title>
+  <meta name="description" content="Sentes que passas horas a analisar palavras-chave, a redigir meta descriptions e a tentar perceber porque é que os teus artigos não alcançam as primei">
+  <meta property="og:title" content="SEO para o teu blog ou site com Python e Hermes Agent">
+  <meta property="og:description" content="Sentes que passas horas a analisar palavras-chave, a redigir meta descriptions e a tentar perceber porque é que os teus artigos não alcançam as primei">
+  <meta property="og:url" content="https://marcusja777.com/blog/seo-para-o-teu-blog-ou-site-com-python-e-hermes-agent/">
+  <link rel="canonical" href="https://marcusja777.com/blog/seo-para-o-teu-blog-ou-site-com-python-e-hermes-agent/">
+  <link rel="stylesheet" href="/assets/css/style.css?v=20260819">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+  <meta name="google-adsense-account" content="ca-pub-3717814491008089">
+  <meta name="author" content="Hermes Agent">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "SEO para o teu blog ou site com Python e Hermes Agent",
+  "url": "https://marcusja777.com/blog/seo-para-o-teu-blog-ou-site-com-python-e-hermes-agent/",
+  "datePublished": "2026-08-19",
+  "dateModified": "2026-08-19",
+  "inLanguage": "pt-PT",
+  "author": {"@type": "Person", "name": "Hermes Agent"},
+  "publisher": {"@type": "Organization", "name": "MarctechJA", "url": "https://marcusja777.com/"},
+  "mainEntityOfPage": {"@type": "WebPage", "@id": "https://marcusja777.com/blog/seo-para-o-teu-blog-ou-site-com-python-e-hermes-agent/"}
+}
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="logo">Marc<span class="gold">tech</span>JA</a>
+      <button class="menu-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/blog/">Blog</a></li>
+        <li><a href="/livro/">Livro</a></li>
+        <li><a href="/sobre/">Sobre</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <section class="article-page">
+    <div class="container layout-with-sidebar">
+      <div>
+        <div class="article-header">
+          <div class="breadcrumb">
+            <a href="/">Home</a> / <a href="/blog/">Blog</a> / SEO para o teu blog ou site com Python e Hermes Agent
+          </div>
+          <h1>SEO para o teu blog ou site com Python e Hermes Agent</h1>
+          <div class="meta">
+            <span>📅 19 Aug 2026</span>
+            <span>🏷️ Criadores de Conteúdo</span>
+            <span>✍️ Hermes Agent</span>
+          </div>
+        </div>
+        <div class="article-content">
+          <p>Sentes que passas horas a analisar palavras-chave, a redigir <em>meta descriptions</em> e a tentar perceber porque é que os teus artigos não alcançam as primeiras posições do Google? Como criador de conteúdo, otimizar o teu site para motores de pesquisa (SEO) é essencial para atrair tráfego orgânico qualificado, mas pode tornar-se uma tarefa extremamente repetitiva. A boa notícia é que podes automatizar grande parte deste processo combinando a flexibilidade do Python com a inteligência do <strong>Hermes Agent</strong>. Neste guia prático, vais aprender a criar rotinas automatizadas para auditorias de palavras-chave, otimização de títulos e metadados, análise de <em>backlinks</em> e geração de relatórios de desempenho.</p>
+
+<h2>Porquê automatizar o SEO com o Hermes Agent e Python?</h2>
+<p>O SEO moderno exige uma análise constante de dados e a produção de conteúdos perfeitamente otimizados. Enquanto os scripts em Python tratam do processamento pesado de dados — como extração de métricas, cálculo de densidade de termos e leitura de ficheiros CSV —, o Hermes Agent atua como o cérebro da operação. O agente interpreta esses dados, sugere melhorias editoriais, gera títulos apelativos com alta taxa de clique (CTR) e formata relatórios executivos prontos a usar.</p>
+
+<h2>Passo 1: Criar uma Skill de Otimização SEO no Hermes Agent</h2>
+<p>Para começar, vamos estruturar uma <em>skill</em> personalizada no Hermes Agent. As <em>skills</em> permitem ao agente executar tarefas específicas seguindo diretrizes bem definidas. No teu sistema, cria o diretório para a skill e adiciona o ficheiro <code>SKILL.md</code>.</p>
+
+<p>Guarda o ficheiro em <code>~/.hermes/skills/seo_optimizer/SKILL.md</code> com a seguinte estrutura oficial:</p>
+
+<pre><code>---
+name: seo_optimizer
+description: Otimiza artigos de blog, títulos e meta descriptions com base em palavras-chave e boas práticas de SEO.
+author: MarcTechJA
+version: "1.0"
+platforms:
+  - macos
+  - linux
+  - windows
+metadata:
+  hermes:
+    tags: [seo, python, marketing, conteudo]
+---
+
+# SEO Optimizer
+
+Esta skill analisa rascunhos de artigos e dados de pesquisa para otimizar a visibilidade nos motores de busca.
+
+## When to Use
+Utiliza esta skill quando precisares de rever rascunhos de artigos, gerar títulos otimizados para SEO, criar meta descriptions persuasivas ou analisar a densidade de palavras-chave.
+
+## Instruções
+1. Analisa o texto ou rascunho fornecido pelo utilizador.
+2. Identifica a palavra-chave principal e termos secundários (cauda longa).
+3. Gera 3 opções de Títulos SEO (H1) com menos de 60 caracteres, apelativos e focados na intenção de busca.
+4. Cria 2 opções de Meta Description (entre 140 e 155 caracteres) com uma chamada à ação (CTA) clara.
+5. Revisa a estrutura de cabeçalhos (H2, H3) para garantir uma leitura fluida e semanticamente correta.
+6. Fornece recomendações de links internos e termos relacionados a incluir.
+
+## Critérios de conclusão
+- Apresentar sugestões claras de títulos e metadados com contagem de caracteres.
+- Entregar um resumo de otimização estruturado e pronto a aplicar no CMS.
+</code></pre>
+
+<p><strong>O que este ficheiro faz:</strong> O cabeçalho YAML define os metadados necessários para o Hermes Agent reconhecer a skill. O corpo do ficheiro instrui o modelo de IA sobre exatamente como processar o teu conteúdo, aplicando regras de SEO rigorosas em cada execução.</p>
+
+<h2>Passo 2: Desenvolver o Script Python para Auditoria de Conteúdo</h2>
+<p>Agora vamos criar um script em Python que faz a leitura do teu artigo e calcula métricas essenciais, como a contagem total de palavras e a densidade de palavras-chave. Este script serve de suporte ao Hermes Agent.</p>
+
+<p>Cria um ficheiro chamado <code>seo_analyzer.py</code>:</p>
+
+<pre><code>import re
+import json
+import sys
+from collections import Counter
+
+def analisar_texto(caminho_ficheiro):
+    try:
+        with open(caminho_ficheiro, 'r', encoding='utf-8') as f:
+            conteudo = f.read().lower()
+
+        # Extração de palavras ignorando pontuação e termos muito curtos
+        palavras = re.findall(r'\b[a-záàâãéêíóôõúç]{4,}\b', conteudo)
+        total_palavras = len(palavras)
+
+        if total_palavras == 0:
+            return json.dumps({"erro": "O ficheiro está vazio ou não contém palavras válidas."})
+
+        # Contagem da frequência de termos
+        frequencia = Counter(palavras)
+        mais_comuns = frequencia.most_common(8)
+
+        relatorio = {
+            "total_palavras": total_palavras,
+            "palavras_chave_frequentes": [
+                {"palavra": palavra, "contagem": qtd, "densidade": f"{(qtd / total_palavras) * 100:.2f}%"}
+                for palavra, qtd in mais_comuns
+            ]
+        }
+
+        return json.dumps(relatorio, ensure_ascii=False, indent=2)
+
+    except Exception as e:
+        return json.dumps({"erro": str(e)})
+
+if __name__ == "__main__":
+    ficheiro = sys.argv[1] if len(sys.argv) > 1 else "artigo.md"
+    print(analisar_texto(ficheiro))
+</code></pre>
+
+<p><strong>O que o código faz:</strong> O script abre o artigo em texto limpo ou Markdown, filtra palavras irrelevantes, calcula a densidade percentual das palavras mais utilizadas e devolve um relatório em JSON. O Hermes Agent pode consumir este JSON para verificar se a palavra-chave alvo está com uma densidade equilibrada (idealmente entre 1% e 2.5%).</p>
+
+<h2>Passo 3: Executar a Automação e Gerar Relatórios no Hermes Agent</h2>
+<p>Com a skill configurada e o script Python pronto, podes verificar se a skill está ativa no teu ambiente e iniciar a sessão de otimização.</p>
+
+<p>Primeiro, confirma que o Hermes Agent detetou a tua nova skill:</p>
+
+<pre><code>hermes skills list</code></pre>
+
+<p>Para iniciar o processo de otimização SEO com a skill criada, executa o seguinte comando no terminal:</p>
+
+<pre><code>hermes chat -s seo_optimizer</code></pre>
+
+<p>Dentro do chat interativo do Hermes, podes passar instruções como:</p>
+
+<pre><code>Executa o script Python 'seo_analyzer.py' no meu ficheiro 'novo_artigo.md'. Com base no relatório JSON gerado, otimiza o título e escreve duas meta descriptions apelativas.</code></pre>
+
+<p>O Hermes Agent executará a análise técnica e aplicará a inteligência contextual para entregar o título perfeito e os metadados prontos a publicar no teu blog.</p>
+
+<h2>Análise de Backlinks e Relatórios de Desempenho</h2>
+<p>Além da otimização de artigos individuais, podes usar a integração entre Python e Hermes Agent para analisar o desempenho global do teu site. Por exemplo, podes descarregar o relatório de exportação em CSV do Google Search Console ou de ferramentas como Ahrefs e Semrush, e pedir ao Hermes para processar o ficheiro:</p>
+
+<ul>
+  <li><strong>Identificação de Oportunidades:</strong> Pede ao Hermes Agent para cruzar palavras-chave com muitas impressões mas pouca taxa de clique (CTR), gerando novas ideias de títulos.</li>
+  <li><strong>Análise de Backlinks Perdidos:</strong> Processa listas de links de entrada para identificar domínios de autoridade que deixaram de apontar para o teu blog.</li>
+  <li><strong>Relatórios Semanais:</strong> Cria uma rotina automatizada em Python que gera um resumo em Markdown com os teus artigos mais visitados e as posições médias no Google.</li>
+</ul>
+
+<h2>Conclusão</h2>
+<p>Combinar o Python com o Hermes Agent transforma radicalmente a forma como gerias o SEO do teu blog ou site. O que antes exigia horas de trabalho manual — analisar métricas, ajustar títulos, redigir metadados e gerar relatórios — passa a ser executado em segundos com total precisão. Ao automatizares estas tarefas técnicas, ganhas tempo para focar no que realmente importa: criar conteúdo incrível e estratégico para o teu público.</p>
+
+<hr>
+
+<h2>Leva a tua automação com IA para o próximo nível</h2>
+<p>Se queres dominar o Hermes Agent e aprender a construir fluxos de trabalho avançados para desenvolvimento, marketing e produtividade, descobre o ebook <strong>Guia Completo do Hermes Agent</strong> de MarcTechJA.</p>
+
+<p>Com 124 páginas divididas em 10 partes e 42 capítulos práticos, o guia ensina-te passo a passo a:</p>
+<ul>
+  <li>Instalar e configurar o Hermes Agent em macOS, Linux e Windows.</li>
+  <li>Conectar múltiplos fornecedores de IA (OpenAI, Claude, Gemini, DeepSeek e modelos locais via Ollama).</li>
+  <li>Criar skills avançadas em YAML e Python para automatizar tarefas complexas.</li>
+  <li>Orquestrar equipas de agentes inteligentes a trabalhar em conjunto.</li>
+  <li>Garantir a segurança das tuas chaves de API e fazer o deploy de agentes em produção.</li>
+</ul>
+
+<p>👉 <strong><a href="https://hotm.io/jFUussV9" target="_blank" rel="noopener">Garante já o teu exemplar em PDF + EPUB do Guia Completo do Hermes Agent</a></strong></p>
+
+          <div class="article-cta">
+            <h3>Queres ir mais longe?</h3>
+            <p>O Guia Completo do Hermes Agent leva-te do zero às automações avançadas com 10 partes e 42 capítulos.</p>
+            <a href="/livro/" class="btn btn-gold">Saber Mais Sobre o Livro</a>
+          </div>
+        </div>
+      </div>
+      <aside class="sidebar">
+        <div class="sidebar-widget">
+          <h3>📘 Livro do Hermes Agent</h3>
+          <p>10 partes, 42 capítulos. PDF + EPUB.</p>
+          <a href="/livro/" class="btn btn-gold">Saber Mais</a>
+        </div>
+        <div class="sidebar-widget ad-placeholder">Anúncio Google AdSense</div>
+      </aside>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <a href="/" class="logo">Marc<span class="gold">tech</span>JA</a>
+          <p>Tecnologia, automação e IA para transformar a produtividade.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Navegação</h4>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/blog/">Blog</a></li>
+            <li><a href="/livro/">Livro</a></li>
+            <li><a href="/sobre/">Sobre</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="/politica-de-privacidade/">Privacidade</a></li>
+            <li><a href="/politica-de-cookies/">Cookies</a></li>
+            <li><a href="/termos/">Termos</a></li>
+            <li><a href="/contactos/">Contactos</a></li>
+            <li><a href="#" id="cookie-settings" onclick="window.MarctechJACookieConsent&&window.MarctechJACookieConsent.show();return false;">Definições de cookies</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contacto</h4>
+          <ul>
+            <li><a href="mailto:marctechja@gmail.com">marctechja@gmail.com</a></li>
+            <li><a href="https://github.com/Jorgeacus">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 MarctechJA. Todos os direitos reservados.</p>
+      </div>
+    </div>
+  </footer>
+  <script src="/assets/js/main.js"></script>
+  <script src="/assets/js/cookie-consent.js"></script>
+</body>
+</html>
