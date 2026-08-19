@@ -418,3 +418,23 @@ img { max-width: 100%; height: auto; display: block; }
   #cookie-consent-banner { left: 8px; right: 8px; bottom: 8px; }
   #cookie-consent-banner button { width: 100%; margin: 6px 0 0; }
 }
+.comments-section {
+  margin-top: 48px;
+  padding-top: 32px;
+  border-top: 1px solid rgba(217,168,62,0.25);
+}
+.comments-section h2 {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--primary);
+  margin: 0 0 20px;
+}
+.comments-section .giscus {
+  min-width: 0;
+}
+.comments-section noscript {
+  display: block;
+  font-size: 14px;
+  color: var(--text-light);
+  font-style: italic;
+}

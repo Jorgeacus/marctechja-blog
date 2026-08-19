@@ -40,7 +40,7 @@ fi
 
 TITLE="$1"
 CATEGORY="${2:-Geral}"
-AUTHOR="${3:-Hermes Agent}"
+AUTHOR="${3:-Marcus}"
 CONTENT_FILE="$4"
 DATE=$(date +%d\ %b\ %Y)
 DATE_ISO=$(date +%Y-%m-%d)
@@ -99,7 +99,7 @@ cat > "$POST_DIR/index.html" << HTMLEOF
   "datePublished": "${DATE_ISO}",
   "dateModified": "${DATE_ISO}",
   "inLanguage": "pt-PT",
-  "author": {"@type": "Person", "name": "${AUTHOR}"},
+  "author": {"@type": "Person", "name": "${AUTHOR}", "url": "https://github.com/Jorgeacus"},
   "publisher": {"@type": "Organization", "name": "MarctechJA", "url": "https://marcusja777.com/"},
   "mainEntityOfPage": {"@type": "WebPage", "@id": "https://marcusja777.com/${POST_DIR}/"}
 }
@@ -135,12 +135,25 @@ cat > "$POST_DIR/index.html" << HTMLEOF
         </div>
         <div class="article-content">
           ${ARTICLE_CONTENT}
-
-          <div class="article-cta">
-            <h3>Queres ir mais longe?</h3>
-            <p>O Guia Completo do Hermes Agent leva-te do zero às automações avançadas com 10 partes e 42 capítulos.</p>
-            <a href="/livro/" class="btn btn-gold">Saber Mais Sobre o Livro</a>
-          </div>
+        </div>
+        <div class="comments-section">
+          <h2>Comentários</h2>
+          <script src="https://giscus.app/client.js"
+                  data-repo="Jorgeacus/marctechja-blog"
+                  data-repo-id="R_kgDOTnRVjw"
+                  data-category="General"
+                  data-category-id="DIC_kwDOTnRVj84DDt4R"
+                  data-mapping="pathname"
+                  data-strict="0"
+                  data-reactions-enabled="1"
+                  data-emit-metadata="0"
+                  data-input-position="bottom"
+                  data-theme="preferred_color_scheme"
+                  data-lang="pt"
+                  crossorigin="anonymous"
+                  async>
+          </script>
+          <noscript>Ativa o JavaScript para veres e deixares comentários.</noscript>
         </div>
       </div>
       <aside class="sidebar">

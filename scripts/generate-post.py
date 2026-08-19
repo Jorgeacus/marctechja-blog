@@ -373,7 +373,7 @@ def generate_article(topic, reference_content, provider, api_key):
 
 Gera um artigo de blog completo em português de Portugal (pt-PT) sobre o tema abaixo.
 
-O artigo deve ser prático, útil e bem estruturado. Deve referir o ebook "Guia Completo do Hermes Agent" como recurso adicional, com link https://hotm.io/jFUussV9 no final.
+O artigo deve ser prático, útil e bem estruturado. No final, pode referir de forma discreta o ebook "Guia Completo do Hermes Agent" como recurso adicional, com link /livro/ (uma menção, sem preço nem urgência comercial).
 
 TÍTULO: {topic["title"]}
 PÚBLICO-ALVO: {audience_pt}
@@ -557,7 +557,7 @@ def main():
 
     # Call the post.sh script
     category = topic["audience"]
-    author = "Hermes Agent"
+    author = "Marcus"
     title = topic["title"]
 
     print(f"📰 A publicar artigo...")
