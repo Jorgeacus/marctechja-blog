@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>E-mail marketing automatizado para a tua empresa com Python — MarctechJA</title>
+  <meta name="description" content="A gestão manual de e-mail marketing consume horas preciosas das equipas e raramente consegue atingir o nível de personalização que os clientes atuais">
+  <meta property="og:title" content="E-mail marketing automatizado para a tua empresa com Python">
+  <meta property="og:description" content="A gestão manual de e-mail marketing consume horas preciosas das equipas e raramente consegue atingir o nível de personalização que os clientes atuais">
+  <meta property="og:url" content="https://marcusja777.com/blog/e-mail-marketing-automatizado-para-a-tua-empresa-com-python/">
+  <link rel="canonical" href="https://marcusja777.com/blog/e-mail-marketing-automatizado-para-a-tua-empresa-com-python/">
+  <link rel="stylesheet" href="/assets/css/style.css?v=20260819">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+  <meta name="google-adsense-account" content="ca-pub-3717814491008089">
+  <meta name="author" content="Marcus">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "E-mail marketing automatizado para a tua empresa com Python",
+  "url": "https://marcusja777.com/blog/e-mail-marketing-automatizado-para-a-tua-empresa-com-python/",
+  "datePublished": "2026-08-20",
+  "dateModified": "2026-08-20",
+  "inLanguage": "pt-PT",
+  "author": {"@type": "Person", "name": "Marcus", "url": "https://github.com/Jorgeacus"},
+  "publisher": {"@type": "Organization", "name": "MarctechJA", "url": "https://marcusja777.com/"},
+  "mainEntityOfPage": {"@type": "WebPage", "@id": "https://marcusja777.com/blog/e-mail-marketing-automatizado-para-a-tua-empresa-com-python/"}
+}
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="logo">Marc<span class="gold">tech</span>JA</a>
+      <button class="menu-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/blog/">Blog</a></li>
+        <li><a href="/livro/">Livro</a></li>
+        <li><a href="/sobre/">Sobre</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <section class="article-page">
+    <div class="container layout-with-sidebar">
+      <div>
+        <div class="article-header">
+          <div class="breadcrumb">
+            <a href="/">Home</a> / <a href="/blog/">Blog</a> / E-mail marketing automatizado para a tua empresa com Python
+          </div>
+          <h1>E-mail marketing automatizado para a tua empresa com Python</h1>
+          <div class="meta">
+            <span>📅 20 Aug 2026</span>
+            <span>📖 5 min de leitura</span>
+            <span>🏷️ Empresários</span>
+            <span>✍️ Marcus</span>
+          </div>
+        </div>
+        <div class="article-content">
+          <p>A gestão manual de e-mail marketing consume horas preciosas das equipas e raramente consegue atingir o nível de personalização que os clientes atuais exigem. Conseguir enviar a mensagem certa, à pessoa certa, no momento ideal, é o divisor de águas entre uma campanha ignorada na caixa de spam e uma conversão bem-sucedida.</p>
+
+<h2>Porquê combinar Python com o Hermes Agent no E-mail Marketing?</h2>
+<p>Python é uma das linguagens mais robustas para automatizar tarefas de dados, ler ficheiros CSV ou bases de dados de clientes e disparar e-mails através de protocolos SMTP ou APIs de serviços como SendGrid e Mailgun. Contudo, o grande desafio do e-mail marketing automatizado tradicional sempre foi a falta de flexibilidade no conteúdo: os e-mails soam a robô e utilizam modelos genéricos.</p>
+
+<p>É aqui que entra o <strong>Hermes Agent</strong>. Ao integrar o Hermes Agent no teu fluxo de trabalho em Python, podes delegar a criação do conteúdo a um agente de Inteligência Artificial capaz de analisar o perfil de cada cliente, criar cópias persuasivas e personalizadas em segundos, e devolvê-las prontas para envio.</p>
+
+<h2>Como criar o teu sistema de e-mail marketing automatizado</h2>
+<p>Vamos construir uma solução prática em três passos simples: organização da lista de contactos, criação da skill de IA para redação e execução do script de automação.</p>
+
+<h3>Passo 1: Preparar a lista de contactos e o ambiente em Python</h3>
+<p>O primeiro passo consiste em estruturar os dados dos teus clientes. Cria um ficheiro chamado <code>clientes.csv</code> com a informação relevante que servirá de contexto para a IA.</p>
+
+<pre><code>nome,email,empresa,setor,ultima_compra
+Ana Silva,ana.silva@exemplo.pt,Silva &amp; Filhos,Restauração,Forno Industrial
+Carlos Mota,carlos@mota-tech.pt,Mota Tech,Tecnologia,Licença de Software
+Sofia Lima,sofia@limadesign.pt,Lima Design,Arquitetura,Mesa Digitalizadora</code></pre>
+
+<p>Este ficheiro contém as variáveis que o Python vai ler e passar ao Hermes Agent para personalizar cada mensagem de forma individual.</p>
+
+<h3>Passo 2: Criar a Skill do Hermes Agent para gerar e-mails</h3>
+<p>Para que o Hermes Agent saiba exatamente como redigir os e-mails da tua empresa, precisamos de criar uma <em>skill</em> personalizada. As skills do Hermes são definidas num ficheiro <code>SKILL.md</code> armazenado na pasta do teu agente (por exemplo, <code>~/.hermes/skills/gerador-email/SKILL.md</code>).</p>
+
+<pre><code>---
+name: gerador-email-marketing
+description: Gera e-mails de marketing altamente personalizados e persuasivos com base nos dados do cliente.
+author: MarctechJA
+version: "1.0"
+platforms:
+  - macos
+  - linux
+  - windows
+metadata:
+  hermes:
+    tags: [email, marketing, automacao]
+---
+
+# Gerador de E-mail Marketing
+
+Esta skill analisa o perfil do cliente e gera um e-mail de acompanhamento comercial personalizado.
+
+## When to Use
+Utiliza esta skill sempre que precisares de gerar uma cópia de e-mail personalizada com base no nome, setor e última compra do cliente.
+
+## Instruções
+1. Lê os dados fornecidos sobre o cliente (Nome, Empresa, Setor, Última Compra).
+2. Escreve um assunto curto e apelativo (máximo 8 palavras).
+3. Redige o corpo do e-mail em português de Portugal (pt-PT) com tom profissional e acolhedor.
+4. Faz referência direta ao setor da empresa e sugere uma conversa de acompanhamento sobre a última compra.
+5. Devolve o resultado estritamente no seguinte formato JSON:
+   {"assunto": "Texto do Assunto", "corpo": "Texto do corpo em HTML"}
+
+## Critérios de conclusão
+- O JSON gerado é válido e contém os campos "assunto" e "corpo".
+- O texto está adaptado ao mercado português e ao perfil do cliente.</code></pre>
+
+<p>Esta estrutura instrui o Hermes Agent sobre o objetivo da tarefa, o tom de voz e o formato exato de saída esperado, garantindo que o resultado possa ser lido diretamente pelo nosso programa em Python.</p>
+
+<p>Para testar o funcionamento da skill diretamente no terminal, podes executar:</p>
+<pre><code>hermes chat -s gerador-email-marketing</code></pre>
+
+<h3>Passo 3: Executar o script de automação em Python</h3>
+<p>Com a lista de contactos pronta e a skill configurada, criamos o script Python que une todas as peças: lê o CSV, solicita a geração do e-mail ao Hermes Agent e realiza o envio via SMTP.</p>
+
+<pre><code>import csv
+import subprocess
+import json
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+
+def gerar_email_com_hermes(nome, empresa, setor, ultima_compra):
+    prompt = f"Gera um e-mail para {nome}, da empresa {empresa} (setor: {setor}), cuja última compra foi {ultima_compra}."
+    
+    # Executa o comando do Hermes Agent passando a skill criada
+    comando = ["hermes", "chat", "-s", "gerador-email-marketing", "-p", prompt]
+    resultado = subprocess.run(comando, capture_output=True, text=True)
+    
+    try:
+        dados = json.loads(resultado.stdout.strip())
+        return dados["assunto"], dados["corpo"]
+    except Exception:
+        # Fallback caso a resposta necessite de limpeza
+        return f"Novidades para a {empresa}", f"&lt;p&gt;Olá {nome}, como está a funcionar o seu {ultima_compra}?&lt;/p&gt;"
+
+def enviar_email(destinatario, assunto, corpo_html):
+    servidor_smtp = "smtp.teudominio.com"
+    porta = 587
+    utilizador = "comercial@teudominio.com"
+    palavra_passe = "sua_palavra_passe_segura"
+
+    msg = MIMEMultipart()
+    msg['From'] = utilizador
+    msg['To'] = destinatario
+    msg['Subject'] = assunto
+    msg.attach(MIMEText(corpo_html, 'html'))
+
+    try:
+        with smtplib.SMTP(servidor_smtp, porta) as servidor:
+            servidor.starttls()
+            servidor.login(utilizador, palavra_passe)
+            servidor.send_message(msg)
+            print(f"E-mail enviado com sucesso para: {destinatario}")
+    except Exception as e:
+        print(f"Erro ao enviar para {destinatario}: {e}")
+
+def processar_campanha(ficheiro_csv):
+    with open(ficheiro_csv, mode='r', encoding='utf-8') as f:
+        leitor = csv.DictReader(f)
+        for linha in leitor:
+            print(f"A processar e-mail para {linha['nome']}...")
+            assunto, corpo = gerar_email_com_hermes(
+                linha['nome'], 
+                linha['empresa'], 
+                linha['setor'], 
+                linha['ultima_compra']
+            )
+            enviar_email(linha['email'], assunto, corpo)
+
+if __name__ == "__main__":
+    processar_campanha("clientes.csv")</code></pre>
+
+<p>O script percorre cada linha da lista de clientes, chama o Hermes Agent em segundo plano para redigir uma mensagem única baseada no histórico do cliente e envia o e-mail em formato HTML automaticamente.</p>
+
+<h2>Boas práticas para garantir a entregabilidade</h2>
+<p>Automatizar o envio de e-mails exige cuidados para evitar que o teu domínio seja classificado como remetente de spam:</p>
+<ul>
+    <li><strong>Configurações DNS adequadas:</strong> Certifica-te de que os registos SPF, DKIM e DMARC do teu domínio estão corretamente configurados no teu provedor de alojamento.</li>
+    <li><strong>Pausas entre envios:</strong> Adiciona um pequeno intervalo de tempo (por exemplo, <code>time.sleep(5)</code>) entre o envio de cada e-mail para não sobrecarregar o servidor SMTP.</li>
+    <li><strong>Validação de dados:</strong> Garante que os endereços de e-mail na tua lista são válidos antes de iniciar o processo de disparo.</li>
+</ul>
+
+<h2>Conclusão</h2>
+<p>Combinar a flexibilidade do Python com a inteligência do Hermes Agent permite às empresas de qualquer dimensão criar campanhas de e-mail marketing altamente personalizadas, escaláveis e eficientes. Em vez de enviar newsletters genéricas, podes agora entregar mensagens que realmente ressoam com as necessidades de cada cliente.</p>
+
+<p>Se queres aprofundar o teu conhecimento sobre criação de skills, automação de processos empresariais e integração de agentes inteligentes no teu negócio, consulta o <a href="/livro/">Guia Completo do Hermes Agent</a> para explorar todos os recursos e exemplos práticos disponíveis.</p>
+        </div>
+        <div class="comments-section">
+          <h2>Comentários</h2>
+          <script src="https://giscus.app/client.js"
+                  data-repo="Jorgeacus/marctechja-blog"
+                  data-repo-id="R_kgDOTnRVjw"
+                  data-category="General"
+                  data-category-id="DIC_kwDOTnRVj84DDt4R"
+                  data-mapping="pathname"
+                  data-strict="0"
+                  data-reactions-enabled="1"
+                  data-emit-metadata="0"
+                  data-input-position="bottom"
+                  data-theme="preferred_color_scheme"
+                  data-lang="pt"
+                  crossorigin="anonymous"
+                  async>
+          </script>
+          <noscript>Ativa o JavaScript para veres e deixares comentários.</noscript>
+        </div>
+      </div>
+      <aside class="sidebar">
+        <div class="sidebar-widget">
+          <h3>📘 Livro do Hermes Agent</h3>
+          <p>10 partes, 42 capítulos. PDF + EPUB.</p>
+          <a href="/livro/" class="btn btn-gold">Saber Mais</a>
+        </div>
+        <div class="sidebar-widget ad-placeholder">Anúncio Google AdSense</div>
+      </aside>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <a href="/" class="logo">Marc<span class="gold">tech</span>JA</a>
+          <p>Tecnologia, automação e IA para transformar a produtividade.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Navegação</h4>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/blog/">Blog</a></li>
+            <li><a href="/livro/">Livro</a></li>
+            <li><a href="/sobre/">Sobre</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="/politica-de-privacidade/">Privacidade</a></li>
+            <li><a href="/politica-de-cookies/">Cookies</a></li>
+            <li><a href="/termos/">Termos</a></li>
+            <li><a href="/contactos/">Contactos</a></li>
+            <li><a href="#" id="cookie-settings" onclick="window.MarctechJACookieConsent&&window.MarctechJACookieConsent.show();return false;">Definições de cookies</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contacto</h4>
+          <ul>
+            <li><a href="mailto:marctechja@gmail.com">marctechja@gmail.com</a></li>
+            <li><a href="https://github.com/Jorgeacus">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 MarctechJA. Todos os direitos reservados.</p>
+      </div>
+    </div>
+  </footer>
+  <script src="/assets/js/main.js"></script>
+  <script src="/assets/js/cookie-consent.js"></script>
+</body>
+</html>
