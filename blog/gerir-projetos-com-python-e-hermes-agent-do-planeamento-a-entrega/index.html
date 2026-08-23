@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gerir projetos com Python e Hermes Agent: do planeamento à entrega — MarctechJA</title>
+  <meta name="description" content="Manter um projeto dentro do prazo e do orçamento exige um acompanhamento constante de tarefas, dependências e relatórios de estado. Quando as equipas">
+  <meta property="og:title" content="Gerir projetos com Python e Hermes Agent: do planeamento à entrega">
+  <meta property="og:description" content="Manter um projeto dentro do prazo e do orçamento exige um acompanhamento constante de tarefas, dependências e relatórios de estado. Quando as equipas">
+  <meta property="og:url" content="https://marcusja777.com/blog/gerir-projetos-com-python-e-hermes-agent-do-planeamento-a-entrega/">
+  <link rel="canonical" href="https://marcusja777.com/blog/gerir-projetos-com-python-e-hermes-agent-do-planeamento-a-entrega/">
+  <link rel="stylesheet" href="/assets/css/style.css?v=20260822">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+  <meta name="google-adsense-account" content="ca-pub-3717814491008089">
+  <meta name="author" content="Marcus">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Gerir projetos com Python e Hermes Agent: do planeamento à entrega",
+  "url": "https://marcusja777.com/blog/gerir-projetos-com-python-e-hermes-agent-do-planeamento-a-entrega/",
+  "datePublished": "2026-08-23",
+  "dateModified": "2026-08-23",
+  "inLanguage": "pt-PT",
+  "author": {"@type": "Person", "name": "Marcus", "url": "https://github.com/Jorgeacus"},
+  "publisher": {"@type": "Organization", "name": "MarctechJA", "url": "https://marcusja777.com/"},
+  "mainEntityOfPage": {"@type": "WebPage", "@id": "https://marcusja777.com/blog/gerir-projetos-com-python-e-hermes-agent-do-planeamento-a-entrega/"}
+}
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="logo">Marc<span class="gold">tech</span>JA</a>
+      <button class="menu-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/blog/">Blog</a></li>
+        <li><a href="/livro/">Livro</a></li>
+        <li><a href="/sobre/">Sobre</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <section class="article-page">
+    <div class="container layout-with-sidebar">
+      <div>
+        <div class="article-header">
+          <div class="breadcrumb">
+            <a href="/">Home</a> / <a href="/blog/">Blog</a> / Gerir projetos com Python e Hermes Agent: do planeamento à entrega
+          </div>
+          <h1>Gerir projetos com Python e Hermes Agent: do planeamento à entrega</h1>
+          <div class="meta">
+            <span>📅 23 Aug 2026</span>
+            <span>📖 5 min de leitura</span>
+            <span>🏷️ Geral</span>
+            <span>✍️ Marcus</span>
+          </div>
+        </div>
+        <div class="article-content">
+          Manter um projeto dentro do prazo e do orçamento exige um acompanhamento constante de tarefas, dependências e relatórios de estado. Quando as equipas dependem de processos manuais para atualizar quadros de tarefas e enviar resumos por email, o risco de falhas aumenta substancialmente. A combinação da linguagem Python com a flexibilidade do **Hermes Agent** permite automatizar este ciclo de gestão — desde o planeamento inicial até à entrega final do projeto.
+
+<h2>O que é o Hermes Agent e como apoia a gestão de projetos?</h2>
+
+<p>O Hermes Agent é uma ferramenta open-source de automação orientada por Inteligência Artificial que executa tarefas complexas diretamente no terminal ou em ambientes de integração contínua. Ao contrário de um chatbot tradicional, o Hermes Agent pode interagir com o sistema de ficheiros local, executar scripts em Python e comunicar com APIs de ferramentas de gestão como Notion, Trello ou Asana.</p>
+
+<p>Ao unir o Hermes Agent com scripts Python, é possível transformar ficheiros de dados de projetos (como JSON ou CSV) em relatórios de progresso detalhados, verificar prazos críticos e delegar ao agente a criação automática das próximas etapas de trabalho.</p>
+
+<h2>Passo 1: Instalar e configurar o ambiente de trabalho</h2>
+
+<p>Para começar, é necessário ter o Python instalado na sua máquina e configurar o Hermes Agent através do instalador oficial do projeto.</p>
+
+<p>Abra o terminal e execute o comando correspondente ao seu sistema operativo:</p>
+
+<pre><code># No macOS e Linux:
+curl -fsSL https://hermes-agent.nousresearch.com/install.sh | bash
+
+# No Windows (PowerShell como Administrador):
+# iex (irm https://hermes-agent.nousresearch.com/install.ps1)
+</code></pre>
+
+<p>Este comando descarrega os binários necessários e configura o comando <code>hermes</code> na sua linha de comandos. Após a instalação, certifique-se de que o Hermes Agent está a funcionar corretamente executando <code>hermes --version</code> no seu terminal.</p>
+
+<h2>Passo 2: Criar uma Skill personalizada no Hermes Agent</h2>
+
+<p>As automações do Hermes Agent são estruturadas sob a forma de <em>skills</em> (competências). Uma skill indica ao agente quando e como deve agir diante de determinado cenário. Vamos criar uma skill dedicada à gestão de projetos.</p>
+
+<p>Crie uma pasta em <code>~/.hermes/skills/project-manager/</code> e guarde o ficheiro <code>SKILL.md</code> com o seguinte conteúdo:</p>
+
+<pre><code>---
+name: project-manager
+description: Skill para estruturar listas de tarefas, monitorizar prazos e gerar relatórios de progresso em projetos Python.
+author: MarctechJA
+version: "1.0"
+platforms:
+  - macos
+  - linux
+  - windows
+metadata:
+  hermes:
+    tags: [gestao, projetos, python, produtividade]
+---
+
+# project-manager
+
+Skill desenhada para apoiar gestores de projeto e programadores na análise de ficheiros de tarefas e na emissão de relatórios automatizados de progresso.
+
+## When to Use
+Utilize esta skill sempre que precisar de:
+- Analisar a lista atual de tarefas e verificar quais estão pendentes ou atrasadas.
+- Executar o script Python de validação de datas e prazos.
+- Gerar um resumo executivo do estado do projeto para envio à equipa.
+
+## Instruções
+1. Leia o ficheiro `tarefas.json` localizado na raiz do projeto.
+2. Execute o script `analisar_projeto.py` para calcular as métricas atualizadas.
+3. Elabore um relatório em formato Markdown com o progresso percentual, tarefas concluídas e alertas sobre datas limite ultrapassadas.
+
+## Critérios de conclusão
+- O script Python deve ser executado sem erros.
+- O relatório em Markdown deve conter a contagem total de tarefas e a identificação clara dos bloqueios ou atrasos.
+</code></pre>
+
+<p>Esta estrutura fornece ao Hermes Agent o contexto exato para compreender a sua função: os metadados de abertura (frontmatter em YAML) registam o agente no sistema, enquanto o corpo narrativo estabelece a sequência lógica de passos que a IA deve seguir.</p>
+
+<h2>Passo 3: Criar o script Python para análise de dados</h2>
+
+<p>Com a skill configurada, precisamos do código em Python responsável por ler os dados do projeto, calcular o estado de cada funcionalidade e reportar desvios no calendário.</p>
+
+<p>Crie um ficheiro chamado <code>analisar_projeto.py</code> na raiz do seu projeto:</p>
+
+<pre><code>import json
+from datetime import datetime
+
+def carregar_tarefas(caminho_ficheiro):
+    try:
+        with open(caminho_ficheiro, 'r', encoding='utf-8') as f:
+            return json.load(f)
+    except FileNotFoundError:
+        print(f"Erro: Ficheiro {caminho_ficheiro} não encontrado.")
+        return []
+
+def gerar_relatorio(tarefas):
+    hoje = datetime.now()
+    total = len(tarefas)
+    if total == 0:
+        return "Nenhuma tarefa registada."
+
+    concluidas = [t for t in tarefas if t.get('status') == 'concluido']
+    em_progresso = [t for t in tarefas if t.get('status') == 'em_progresso']
+    atrasadas = []
+
+    for t in tarefas:
+        if t.get('status') != 'concluido' and 'prazo' in t:
+            data_prazo = datetime.strptime(t['prazo'], '%Y-%m-%d')
+            if data_prazo < hoje:
+                atrasadas.append(t)
+
+    percentual = (len(concluidas) / total) * 100
+
+    print("=== RESUMO DO PROJETO ===")
+    print(f"Total de Tarefas: {total}")
+    print(f"Concluídas: {len(concluidas)} ({percentual:.1f}%)")
+    print(f"Em Progresso: {len(em_progresso)}")
+    print(f"Atrasadas: {len(atrasadas)}")
+    
+    if atrasadas:
+        print("\n--- ATENÇÃO: TAREFAS ATRASADAS ---")
+        for a in atrasadas:
+            print(f"- {a['titulo']} (Prazo: {a['prazo']})")
+
+if __name__ == "__main__":
+    lista_tarefas = carregar_tarefas("tarefas.json")
+    gerar_relatorio(lista_tarefas)
+</code></pre>
+
+<p>Este script Python carrega a lista de tarefas a partir de uma fonte estruturada (JSON), valida a data atual contra os prazos definidos em cada registo e devolve no terminal um resumo estatístico das atividades pendentes e em risco.</p>
+
+<h2>Passo 4: Interagir com o Hermes Agent para gerir o projeto</h2>
+
+<p>Para colocar a automação em funcionamento, basta ativar o Hermes Agent utilizando a skill criada no Passo 2. Pode fazê-lo em modo interativo de conversação.</p>
+
+<p>No terminal, execute o seguinte comando:</p>
+
+<pre><code>hermes chat -s project-manager
+</code></pre>
+
+<p>Durante a sessão interativa, pode pedir ao agente:</p>
+
+<pre><code>> Analisa o ficheiro tarefas.json, corre o script analisar_projeto.py e gera um relatório resumido para partilhar no Slack da equipa.
+</code></pre>
+
+<p>O Hermes Agent vai interpretar as suas instruções, invocar o código Python, analisar os resultados gerados e estruturar um texto de comunicação pronto a ser distribuído pelos elementos da sua equipa.</p>
+
+<h2>Conclusão</h2>
+
+<p>A automação da gestão de projetos através da combinação do Hermes Agent com Python elimina a necessidade de atualizações manuais e reduz significativamente os erros de acompanhamento. Ao centralizar as regras de negócio em scripts Python e delegar a coordenação e síntese ao Hermes Agent, obtém um fluxo transparente desde a fase de planeamento até à entrega final do software.</p>
+
+<p>Como próximo passo, pode expandir esta skill para incluir integrações diretas através das APIs do Trello ou Notion, permitindo ao agente atualizar cartões e quadros Kanban de forma totalmente autónoma.</p>
+
+<p>Para quem deseja aprofundar o desenvolvimento de automações avançadas e aprender a criar equipas inteiras de agentes especializados, o <a href="/livro/">Guia Completo do Hermes Agent</a> oferece um roteiro prático com exemplos detalhados de integração e segurança em produção.</p>
+        </div>
+        <div class="comments-section">
+          <h2>Comentários</h2>
+          <script src="https://giscus.app/client.js"
+                  data-repo="Jorgeacus/marctechja-blog"
+                  data-repo-id="R_kgDOTnRVjw"
+                  data-category="General"
+                  data-category-id="DIC_kwDOTnRVj84DDt4R"
+                  data-mapping="pathname"
+                  data-strict="0"
+                  data-reactions-enabled="1"
+                  data-emit-metadata="0"
+                  data-input-position="bottom"
+                  data-theme="preferred_color_scheme"
+                  data-lang="pt"
+                  crossorigin="anonymous"
+                  async>
+          </script>
+          <noscript>Ativa o JavaScript para veres e deixares comentários.</noscript>
+        </div>
+      </div>
+      <aside class="sidebar">
+        <div class="sidebar-widget">
+          <h3>📘 Livro do Hermes Agent</h3>
+          <p>10 partes, 42 capítulos. PDF + EPUB.</p>
+          <a href="/livro/" class="btn btn-gold">Saber Mais</a>
+        </div>
+        <div class="sidebar-widget ad-placeholder">Anúncio Google AdSense</div>
+      </aside>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <a href="/" class="logo">Marc<span class="gold">tech</span>JA</a>
+          <p>Tecnologia, automação e IA para transformar a produtividade.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Navegação</h4>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/blog/">Blog</a></li>
+            <li><a href="/livro/">Livro</a></li>
+            <li><a href="/sobre/">Sobre</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="/politica-de-privacidade/">Privacidade</a></li>
+            <li><a href="/politica-de-cookies/">Cookies</a></li>
+            <li><a href="/termos/">Termos</a></li>
+            <li><a href="/contactos/">Contactos</a></li>
+            <li><a href="#" id="cookie-settings" onclick="window.MarctechJACookieConsent&&window.MarctechJACookieConsent.show();return false;">Definições de cookies</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contacto</h4>
+          <ul>
+            <li><a href="mailto:marctechja@gmail.com">marctechja@gmail.com</a></li>
+            <li><a href="https://github.com/Jorgeacus">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 MarctechJA. Todos os direitos reservados.</p>
+      </div>
+    </div>
+  </footer>
+  <script src="/assets/js/main.js"></script>
+  <script src="/assets/js/cookie-consent.js"></script>
+</body>
+</html>
