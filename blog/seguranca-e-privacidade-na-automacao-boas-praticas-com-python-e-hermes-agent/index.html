@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Segurança e privacidade na automação: boas práticas com Python e Hermes Agent — MarctechJA</title>
+  <meta name="description" content="Imagina a seguinte situação: criaste um script fantástico em Python integrado com o Hermes Agent para resumir relatórios financeiros e enviar alertas">
+  <meta property="og:title" content="Segurança e privacidade na automação: boas práticas com Python e Hermes Agent">
+  <meta property="og:description" content="Imagina a seguinte situação: criaste um script fantástico em Python integrado com o Hermes Agent para resumir relatórios financeiros e enviar alertas">
+  <meta property="og:url" content="https://marcusja777.com/blog/seguranca-e-privacidade-na-automacao-boas-praticas-com-python-e-hermes-agent/">
+  <link rel="canonical" href="https://marcusja777.com/blog/seguranca-e-privacidade-na-automacao-boas-praticas-com-python-e-hermes-agent/">
+  <link rel="stylesheet" href="/assets/css/style.css?v=20260823">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+  <meta name="google-adsense-account" content="ca-pub-3717814491008089">
+  <meta name="author" content="Marcus">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Segurança e privacidade na automação: boas práticas com Python e Hermes Agent",
+  "url": "https://marcusja777.com/blog/seguranca-e-privacidade-na-automacao-boas-praticas-com-python-e-hermes-agent/",
+  "datePublished": "2026-08-24",
+  "dateModified": "2026-08-24",
+  "inLanguage": "pt-PT",
+  "author": {"@type": "Person", "name": "Marcus", "url": "https://github.com/Jorgeacus"},
+  "publisher": {"@type": "Organization", "name": "MarctechJA", "url": "https://marcusja777.com/"},
+  "mainEntityOfPage": {"@type": "WebPage", "@id": "https://marcusja777.com/blog/seguranca-e-privacidade-na-automacao-boas-praticas-com-python-e-hermes-agent/"}
+}
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="logo">Marc<span class="gold">tech</span>JA</a>
+      <button class="menu-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/blog/">Blog</a></li>
+        <li><a href="/livro/">Livro</a></li>
+        <li><a href="/sobre/">Sobre</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <section class="article-page">
+    <div class="container layout-with-sidebar">
+      <div>
+        <div class="article-header">
+          <div class="breadcrumb">
+            <a href="/">Home</a> / <a href="/blog/">Blog</a> / Segurança e privacidade na automação: boas práticas com Python e Hermes Agent
+          </div>
+          <h1>Segurança e privacidade na automação: boas práticas com Python e Hermes Agent</h1>
+          <div class="meta">
+            <span>📅 24 Aug 2026</span>
+            <span>📖 5 min de leitura</span>
+            <span>🏷️ Programadores</span>
+            <span>✍️ Marcus</span>
+          </div>
+        </div>
+        <div class="article-content">
+          <p>Imagina a seguinte situação: criaste um script fantástico em Python integrado com o Hermes Agent para resumir relatórios financeiros e enviar alertas automáticos para a tua equipa. Funciona perfeitamente, mas, por descuido, guardaste o código num repositório público no GitHub com as chaves de API e dados de clientes visíveis. Em questão de minutos, robôs automatizados podem raspar as tuas credenciais e expor dados confidenciais. A automação com Inteligência Artificial traz um ganho colossal de produtividade, mas exige responsabilidade acrescida no tratamento da informação e na gestão de permissões.</p>
+
+<h2>Por que motivo a segurança é crucial na automação com IA?</h2>
+
+<p>Quando automatizamos processos com o <strong>Hermes Agent</strong> ou scripts Python, concedemos às ferramentas autonomia para ler ficheiros, aceder a APIs externas e até executar comandos no sistema concetualmente sensíveis. Se não houver limites bem definidos, surgem vulnerabilidades críticas:</p>
+
+<ul>
+  <li><strong>Vazamento de credenciais:</strong> guardar chaves de API (OpenAI, Anthropic, Gemini) diretamente no código-fonte.</li>
+  <li><strong>Exposição de Dados de Identificação Pessoal (PII):</strong> enviar ficheiros de clientes com nomes, NIFs ou dados bancários para modelos de linguagem na nuvem sem qualquer higienização prévia.</li>
+  <li><strong>Prompt Injection:</strong> injeção de instruções maliciosas através de ficheiros externos ou e-mails lidos pelo agente, levando-o a executar ações não autorizadas.</li>
+  <li><strong>Falta de auditoria:</strong> ausência de registos (logs) sobre o que o agente leu, alterou ou enviou para a rede.</li>
+</ul>
+
+<h2>Guia prático: implementar automações seguras passo a passo</h2>
+
+<p>Para garantires que os teus fluxos de trabalho mantêm a máxima privacidade e resiliência, segue este passo a passo prático focado em Python e no ecossistema do Hermes Agent.</p>
+
+<h3>Passo 1: Isolamento de credenciais com variáveis de ambiente</h3>
+
+<p>Nunca coloques chaves secretas diretamente nos teus ficheiros de código. Em Python, a forma correta de gerir segredos é através de variáveis de ambiente e ficheiros <code>.env</code>, que devem ser sempre incluídos no teu ficheiro <code>.gitignore</code>.</p>
+
+<pre><code>import os
+from dotenv import load_dotenv
+
+# Carrega as variáveis declaradas no ficheiro .env
+load_dotenv()
+
+def obter_chave_api():
+    api_key = os.getenv("HERMES_API_KEY")
+    if not api_key:
+        raise ValueError("ERRO CRÍTICO: A chave de API não foi configurada no ambiente.")
+    return api_key
+
+if __name__ == "__main__":
+    try:
+        key = obter_chave_api()
+        print("Credenciais carregadas com sucesso e em segurança.")
+    except ValueError as e:
+        print(e)
+</code></pre>
+
+<p>Este código garante que o script valida a existência da credencial antes de prosseguir com qualquer execução. Se a chave não estiver configurada no ambiente local do servidor ou máquina de trabalho, a execução é interrompida imediatamente sem expor dados no código-fonte.</p>
+
+<h3>Passo 2: Configurar o Hermes Agent com modelos locais para dados sensíveis</h3>
+
+<p>Se lidas com informações corporativas estritamente confidenciais, podes configurar o Hermes Agent para utilizar fornecedores de modelos locais através do Ollama, evitando que qualquer byte de informação saia da tua rede local.</p>
+
+<pre><code># Definir a variável de ambiente para sessão segura
+export OPENAI_API_KEY="sk-proj-sua-chave-aqui"
+
+# Verificar as skills instaladas e estado do agente
+hermes skills list
+
+# Executar o Hermes Agent utilizando um modelo local totalmente privado via Ollama
+hermes chat -s analisador-seguro
+</code></pre>
+
+<p>Ao utilizar modelos como Llama 3.1 ou Phi-4-mini a correr localmente na tua infraestrutura, os dados processados pelo agente nunca chegam aos servidores de terceiros, garantindo conformidade total com regulamentos de privacidade de dados como o RGPD.</p>
+
+<h3>Passo 3: Criar uma Skill de sanitização de dados no Hermes Agent</h3>
+
+<p>As skills do Hermes Agent permitem definir comportamentos estritos e seguros. Abaixo encontras o exemplo da skill <code>sanitizador-dados</code> que analisa e mascara dados sensíveis (emails, NIFs) antes que estes sejam processados por fluxos posteriores.</p>
+
+<p>O ficheiro de definição da skill deve ser guardado em <code>~/.hermes/skills/sanitizador-dados/SKILL.md</code>:</p>
+
+<pre><code>---
+name: sanitizador-dados
+description: Identifica e mascara dados sensíveis (PII) em ficheiros de texto antes do envio para processamento.
+author: MarctechJA
+version: "1.0"
+platforms:
+  - macos
+  - linux
+  - windows
+metadata:
+  hermes:
+    tags: [seguranca, privacidade, pii]
+---
+
+# sanitizador-dados
+Skill especializada em detetar e ocultar Informações de Identificação Pessoal (PII) em documentos de texto.
+
+## When to Use
+Usa esta skill sempre que precisares de processar documentos recebidos de clientes, relatórios financeiros ou ficheiros de registo que possam conter dados pessoais.
+
+## Instruções
+1. Lê o ficheiro de entrada fornecido pelo utilizador no caminho especificado.
+2. Identifica padrões que correspondam a números de identificação fiscal (NIF), endereços de e-mail e números de telefone.
+3. Substitui os dados sensíveis detetados por marcadores genéricos (ex.: `[NIF_PROTEGIDO]`, `[EMAIL_PROTEGIDO]`).
+4. Grava o resultado num ficheiro de saída temporário limpo.
+5. Reporta ao utilizador apenas o número de elementos higienizados, sem expor os valores originais.
+
+## Critérios de conclusão
+- O ficheiro resultante não contém nenhum dado pessoal legível.
+- É gerado um resumo do processo com a contagem das alterações efetuadas.
+</code></pre>
+
+<p>Com esta skill configurada, podes invocar o sanitizador diretamente no terminal de forma interativa:</p>
+
+<pre><code>hermes chat -s sanitizador-dados
+</code></pre>
+
+<p>O agente aplicará rigorosamente as regras de higienização descritas no ficheiro <code>SKILL.md</code>, assegurando que o texto final está livre de dados privados antes de ser partilhado ou analisado por outros serviços.</p>
+
+<h2>Boas práticas adicionais para reforçar a tua infraestrutura</h2>
+
+<p>Para além da gestão de chaves e da higienização de texto, adota as seguintes medidas no teu dia a dia de automação:</p>
+
+<ol>
+  <li><strong>Princípio do Menor Privilégio:</strong> concede aos scripts e agentes apenas o acesso mínimo necessário para realizarem a sua tarefa (por exemplo, permissões de leitura apenas na pasta de trabalho, sem acesso à raiz do sistema).</li>
+  <li><strong>Validação de Entradas contra Prompt Injection:</strong> ao ler dados vindos do exterior (como e-mails ou formulários web), trata esse conteúdo como entrada não confiável. Orienta o agente a ignorar comandos executáveis contidos dentro do texto analisado.</li>
+  <li><strong>Registos de Auditoria (Logging):</strong> mantém registos atualizados das operações executadas pelas tuas automações em Python para que possas auditar chamadas de API e edições de ficheiros em caso de anomalias.</li>
+</ol>
+
+<h2>Conclusão</h2>
+
+<p>Automatizar tarefas repetitivas com o Hermes Agent e Python transforma radicalmente a tua produtividade, mas a segurança deve ser encarada como um pilar fundamental desde o primeiro dia. Ao isolares as tuas credenciais em variáveis de ambiente, utilizares modelos locais para dados confidenciais e estruturares skills orientadas à privacidade, constróis fluxos de IA extremamente robustos e seguros.</p>
+
+<p>Se queres dominar o desenvolvimento de automações avançadas, criar equipas de agentes inteligentes e aprender as melhores estratégias de implementação e segurança, vale a pena consultar o <a href="/livro/">Guia Completo do Hermes Agent</a>, um manual prático concebido para elevar as tuas competências em inteligência artificial ao próximo nível.</p>
+        </div>
+        <div class="comments-section">
+          <h2>Comentários</h2>
+          <script src="https://giscus.app/client.js"
+                  data-repo="Jorgeacus/marctechja-blog"
+                  data-repo-id="R_kgDOTnRVjw"
+                  data-category="General"
+                  data-category-id="DIC_kwDOTnRVj84DDt4R"
+                  data-mapping="pathname"
+                  data-strict="0"
+                  data-reactions-enabled="1"
+                  data-emit-metadata="0"
+                  data-input-position="bottom"
+                  data-theme="preferred_color_scheme"
+                  data-lang="pt"
+                  crossorigin="anonymous"
+                  async>
+          </script>
+          <noscript>Ativa o JavaScript para veres e deixares comentários.</noscript>
+        </div>
+      </div>
+      <aside class="sidebar">
+        <div class="sidebar-widget">
+          <h3>📘 Livro do Hermes Agent</h3>
+          <p>10 partes, 42 capítulos. PDF + EPUB.</p>
+          <a href="/livro/" class="btn btn-gold">Saber Mais</a>
+        </div>
+        <div class="sidebar-widget ad-placeholder">Anúncio Google AdSense</div>
+      </aside>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <a href="/" class="logo">Marc<span class="gold">tech</span>JA</a>
+          <p>Tecnologia, automação e IA para transformar a produtividade.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Navegação</h4>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/blog/">Blog</a></li>
+            <li><a href="/livro/">Livro</a></li>
+            <li><a href="/sobre/">Sobre</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="/politica-de-privacidade/">Privacidade</a></li>
+            <li><a href="/politica-de-cookies/">Cookies</a></li>
+            <li><a href="/termos/">Termos</a></li>
+            <li><a href="/contactos/">Contactos</a></li>
+            <li><a href="#" id="cookie-settings" onclick="window.MarctechJACookieConsent&&window.MarctechJACookieConsent.show();return false;">Definições de cookies</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contacto</h4>
+          <ul>
+            <li><a href="mailto:marctechja@gmail.com">marctechja@gmail.com</a></li>
+            <li><a href="https://github.com/Jorgeacus">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 MarctechJA. Todos os direitos reservados.</p>
+      </div>
+    </div>
+  </footer>
+  <script src="/assets/js/main.js"></script>
+  <script src="/assets/js/cookie-consent.js"></script>
+</body>
+</html>
