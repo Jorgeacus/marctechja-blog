@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Criar e automatizar uma newsletter com Python e Hermes Agent — MarctechJA</title>
+  <meta name="description" content="Imagina teres uma newsletter semanal com conteúdos relevantes e altamente personalizados, curados e redigidos quase sem intervenção manual, permitindo">
+  <meta property="og:title" content="Criar e automatizar uma newsletter com Python e Hermes Agent">
+  <meta property="og:description" content="Imagina teres uma newsletter semanal com conteúdos relevantes e altamente personalizados, curados e redigidos quase sem intervenção manual, permitindo">
+  <meta property="og:url" content="https://marcusja777.com/blog/criar-e-automatizar-uma-newsletter-com-python-e-hermes-agent/">
+  <link rel="canonical" href="https://marcusja777.com/blog/criar-e-automatizar-uma-newsletter-com-python-e-hermes-agent/">
+  <link rel="stylesheet" href="/assets/css/style.css?v=20260824">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+  <meta name="google-adsense-account" content="ca-pub-3717814491008089">
+  <meta name="author" content="Marcus">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Criar e automatizar uma newsletter com Python e Hermes Agent",
+  "url": "https://marcusja777.com/blog/criar-e-automatizar-uma-newsletter-com-python-e-hermes-agent/",
+  "datePublished": "2026-08-25",
+  "dateModified": "2026-08-25",
+  "inLanguage": "pt-PT",
+  "author": {"@type": "Person", "name": "Marcus", "url": "https://github.com/Jorgeacus"},
+  "publisher": {"@type": "Organization", "name": "MarctechJA", "url": "https://marcusja777.com/"},
+  "mainEntityOfPage": {"@type": "WebPage", "@id": "https://marcusja777.com/blog/criar-e-automatizar-uma-newsletter-com-python-e-hermes-agent/"}
+}
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="logo">Marc<span class="gold">tech</span>JA</a>
+      <button class="menu-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/blog/">Blog</a></li>
+        <li><a href="/livro/">Livro</a></li>
+        <li><a href="/sobre/">Sobre</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <section class="article-page">
+    <div class="container layout-with-sidebar">
+      <div>
+        <div class="article-header">
+          <div class="breadcrumb">
+            <a href="/">Home</a> / <a href="/blog/">Blog</a> / Criar e automatizar uma newsletter com Python e Hermes Agent
+          </div>
+          <h1>Criar e automatizar uma newsletter com Python e Hermes Agent</h1>
+          <div class="meta">
+            <span>📅 25 Aug 2026</span>
+            <span>📖 5 min de leitura</span>
+            <span>🏷️ Criadores de Conteúdo</span>
+            <span>✍️ Marcus</span>
+          </div>
+        </div>
+        <div class="article-content">
+          <p>Imagina teres uma newsletter semanal com conteúdos relevantes e altamente personalizados, curados e redigidos quase sem intervenção manual, permitindo-te focar exclusivamente na estratégia e na ligação com a tua audiência. Para quem cria conteúdo digital, manter a consistência de publicação é frequentemente o maior desafio — mas a combinação do Python com o <strong>Hermes Agent</strong> transforma completamente este cenário.</p>
+
+<p>Neste tutorial prático, vamos construir um pipeline completo de automação para newsletters: desde a gestão de subscritores até ao processamento e redação assistida por IA, finalizando com o disparo e medição de métricas de desempenho.</p>
+
+<h2>A Arquitetura de uma Newsletter Automatizada</h2>
+
+<p>Para criar um sistema robusto e independente de plataformas pagas e limitadoras, dividimos a automação em quatro pilares fundamentais:</p>
+
+<ul>
+  <li><strong>Gestão de Subscritores:</strong> Base de dados simples em Python para armazenar e filtrar a lista de contactos.</li>
+  <li><strong>Curadoria e Geração com IA:</strong> Utilização do Hermes Agent com uma <em>skill</em> dedicada à pesquisa e redação.</li>
+  <li><strong>Envio Programado:</strong> Script de integração SMTP/API para distribuição dos emails.</li>
+  <li><strong>Análise de Métricas:</strong> Monitorização do crescimento e retenção da lista.</li>
+</ul>
+
+<h2>Passo 1: Captar e Gerir Subscritores com Python</h2>
+
+<p>Antes de enviar qualquer email, precisamos de uma forma simples e eficiente de armazenar quem subscreveu a nossa newsletter. Vamos utilizar a biblioteca nativa <code>sqlite3</code> em Python para gerir a base de dados de contactos de forma local e segura.</p>
+
+<pre><code>import sqlite3
+
+def init_db():
+    conn = sqlite3.connect("newsletter.db")
+    cursor = conn.cursor()
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS subscribers (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            email TEXT UNIQUE NOT NULL,
+            status TEXT DEFAULT 'active'
+        )
+    ''')
+    conn.commit()
+    conn.close()
+
+def add_subscriber(email):
+    conn = sqlite3.connect("newsletter.db")
+    cursor = conn.cursor()
+    try:
+        cursor.execute("INSERT INTO subscribers (email) VALUES (?)", (email,))
+        conn.commit()
+        print(f"Subscritor {email} adicionado com sucesso.")
+    except sqlite3.IntegrityError:
+        print(f"O email {email} já está registado.")
+    finally:
+        conn.close()
+
+if __name__ == "__main__":
+    init_db()
+    add_subscriber("leitor@exemplo.pt")
+</code></pre>
+
+<p><strong>O que o código faz:</strong> O script cria um ficheiro de base de dados SQLite (<code>newsletter.db</code>) e define a tabela <code>subscribers</code>. A função <code>add_subscriber</code> garante que não existem registos duplicados na tua lista de contactos.</p>
+
+<h2>Passo 2: Criar a Skill do Hermes Agent para Redação</h2>
+
+<p>Com a lista pronta, o passo seguinte é automatizar a criação do conteúdo. O Hermes Agent permite definir <em>skills</em> personalizadas que orientam a inteligência artificial a agir conforme a tua voz de marca e estrutura pretendida.</p>
+
+<p>Cria o ficheiro de <em>skill</em> no diretório do Hermes Agent: <code>~/.hermes/skills/newsletter-writer/SKILL.md</code>.</p>
+
+<pre><code>---
+name: newsletter-writer
+description: Gera o rascunho de uma newsletter semanal em Markdown com base em tópicos fornecidos.
+author: MarcTechJA
+version: "1.0"
+platforms:
+  - macos
+  - linux
+  - windows
+metadata:
+  hermes:
+    tags: [content, newsletter, ai]
+---
+
+# newsletter-writer
+Esta skill analisa os temas do momento e escreve uma newsletter envolvente e pronta a enviar.
+
+## When to Use
+Utiliza esta skill quando precisares de gerar uma nova edição da newsletter semanal em formato Markdown.
+
+## Instruções
+1. Organiza os tópicos principais ou notas fornecidas pelo utilizador.
+2. Estrutura o artigo com uma introdução cativante, 3 destaques principais e uma nota final de reflexão.
+3. Mantém um tom profissional, acessível em português de Portugal e otimizado para leitura rápida.
+4. Salva o resultado final no ficheiro `edicao_semanal.md`.
+
+## Critérios de conclusão
+- Ficheiro `edicao_semanal.md` gerado na raiz do projeto com o conteúdo estruturado da newsletter.
+</code></pre>
+
+<p>Para verificar as tuas <em>skills</em> disponíveis e executar o assistente, podes utilizar os comandos de linha de comandos do Hermes Agent:</p>
+
+<pre><code># Listar todas as skills ativas
+hermes skills list
+
+# Iniciar o chat aplicando a skill de escrita da newsletter
+hermes chat -s newsletter-writer
+</code></pre>
+
+<p><strong>O que o código faz:</strong> A <em>skill</em> especifica o comportamento exigido ao agente, garantindo que o rascunho é criado com a estrutura certa e guardado diretamente no ficheiro <code>edicao_semanal.md</code> pronto a ser processado.</p>
+
+<h2>Passo 3: Envio Automatizado da Edição com Python</h2>
+
+<p>Assim que o Hermes Agent gerar o ficheiro <code>edicao_semanal.md</code>, podemos disparar o envio para todos os subscritores registados com um script Python rápido e simples.</p>
+
+<pre><code>import smtplib
+import sqlite3
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+
+def send_email(to_email, subject, body_text):
+    sender_email = "geral@omeusite.pt"
+    password = "a-tua-palavra-passe"
+    
+    msg = MIMEMultipart()
+    msg['From'] = sender_email
+    msg['To'] = to_email
+    msg['Subject'] = subject
+    msg.attach(MIMEText(body_text, 'plain', 'utf-8'))
+
+    with smtplib.SMTP("smtp.gmail.com", 587) as server:
+        server.starttls()
+        server.login(sender_email, password)
+        server.send_message(msg)
+
+def dispatch_newsletter():
+    try:
+        with open("edicao_semanal.md", "r", encoding="utf-8") as f:
+            content = f.read()
+    except FileNotFoundError:
+        print("Erro: O ficheiro edicao_semanal.md ainda não foi gerado.")
+        return
+
+    conn = sqlite3.connect("newsletter.db")
+    cursor = conn.cursor()
+    cursor.execute("SELECT email FROM subscribers WHERE status = 'active'")
+    subscribers = cursor.fetchall()
+    conn.close()
+
+    for sub in subscribers:
+        send_email(sub[0], "Edição Semanal: Novidades do Sector", content)
+        print(f"Enviado com sucesso para: {sub[0]}")
+
+if __name__ == "__main__":
+    dispatch_newsletter()
+</code></pre>
+
+<p><strong>O que o código faz:</strong> O script lê o conteúdo em Markdown gerado pelo Hermes Agent, conecta-se à base de dados SQLite para obter os subscritores ativos e envia a mensagem utilizando uma ligação SMTP segura.</p>
+
+<h2>Passo 4: Medir Resultados e Métricas da Lista</h2>
+
+<p>Automatizar a criação e o envio só faz sentido se conseguires acompanhar a evolução do teu projeto. Um script de análise de métricas simples ajuda a manter o controlo sobre a tua audiência.</p>
+
+<pre><code>import sqlite3
+
+def generate_report():
+    conn = sqlite3.connect("newsletter.db")
+    cursor = conn.cursor()
+    
+    cursor.execute("SELECT COUNT(*) FROM subscribers WHERE status = 'active'")
+    active_count = cursor.fetchone()[0]
+
+    cursor.execute("SELECT COUNT(*) FROM subscribers WHERE status = 'unsubscribed'")
+    unsub_count = cursor.fetchone()[0]
+    
+    conn.close()
+
+    total = active_count + unsub_count
+    retention_rate = (active_count / max(1, total)) * 100
+
+    print("=== Relatório de Desempenho da Newsletter ===")
+    print(f"Subscritores Ativos: {active_count}")
+    print(f"Cancelamentos: {unsub_count}")
+    print(f"Taxa de Retenção: {retention_rate:.1f}%")
+
+if __name__ == "__main__":
+    generate_report()
+</code></pre>
+
+<p><strong>O que o código faz:</strong> Consulta a base de dados local para gerar um resumo claro da taxa de retenção e número total de leitores ativos na tua lista.</p>
+
+<h2>Conclusão</h2>
+
+<p>A combinação de scripts Python leves com a inteligência contextual do Hermes Agent permite a qualquer criador de conteúdo operar uma newsletter profissional sem perder horas em tarefas repetitivas. Aprendeste a estruturar a captação de dados, configurar <em>skills</em> personalizadas para a IA, automatizar disparos por email e monitorizar os resultados de forma prática.</p>
+
+<p>Se pretendes aprofundar o teu conhecimento sobre automações avançadas, criação de equipas de agentes e integrações de sistema, consulta o <a href="/livro/">Guia Completo do Hermes Agent</a> para explorar todas as capacidades deste ecossistema open-source.</p>
+        </div>
+        <div class="comments-section">
+          <h2>Comentários</h2>
+          <script src="https://giscus.app/client.js"
+                  data-repo="Jorgeacus/marctechja-blog"
+                  data-repo-id="R_kgDOTnRVjw"
+                  data-category="General"
+                  data-category-id="DIC_kwDOTnRVj84DDt4R"
+                  data-mapping="pathname"
+                  data-strict="0"
+                  data-reactions-enabled="1"
+                  data-emit-metadata="0"
+                  data-input-position="bottom"
+                  data-theme="preferred_color_scheme"
+                  data-lang="pt"
+                  crossorigin="anonymous"
+                  async>
+          </script>
+          <noscript>Ativa o JavaScript para veres e deixares comentários.</noscript>
+        </div>
+      </div>
+      <aside class="sidebar">
+        <div class="sidebar-widget">
+          <h3>📘 Livro do Hermes Agent</h3>
+          <p>10 partes, 42 capítulos. PDF + EPUB.</p>
+          <a href="/livro/" class="btn btn-gold">Saber Mais</a>
+        </div>
+        <div class="sidebar-widget ad-placeholder">Anúncio Google AdSense</div>
+      </aside>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <a href="/" class="logo">Marc<span class="gold">tech</span>JA</a>
+          <p>Tecnologia, automação e IA para transformar a produtividade.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Navegação</h4>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/blog/">Blog</a></li>
+            <li><a href="/livro/">Livro</a></li>
+            <li><a href="/sobre/">Sobre</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="/politica-de-privacidade/">Privacidade</a></li>
+            <li><a href="/politica-de-cookies/">Cookies</a></li>
+            <li><a href="/termos/">Termos</a></li>
+            <li><a href="/contactos/">Contactos</a></li>
+            <li><a href="#" id="cookie-settings" onclick="window.MarctechJACookieConsent&&window.MarctechJACookieConsent.show();return false;">Definições de cookies</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contacto</h4>
+          <ul>
+            <li><a href="mailto:marctechja@gmail.com">marctechja@gmail.com</a></li>
+            <li><a href="https://github.com/Jorgeacus">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 MarctechJA. Todos os direitos reservados.</p>
+      </div>
+    </div>
+  </footer>
+  <script src="/assets/js/main.js"></script>
+  <script src="/assets/js/cookie-consent.js"></script>
+</body>
+</html>
