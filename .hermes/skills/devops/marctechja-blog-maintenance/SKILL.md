@@ -28,7 +28,7 @@ Sou o agente responsável por manter o blog MarctechJA **sempre funcional**, seg
 - **Design:** cores Hermes — petróleo `#031522`, navy `#061B2B`, dourado `#D9A83E`, ciano `#008FBE`
 - **Páginas:** `/` (home, 6 cards), `/blog/` (todos os artigos + formulário Google Forms na sidebar), `/livro/`, `/sobre/`, `/politica-de-privacidade/`, `/politica-de-cookies/`, `/termos/`, `/contactos/` (obrigatórias para o Google AdSense)
 - **Ordem dos artigos:** do **mais recente para o mais antigo** (no blog archive)
-- **Publicação diária:** workflow GitHub Actions "Hermes Agent" (`.github/workflows/marc.yml`), 09:00 UTC + `workflow_dispatch`
+- **Publicação:** 2 artigos por semana (segunda e quinta), 09:00 UTC, via workflow GitHub Actions "Hermes Agent" (`.github/workflows/marc.yml`) + `workflow_dispatch`
 
 ## Verificação de saúde (checklist)
 
@@ -63,7 +63,7 @@ Causa: `.hero::before` (overlay decorativo com `inset:0`) interceptava cliques. 
 ### 5. Cache CDN GitHub Pages (conteúdo antigo no browser)
 `expires: max-age=600` + `x-cache: HIT`. **Correção:** forçar atualização com query string `?v=$(date +%s)` nas URLs, ou cache-busting no link do CSS (`style.css?v=YYYYMMDD`).
 
-### 6. Workflow diário falhou
+### 6. Workflow de publicação falhou
 Ver em Actions: `https://github.com/Jorgeacus/marctechja-blog/actions`. Causa comum: falha de timeout/URL da API Gemini (o script só capturava `HTTPError`). **Correção:** tentar manualmente com `workflow_dispatch` (botão "Run workflow"); o `generate-post.py` atual já faz retry nos 4 modelos e 2 versões da API.
 
 ### 7. Repo local desatualizado
@@ -83,6 +83,6 @@ Sincronizar sempre antes de editar: `git -C ~/MARCS_Blog pull origin main`. Se o
 - Homepage: só 6 cards (5 essenciais + mais recente) + CTA "Explorar Blog Completo →".
 - Blog archive: todos os artigos + formulário Google Forms (iframe) na sidebar.
 - Slug: minúsculas, sem acentos, hífens para espaços.
-- Autor default: "Hermes Agent" (nunca "MARC-Jarvis").
-- **1 artigo por dia**, às 09:00 UTC (workflow "Hermes Agent").
-- **Temas:** mistura de Hermes Agent, Python, criação de sites/landing pages, automação (WhatsApp, Telegram, Instagram), gestão de tráfego e redes sociais, análise de mercado/produtos, e conteúdo para micro e grandes empresas. Rotação sequencial em `scripts/generate-post.py` (110 tópicos, do mais simples ao mais complexo) — 1 tema por dia por ordem. Quando a rotação local esgota, `generate_new_topic()` pede um tema novo à IA (com deduplicação por slug). **Não repetir temas/artigos já publicados** — só atualizar ou aprofundar.
+- Autor default: "Marcus" (nunca "MARC-Jarvis" nem "Hermes Agent").
+- **2 artigos por semana** (segunda e quinta), às 09:00 UTC (workflow "Hermes Agent").
+- **Temas:** mistura de Hermes Agent, Python, criação de sites/landing pages, automação (WhatsApp, Telegram, Instagram), gestão de tráfego e redes sociais, análise de mercado/produtos, e conteúdo para micro e grandes empresas. Rotação sequencial em `scripts/generate-post.py` (110 tópicos, do mais simples ao mais complexo) — 1 tema por publicação, por ordem. Quando a rotação local esgota, `generate_new_topic()` pede um tema novo à IA (com deduplicação por slug). **Não repetir temas/artigos já publicados** — só atualizar ou aprofundar.

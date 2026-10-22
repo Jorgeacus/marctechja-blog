@@ -812,6 +812,32 @@ def validate_content(html_content, title):
     if text_len < 400:
         errors.append(f"corpo demasiado curto ({text_len} caracteres de texto)")
 
+    # 7. Extensão mínima — artigos finos são sinal de "conteúdo de baixo valor"
+    import html as h
+    plain = h.unescape(re.sub(r"<[^>]+>", " ", html_content))
+    word_count = len(plain.split())
+    if word_count < 1400:
+        errors.append(f"artigo com {word_count} palavras (mínimo 1400 para qualidade/AdSense)")
+
+    # 8. Fontes externas credíveis (mínimo 2) — combate conteúdo genérico
+    allowed_domains = (
+        "python.org", "docs.python.org", "github.com", "docs.github.com",
+        "developer.mozilla.org", "hermes-agent.nousresearch.com", "ollama.ai",
+        "developers.google.com", "support.google.com", "cloud.google.com",
+        "fastapi.tiangolo.com", "pandas.pydata.org", "streamlit.io",
+        "openpyxl.readthedocs.io", "stripe.com", "developers.cloudflare.com",
+        "w3.org", "schema.org", "docs.docker.com", "wiki.python.org",
+    )
+    ext_links = re.findall(r'href="(https?://[^"]+)"', html_content)
+    ext_ok = [u for u in ext_links if any(d in u for d in allowed_domains)]
+    if len(ext_ok) < 2:
+        errors.append(f"apenas {len(ext_ok)} fonte(s) externa(s) credível(is) (mínimo 2)")
+
+    # 9. Ligações internas contextuais (mínimo 3)
+    internal_links = re.findall(r'href="(?:https?://marcusja777\.com)?/blog/[^"]+"', html_content)
+    if len(internal_links) < 3:
+        errors.append(f"apenas {len(internal_links)} ligação(ões) interna(s) no corpo (mínimo 3)")
+
     return errors
 
 
@@ -830,6 +856,9 @@ def generate_article(topic, reference_content, provider, api_key):
         "Geral": "todos"
     }
     audience_pt = audiences_pt.get(topic["audience"], "todos")
+
+    published = sorted(p.name for p in Path(BLOG_DIR).iterdir() if p.is_dir())
+    links_sugeridos = "\n".join(f"   - /blog/{s}/" for s in published[-24:])
 
     prompt = f"""És um especialista em Hermes Agent e automação com IA.
 
@@ -904,6 +933,15 @@ REGRAS DE QUALIDADE OBRIGATÓRIAS:
    - NÃO repitas o título como primeiro heading ou como meta description (evita duplicação no excerpt e nos cards).
    - Meta description completa, com pontuação final e sem cortes a meio.
 
+4. VALOR REAL, FONTES E LIGAÇÕES (obrigatório):
+   - O artigo deve ter entre 1.600 e 2.200 palavras de conteúdo útil (sem contar blocos de código).
+   - Inclui 3 a 5 ligações internas contextuais para outros artigos do blog, escolhendo entre estes:
+{links_sugeridos}
+   - Inclui uma secção final "Fontes e leitura recomendada" com 2 a 4 ligações para documentação oficial (python.org, docs.python.org, github.com, developer.mozilla.org, hermes-agent.nousresearch.com, ollama.ai, fastapi.tiangolo.com, pandas.pydata.org, streamlit.io). NÃO inventes URLs.
+   - Apresenta pelo menos um caso prático com resultado esperado e uma limitação ou erro comum.
+   - Evita frases genéricas e enchimento ("no mundo atual", "revolucionar", "imagina", "neste artigo", "cada vez mais").
+   - Não inventes estatísticas, estudos ou citações.
+
 IMPORTANTE: Gera APENAS o HTML do conteúdo (o que vai dentro da div <div class="article-content">).
 NÃO incluis <!DOCTYPE>, <html>, <head>, <body> ou tags de estrutura da página.
 NÃO incluis comentários HTML (nem <!-- -->), nem blocos "SEO Metadata". Começa diretamente com o <h2> ou <p>.
@@ -915,6 +953,52 @@ Apenas o conteúdo interno: parágrafos, headings, listas, código e CTA.
         return call_gemini_api(prompt, api_key)
     else:
         return call_openai_api(prompt, api_key)
+
+
+def write_cover(slug, title):
+    """Gera uma capa SVG original e devolve o HTML <figure> para o artigo."""
+    import html as h
+    import textwrap
+
+    covers = Path("assets/images/covers")
+    covers.mkdir(parents=True, exist_ok=True)
+
+    def esc(s):
+        return (s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+                 .replace('"', "&quot;"))
+
+    lines = textwrap.wrap(title, width=26, break_long_words=True)[:5]
+    fs = 54 if len(lines) <= 3 else (46 if len(lines) == 4 else 40)
+    y0 = 300 - (len(lines) - 1) * (fs + 10) // 2
+    tspans = "".join(
+        f'<tspan x="80" y="{y0 + i * (fs + 10)}">{esc(line)}</tspan>'
+        for i, line in enumerate(lines)
+    )
+    svg = f'''<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="{esc(title)}">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#031522"/>
+      <stop offset="1" stop-color="#061B2B"/>
+    </linearGradient>
+    <linearGradient id="line" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#D9A83E"/>
+      <stop offset="1" stop-color="#008FBE"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect x="80" y="110" width="120" height="6" rx="3" fill="url(#line)"/>
+  <text x="80" y="95" font-family="Helvetica, Arial, sans-serif" font-size="28" font-weight="700" fill="#F5F5F2">Marc<tspan fill="#D9A83E">tech</tspan>JA</text>
+  <text font-family="Helvetica, Arial, sans-serif" font-size="{fs}" font-weight="700" fill="#F5F5F2">{tspans}</text>
+  <text x="80" y="560" font-family="Helvetica, Arial, sans-serif" font-size="24" fill="#D9A83E">Automação · IA · Python</text>
+  <text x="1120" y="560" text-anchor="end" font-family="Helvetica, Arial, sans-serif" font-size="22" fill="#8FA3B0">marcusja777.com</text>
+</svg>
+'''
+    (covers / f"{slug}.svg").write_text(svg, encoding="utf-8")
+    return (
+        f'<figure class="post-cover"><img src="/assets/images/covers/{slug}.svg" '
+        f'alt="{esc(title)}" width="1200" height="630" loading="eager">'
+        f'<figcaption>Ilustração editorial — MarctechJA</figcaption></figure>\n\n'
+    )
 
 
 def generate_new_topic(published_titles, provider, api_key):
@@ -1066,6 +1150,9 @@ def main():
     if dry_run:
         print(f"✅ DRY-RUN: artigo válido ({len(content_html)} chars) — não publicado.")
         sys.exit(0)
+
+    # Capa editorial original (imagem no artigo)
+    content_html = write_cover(slugify(topic["title"]), topic["title"]) + content_html
 
     # Save content to temp file
     temp_file = f"/tmp/marctechja_article_{datetime.now().strftime('%Y%m%d%H%M%S')}.html"

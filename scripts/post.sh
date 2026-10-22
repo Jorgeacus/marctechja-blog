@@ -149,6 +149,14 @@ cat > "$POST_DIR/index.html" << HTMLEOF
         <div class="article-content">
           ${ARTICLE_CONTENT}
         </div>
+        <div class="author-box">
+          <div class="author-avatar" aria-hidden="true">M</div>
+          <div class="author-info">
+            <p class="author-name">${AUTHOR} <span>· Autor</span></p>
+            <p class="author-bio">Desenvolvedor independente. Escrevo sobre automação com Python, agentes de IA e ferramentas como o Hermes Agent — com exemplos testados e foco em resultados práticos.</p>
+            <p class="author-links"><a href="/sobre/#autor">Sobre o autor</a> · <a href="https://github.com/Jorgeacus" rel="noopener">GitHub</a> · <a href="mailto:marctechja@gmail.com">Contacto</a></p>
+          </div>
+        </div>
         <div class="comments-section">
           <h2>Comentários</h2>
           <script src="https://giscus.app/client.js"
