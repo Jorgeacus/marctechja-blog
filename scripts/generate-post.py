@@ -228,6 +228,468 @@ TOPICS = [
         "title": "Criar e automatizar uma newsletter com Python e Hermes Agent",
         "focus": "Como montar uma newsletter do zero: captar subscritores, gerar conteúdo automaticamente com IA, enviar edições e medir resultados com Python e Hermes Agent."
     },
+    # 34 — Faturação
+    {
+        "audience": "Empresas",
+        "title": "Automatizar faturas e recibos com Python e Hermes Agent",
+        "focus": "Como gerar, organizar e enviar faturas e recibos automaticamente: templates, dados de clientes, PDF e envio por email com Python e Hermes Agent."
+    },
+    # 35 — OCR
+    {
+        "audience": "Programadores",
+        "title": "OCR com Python: extrair texto de imagens e PDFs",
+        "focus": "Como usar OCR em Python para digitalizar documentos: instalar Tesseract, processar imagens e PDFs e guardar os resultados de forma estruturada."
+    },
+    # 36 — Dashboards
+    {
+        "audience": "Empresas",
+        "title": "Criar um dashboard de vendas com Python e Streamlit",
+        "focus": "Tutorial para construir um dashboard interativo de vendas com Streamlit e pandas: ler dados, criar gráficos e publicar o painel para a equipa."
+    },
+    # 37 — Excel
+    {
+        "audience": "Empresas",
+        "title": "Automatizar relatórios em Excel com Python e openpyxl",
+        "focus": "Como automatizar folhas de cálculo: ler e escrever ficheiros Excel, aplicar formatação, criar gráficos e gerar relatórios mensais com Python."
+    },
+    # 38 — Google Sheets
+    {
+        "audience": "Empresas",
+        "title": "Integrar o Hermes Agent com o Google Sheets",
+        "focus": "Como ligar o Hermes Agent ao Google Sheets: autenticação, leitura e escrita de dados, atualização automática de relatórios e alertas."
+    },
+    # 39 — Chatbot no site
+    {
+        "audience": "Empresas",
+        "title": "Construir um chatbot para o teu site com Python e IA",
+        "focus": "Guia para criar um chatbot que responde a visitantes do site: arquitetura, API de IA, base de conhecimento e integração no HTML."
+    },
+    # 40 — RAG
+    {
+        "audience": "Programadores",
+        "title": "RAG explicado: dar memória à tua IA com Python",
+        "focus": "O que é RAG, quando faz sentido e como implementar uma base de conhecimento pesquisável com embeddings e Python."
+    },
+    # 41 — Ollama local
+    {
+        "audience": "Programadores",
+        "title": "Correr modelos de IA localmente com Ollama: guia prático",
+        "focus": "Como instalar o Ollama, escolher modelos adequados ao teu computador, correr a API local e integrar com Python sem custos de cloud."
+    },
+    # 42 — Comparação local
+    {
+        "audience": "Programadores",
+        "title": "Ollama, LM Studio e llama.cpp: qual escolher",
+        "focus": "Comparação prática das principais ferramentas para correr modelos de IA localmente: facilidade, desempenho, compatibilidade e casos de uso."
+    },
+    # 43 — LinkedIn
+    {
+        "audience": "Criadores de Conteúdo",
+        "title": "Automatizar a publicação de conteúdo no LinkedIn",
+        "focus": "Como planear e agendar publicações no LinkedIn, gerar variações de texto com IA e medir resultados sem perder autenticidade."
+    },
+    # 44 — Pinterest
+    {
+        "audience": "Criadores de Conteúdo",
+        "title": "Automatizar o Pinterest para trazer tráfego ao blog",
+        "focus": "Como criar pins, agendar publicações e usar o Pinterest para atrair visitas consistentes ao blog, com apoio de IA e Python."
+    },
+    # 45 — YouTube
+    {
+        "audience": "Criadores de Conteúdo",
+        "title": "YouTube automatizado: títulos, descrições e ideias com IA",
+        "focus": "Como usar IA para investigar temas, escrever títulos e descrições otimizados e planear um calendário de vídeos consistente."
+    },
+    # 46 — Reels e TikTok
+    {
+        "audience": "Criadores de Conteúdo",
+        "title": "TikTok e Reels: criar guiões com IA em minutos",
+        "focus": "Processo para gerar guiões curtos e envolventes para TikTok e Reels, com ganchos, estrutura e chamadas à ação adaptadas ao público."
+    },
+    # 47 — SEO local
+    {
+        "audience": "Empresas",
+        "title": "SEO local: aparecer no Google Maps e no Google Meu Negócio",
+        "focus": "Passos para otimizar a presença local de um negócio: perfil no Google Meu Negócio, avaliações, palavras-chave locais e páginas de serviço."
+    },
+    # 48 — Palavras-chave
+    {
+        "audience": "Criadores de Conteúdo",
+        "title": "Palavras-chave: como encontrar temas que dão tráfego",
+        "focus": "Método prático para descobrir palavras-chave com procura e pouca concorrência, usando ferramentas gratuitas e análise de intenção de pesquisa."
+    },
+    # 49 — Search Console
+    {
+        "audience": "Criadores de Conteúdo",
+        "title": "Google Search Console: interpretar dados e corrigir erros",
+        "focus": "Como usar o Search Console para encontrar oportunidades: consultas, páginas, indexação, erros de rastreamento e melhorias de CTR."
+    },
+    # 50 — Core Web Vitals
+    {
+        "audience": "Programadores",
+        "title": "Core Web Vitals: acelerar o teu site em 2026",
+        "focus": "Como medir e melhorar LCP, INP e CLS: imagens, fontes, JavaScript, cache e boas práticas para sites estáticos."
+    },
+    # 51 — AdSense
+    {
+        "audience": "Criadores de Conteúdo",
+        "title": "AdSense: como pedir aprovação e aumentar o RPM",
+        "focus": "Requisitos de aprovação do AdSense, erros que causam recusa, posicionamento de anúncios e técnicas éticas para aumentar o RPM."
+    },
+    # 52 — Afiliados
+    {
+        "audience": "Criadores de Conteúdo",
+        "title": "Monetizar um blog com marketing de afiliados",
+        "focus": "Como escolher programas de afiliados, criar conteúdo que converte, divulgar links com transparência e medir comissões."
+    },
+    # 53 — Plataformas afiliados
+    {
+        "audience": "Empresários",
+        "title": "Hotmart, Eduzz e Monetizze: comparar plataformas de afiliados",
+        "focus": "Comparação das principais plataformas de produtos digitais em português: comissões, pagamentos, ferramentas e adequação a diferentes nichos."
+    },
+    # 54 — Ebook
+    {
+        "audience": "Criadores de Conteúdo",
+        "title": "Criar um ebook e vendê-lo no automático",
+        "focus": "Do planeamento à venda: como escrever um ebook com apoio de IA, criar a página de venda e automatizar entrega e pagamentos."
+    },
+    # 55 — Copywriting
+    {
+        "audience": "Empresários",
+        "title": "Copywriting para landing pages que convertem",
+        "focus": "Estrutura de uma landing page eficaz: promessa, benefícios, prova social, objeções e chamada à ação, com exemplos práticos."
+    },
+    # 56 — Testes A/B
+    {
+        "audience": "Empresários",
+        "title": "Testes A/B simples com Python e Google Analytics",
+        "focus": "Como planear e medir testes A/B sem ferramentas caras: variantes, amostra, métricas e interpretação de resultados."
+    },
+    # 57 — Entregabilidade email
+    {
+        "audience": "Empresas",
+        "title": "E-mail marketing: evitar a pasta de spam com SPF, DKIM e DMARC",
+        "focus": "Configurar autenticação de email, aquecer o domínio e melhorar a entregabilidade das campanhas passo a passo."
+    },
+    # 58 — Propostas
+    {
+        "audience": "Empresários",
+        "title": "Automação de propostas comerciais com Python",
+        "focus": "Como gerar propostas personalizadas em PDF a partir de dados do cliente, com templates, cálculo de preços e envio automático."
+    },
+    # 59 — Precificação
+    {
+        "audience": "Empresários",
+        "title": "Precificar serviços de automação para empresas",
+        "focus": "Modelos de preço para serviços de automação: por projeto, por hora, retainer e por resultado, com exemplos de cálculo."
+    },
+    # 60 — Primeiros clientes
+    {
+        "audience": "Empresários",
+        "title": "Como conseguir os primeiros clientes de automação",
+        "focus": "Estratégias práticas para encontrar pequenas empresas com processos manuais, apresentar soluções e fechar os primeiros contratos."
+    },
+    # 61 — Freelancing com IA
+    {
+        "audience": "Empresários",
+        "title": "Freelancing com IA: pacotes e serviços que vendem",
+        "focus": "Ideias de serviços empacotados com IA e automação, como definir entregáveis, prazos e preços para vender com consistência."
+    },
+    # 62 — Loja online
+    {
+        "audience": "Empresas",
+        "title": "Automatizar o atendimento de uma loja online",
+        "focus": "Como automatizar respostas a clientes de uma loja online: dúvidas frequentes, estados de encomenda, devoluções e escalonamento para humanos."
+    },
+    # 63 — Preços concorrência
+    {
+        "audience": "Empresas",
+        "title": "Scraping de preços para monitorizar a concorrência",
+        "focus": "Como recolher preços de concorrentes de forma ética e legal, guardar histórico e criar alertas de alterações relevantes."
+    },
+    # 64 — APIs
+    {
+        "audience": "Programadores",
+        "title": "Integrar APIs com Python: autenticação, limites e erros",
+        "focus": "Boas práticas para consumir APIs: chaves e tokens, paginação, limites de utilização, tentativas e tratamento de erros."
+    },
+    # 65 — FastAPI
+    {
+        "audience": "Programadores",
+        "title": "Criar uma API com FastAPI para os teus scripts",
+        "focus": "Como expor scripts Python através de uma API com FastAPI: rotas, validação, documentação automática e publicação."
+    },
+    # 66 — Webhooks
+    {
+        "audience": "Programadores",
+        "title": "Webhooks: ligar aplicações sem código complexo",
+        "focus": "O que são webhooks, como recebê-los com Python, validar assinaturas e acionar automações quando algo acontece noutra aplicação."
+    },
+    # 67 — Agendamento
+    {
+        "audience": "Programadores",
+        "title": "Agendar tarefas com cron, launchd e GitHub Actions",
+        "focus": "Comparação das formas de agendar scripts em macOS, Linux e na cloud, com exemplos e cuidados a ter."
+    },
+    # 68 — Docker
+    {
+        "audience": "Programadores",
+        "title": "Docker para automações: empacotar e correr em qualquer lado",
+        "focus": "Como criar uma imagem Docker para um script de automação, gerir dependências e executar de forma reproduzível."
+    },
+    # 69 — Cloudflare Pages
+    {
+        "audience": "Programadores",
+        "title": "Publicar um site na Cloudflare Pages passo a passo",
+        "focus": "Como ligar um repositório à Cloudflare Pages, configurar o domínio, variáveis de ambiente e atualizações automáticas."
+    },
+    # 70 — Git
+    {
+        "audience": "Programadores",
+        "title": "Git e GitHub para iniciantes: versionar sem medo",
+        "focus": "Comandos essenciais de Git, ramos, resolução de conflitos e boas práticas para trabalhar sozinho ou em equipa."
+    },
+    # 71 — Testes
+    {
+        "audience": "Programadores",
+        "title": "Como escrever testes para scripts de automação",
+        "focus": "Introdução a testes em Python com pytest: testes unitários, mocks para APIs e integração contínua."
+    },
+    # 72 — Depuração
+    {
+        "audience": "Programadores",
+        "title": "Depurar código Python: erros comuns e como resolver",
+        "focus": "Guia de depuração: ler tracebacks, usar breakpoints, registar logs úteis e resolver os erros mais frequentes."
+    },
+    # 73 — Refatoração
+    {
+        "audience": "Programadores",
+        "title": "Refatorar código antigo sem partir nada",
+        "focus": "Estratégia para melhorar código legado com segurança: testes, pequenos passos, funções claras e revisão de dependências."
+    },
+    # 74 — Documentação
+    {
+        "audience": "Programadores",
+        "title": "Documentar projetos com IA: README, docstrings e guias",
+        "focus": "Como gerar documentação útil com apoio de IA: README, docstrings, exemplos de utilização e guias de instalação."
+    },
+    # 75 — Segundo cérebro
+    {
+        "audience": "Geral",
+        "title": "Segundo cérebro com Notion, Obsidian e IA",
+        "focus": "Como organizar notas, ideias e projetos num sistema pessoal pesquisável, com apoio de IA para resumir e ligar informação."
+    },
+    # 76 — Todoist
+    {
+        "audience": "Geral",
+        "title": "Automatizar a gestão de tarefas com Todoist e Python",
+        "focus": "Como criar e organizar tarefas automaticamente, integrar com email e calendário e gerar revisões semanais."
+    },
+    # 77 — Calendário editorial
+    {
+        "audience": "Criadores de Conteúdo",
+        "title": "Calendário editorial automático para blogs e redes sociais",
+        "focus": "Como planear um mês de conteúdo, gerar ideias com IA e manter consistência entre blog, newsletter e redes sociais."
+    },
+    # 78 — Backups
+    {
+        "audience": "Empresas",
+        "title": "Backups automáticos: proteger dados de clientes",
+        "focus": "Estratégia de backups com regra 3-2-1, automação de cópias, testes de restauro e proteção de dados sensíveis."
+    },
+    # 79 — RGPD
+    {
+        "audience": "Empresas",
+        "title": "RGPD na prática para blogs e pequenos negócios",
+        "focus": "Obrigações essenciais do RGPD: base legal, consentimento, políticas, cookies, direitos dos titulares e registo de tratamentos."
+    },
+    # 80 — Passwords e chaves
+    {
+        "audience": "Programadores",
+        "title": "Segurança de passwords e chaves de API",
+        "focus": "Boas práticas para guardar segredos: gestores de passwords, variáveis de ambiente, rotação de chaves e evitar fugas em repositórios."
+    },
+    # 81 — Discord
+    {
+        "audience": "Programadores",
+        "title": "Bots de Discord com Python: guia completo",
+        "focus": "Como criar um bot de Discord em Python: ligação, comandos, eventos, permissões e alojamento."
+    },
+    # 82 — WhatsApp API
+    {
+        "audience": "Empresas",
+        "title": "Automatizar o WhatsApp com a API oficial: limites e custos",
+        "focus": "Diferenças entre automação não oficial e API oficial, requisitos, limites, custos e boas práticas para empresas."
+    },
+    # 83 — Comparar automação
+    {
+        "audience": "Empresários",
+        "title": "Make, Zapier, n8n e Python: qual escolher para automatizar",
+        "focus": "Comparação de custos, flexibilidade, manutenção e casos ideais para cada ferramenta de automação."
+    },
+    # 84 — Migrar Zapier
+    {
+        "audience": "Empresas",
+        "title": "Migrar automações de Zapier para Python e poupar dinheiro",
+        "focus": "Como identificar automações caras, reescrever os fluxos em Python e manter tudo a funcionar com menor custo mensal."
+    },
+    # 85 — Loja com Stripe
+    {
+        "audience": "Programadores",
+        "title": "Criar uma loja online simples com HTML, CSS e Stripe",
+        "focus": "Como montar uma loja estática com pagamentos Stripe, páginas de produto e entrega automática de ficheiros digitais."
+    },
+    # 86 — GA4
+    {
+        "audience": "Empresários",
+        "title": "Google Analytics 4: medir o que importa",
+        "focus": "Configurar eventos, conversões e relatórios úteis no GA4, evitando métricas de vaidade e respeitando a privacidade."
+    },
+    # 87 — Lista de email
+    {
+        "audience": "Criadores de Conteúdo",
+        "title": "Crescer uma lista de email do zero",
+        "focus": "Como atrair subscritores com conteúdo útil, criar formulários simples e manter uma lista saudável ao longo do tempo."
+    },
+    # 88 — Iscas digitais
+    {
+        "audience": "Criadores de Conteúdo",
+        "title": "Criar iscas digitais que captam subscritores",
+        "focus": "Ideias de recursos gratuitos que atraem o público certo, como criar rapidamente e como ligar à newsletter."
+    },
+    # 89 — Webinars
+    {
+        "audience": "Empresários",
+        "title": "Webinars e workshops automáticos para vender serviços",
+        "focus": "Como planear, promover e automatizar webinars e workshops, desde a inscrição até ao acompanhamento dos participantes."
+    },
+    # 90 — Instagram empresas
+    {
+        "audience": "Empresas",
+        "title": "Instagram para empresas: conteúdo que gera clientes",
+        "focus": "Estratégia de conteúdo para empresas no Instagram: pilares, formatos, frequência e ligação ao site ou loja."
+    },
+    # 91 — Facebook Ads
+    {
+        "audience": "Empresários",
+        "title": "Facebook Ads para pequenos negócios: orçamento e públicos",
+        "focus": "Como começar com orçamentos pequenos: objetivos, públicos, criativos e leitura de resultados sem desperdiçar dinheiro."
+    },
+    # 92 — Google Ads
+    {
+        "audience": "Empresários",
+        "title": "Google Ads para iniciantes: evitar desperdício de dinheiro",
+        "focus": "Fundamentos de Google Ads: palavras-chave negativas, estrutura de campanhas, lances e acompanhamento de conversões."
+    },
+    # 93 — Análise concorrência
+    {
+        "audience": "Empresas",
+        "title": "Análise de concorrência com Python e IA",
+        "focus": "Como recolher e comparar informação pública de concorrentes: sites, preços, conteúdo e presença social, com relatórios automáticos."
+    },
+    # 94 — Portfólio
+    {
+        "audience": "Programadores",
+        "title": "Criar um portfólio que atrai clientes de automação",
+        "focus": "Que projetos mostrar, como apresentar resultados e como transformar um portfólio simples numa fonte de contactos comerciais."
+    },
+    # 95 — Auditoria
+    {
+        "audience": "Empresas",
+        "title": "Como fazer uma auditoria de automação numa empresa",
+        "focus": "Método para identificar processos repetitivos, estimar tempo e custo, priorizar oportunidades e apresentar um plano de automação."
+    },
+    # 96 — Case study
+    {
+        "audience": "Empresas",
+        "title": "Automatizar um processo manual em 7 dias",
+        "focus": "Caso prático passo a passo: escolher o processo, mapear tarefas, construir a automação e medir o impacto numa semana."
+    },
+    # 97 — Manutenção de sites
+    {
+        "audience": "Programadores",
+        "title": "Manutenção de sites: checklist mensal",
+        "focus": "Checklist de manutenção: links quebrados, formulários, backups, atualizações, segurança, velocidade e SEO técnico."
+    },
+    # 98 — WordPress para estático
+    {
+        "audience": "Programadores",
+        "title": "Migrar um blog de WordPress para um site estático",
+        "focus": "Como exportar conteúdo, preservar URLs e SEO, escolher um gerador estático e publicar sem perder tráfego."
+    },
+    # 99 — Velocidade
+    {
+        "audience": "Programadores",
+        "title": "Velocidade e SEO: imagens, cache e CDN",
+        "focus": "Otimizações práticas de velocidade: formatos de imagem, compressão, cache, CDN e carregamento diferido."
+    },
+    # 100 — IA no atendimento
+    {
+        "audience": "Empresas",
+        "title": "IA no atendimento: quando vale a pena e quando não vale",
+        "focus": "Critérios para decidir o que automatizar no atendimento, riscos de má experiência e como combinar IA com apoio humano."
+    },
+    # 101 — Prompts
+    {
+        "audience": "Geral",
+        "title": "Prompts eficazes para tarefas de negócio",
+        "focus": "Como escrever instruções claras para obter resultados úteis da IA: contexto, exemplos, formato de saída e iteração."
+    },
+    # 102 — Escolher modelo
+    {
+        "audience": "Programadores",
+        "title": "Escolher o modelo de IA certo: custo, velocidade e qualidade",
+        "focus": "Como comparar modelos por tarefa, medir qualidade e custo e decidir entre modelos locais e cloud."
+    },
+    # 103 — Limites de APIs
+    {
+        "audience": "Programadores",
+        "title": "Limites de APIs gratuitas: como evitar bloqueios",
+        "focus": "Como funcionam limites por minuto e por dia, estratégias de cache, filas, tentativas e monitorização de consumo."
+    },
+    # 104 — Base de conhecimento
+    {
+        "audience": "Empresas",
+        "title": "Criar uma base de conhecimento para a tua equipa",
+        "focus": "Como organizar procedimentos e respostas frequentes, manter a informação atualizada e torná-la pesquisável com IA."
+    },
+    # 105 — Prospeção
+    {
+        "audience": "Empresários",
+        "title": "Automatizar a prospeção de clientes com Python",
+        "focus": "Como construir uma lista de potenciais clientes a partir de fontes públicas, qualificar contactos e preparar abordagens personalizadas."
+    },
+    # 106 — Várias marcas
+    {
+        "audience": "Empresas",
+        "title": "Gerir redes sociais de várias marcas com IA",
+        "focus": "Fluxo de trabalho para várias contas: calendário central, variações de tom, aprovação e publicação consistente."
+    },
+    # 107 — Relatórios sociais
+    {
+        "audience": "Empresas",
+        "title": "Relatórios de redes sociais automáticos",
+        "focus": "Como recolher métricas, calcular indicadores úteis e gerar relatórios mensais automáticos para clientes ou equipas."
+    },
+    # 108 — Vender automações
+    {
+        "audience": "Empresários",
+        "title": "Como vender automações para microempresas",
+        "focus": "Como apresentar benefícios em linguagem simples, criar ofertas acessíveis e provar resultados rapidamente."
+    },
+    # 109 — Erros ao automatizar
+    {
+        "audience": "Empresas",
+        "title": "Erros comuns ao automatizar um negócio",
+        "focus": "Os erros mais frequentes em projetos de automação, como evitá-los e que processos nunca devem ser automatizados às cegas."
+    },
+    # 110 — Plano de 30 dias
+    {
+        "audience": "Geral",
+        "title": "Do zero ao primeiro euro online: plano de 30 dias",
+        "focus": "Plano realista de 30 dias para criar uma presença online, publicar conteúdo útil e abrir a primeira fonte de rendimento."
+    },
 ]
 
 REFERENCE_FILE = "assets/reference/ebook-summary.md"
@@ -454,6 +916,41 @@ Apenas o conteúdo interno: parágrafos, headings, listas, código e CTA.
     else:
         return call_openai_api(prompt, api_key)
 
+
+def generate_new_topic(published_titles, provider, api_key):
+    """Pede à IA um tema novo quando a rotação local está esgotada."""
+    import re
+
+    prompt = (
+        "És editor de um blog em português de Portugal sobre tecnologia, automação com IA, "
+        "Python, criação de sites, marketing digital e pequenos negócios.\n"
+        "Propõe UM artigo novo, prático e original. NÃO repitas nenhum destes temas:\n"
+        + "\n".join(f"- {t}" for t in published_titles[-120:])
+        + "\n\nRequisitos:\n"
+        "- Título em pt-PT, entre 40 e 80 caracteres, sem aspas.\n"
+        "- Público: Geral, Programadores, Criadores de Conteúdo, Empresas ou Empresários.\n"
+        "- Foco: 1 a 2 frases com o que o artigo deve cobrir.\n"
+        'Responde APENAS com JSON válido, sem markdown: {"audience": "...", "title": "...", "focus": "..."}'
+    )
+    if provider == "gemini":
+        raw = call_gemini_api(prompt, api_key)
+    else:
+        raw = call_openai_api(prompt, api_key)
+
+    match = re.search(r"\{.*\}", raw, re.S)
+    if not match:
+        raise ValueError("resposta sem JSON")
+    data = json.loads(match.group(0))
+    topic = {
+        "audience": str(data.get("audience", "Geral")).strip(),
+        "title": str(data.get("title", "")).strip().strip('"'),
+        "focus": str(data.get("focus", "")).strip(),
+    }
+    if not topic["title"] or not topic["focus"]:
+        raise ValueError("JSON incompleto")
+    return topic
+
+
 def main():
     dry_run = "--dry-run" in sys.argv
     provider = os.environ.get("AI_PROVIDER", "gemini").lower()
@@ -490,8 +987,28 @@ def main():
             topic = candidate
             break
     if topic is None:
-        print("   ⚠️ Todos os tópicos da rotação já foram publicados. Nada novo a gerar hoje.")
-        sys.exit(0)
+        print("   ⚠️ Todos os tópicos da rotação já foram publicados. A pedir um tema novo à IA...")
+        published_titles = sorted(
+            p.name.replace("-", " ") for p in Path(BLOG_DIR).iterdir() if p.is_dir()
+        )
+        topic = None
+        for attempt in range(3):
+            try:
+                topic = generate_new_topic(published_titles, provider, api_key)
+            except Exception as e:
+                print(f"   ❌ Tema automático falhou ({attempt + 1}/3): {type(e).__name__}: {e}")
+                topic = None
+                continue
+            if slugify(topic["title"]) in published_slugs:
+                print(f"   ⚠️ Tema repetido ({topic['title']}); a tentar outro...")
+                published_titles.append(topic["title"])
+                topic = None
+                continue
+            break
+        if topic is None:
+            print("   ❌ Não foi possível gerar um tema novo. Adiciona temas ao TOPICS.")
+            sys.exit(1)
+        print(f"   ✅ Tema novo gerado: {topic['title']}")
 
     print(f"📝 A gerar artigo: {topic['title']}")
     print(f"   Público: {topic['audience']}")

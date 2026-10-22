@@ -100,6 +100,7 @@ cat > "$POST_DIR/index.html" << HTMLEOF
   <link rel="stylesheet" href="/assets/css/style.css?v=${CSS_VERSION}">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
   <meta name="google-adsense-account" content="ca-pub-3717814491008089">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3717814491008089" crossorigin="anonymous"></script>
   <meta name="author" content="${AUTHOR}">
   <script type="application/ld+json">
 {
