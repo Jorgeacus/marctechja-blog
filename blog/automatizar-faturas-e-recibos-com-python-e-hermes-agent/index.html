@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Automatizar faturas e recibos com Python e Hermes Agent — MarctechJA</title>
+  <meta name="description" content="Ilustração editorial — MarctechJA Emitir faturas, gerar recibos de pagamento em formato PDF e enviá-los manualmente por e-mail a cada cliente é um dos">
+  <meta property="og:title" content="Automatizar faturas e recibos com Python e Hermes Agent">
+  <meta property="og:description" content="Ilustração editorial — MarctechJA Emitir faturas, gerar recibos de pagamento em formato PDF e enviá-los manualmente por e-mail a cada cliente é um dos">
+  <meta property="og:url" content="https://marcusja777.com/blog/automatizar-faturas-e-recibos-com-python-e-hermes-agent/">
+  <link rel="canonical" href="https://marcusja777.com/blog/automatizar-faturas-e-recibos-com-python-e-hermes-agent/">
+  <link rel="stylesheet" href="/assets/css/style.css?v=20261116">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+  <meta name="google-adsense-account" content="ca-pub-3717814491008089">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3717814491008089" crossorigin="anonymous"></script>
+  <meta name="author" content="Marcus">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Automatizar faturas e recibos com Python e Hermes Agent",
+  "url": "https://marcusja777.com/blog/automatizar-faturas-e-recibos-com-python-e-hermes-agent/",
+  "datePublished": "2026-11-23",
+  "dateModified": "2026-11-23",
+  "inLanguage": "pt-PT",
+  "author": {"@type": "Person", "name": "Marcus", "url": "https://github.com/Jorgeacus"},
+  "publisher": {"@type": "Organization", "name": "MarctechJA", "url": "https://marcusja777.com/"},
+  "mainEntityOfPage": {"@type": "WebPage", "@id": "https://marcusja777.com/blog/automatizar-faturas-e-recibos-com-python-e-hermes-agent/"}
+}
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="logo">Marc<span class="gold">tech</span>JA</a>
+      <button class="menu-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/blog/">Blog</a></li>
+        <li><a href="/livro/">Livro</a></li>
+        <li><a href="/sobre/">Sobre</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <section class="article-page">
+    <div class="container layout-with-sidebar">
+      <div>
+        <div class="article-header">
+          <div class="breadcrumb">
+            <a href="/">Home</a> / <a href="/blog/">Blog</a> / Automatizar faturas e recibos com Python e Hermes Agent
+          </div>
+          <h1>Automatizar faturas e recibos com Python e Hermes Agent</h1>
+          <div class="meta">
+            <span>📅 23 Nov 2026</span>
+            <span>📖 10 min de leitura</span>
+            <span>🏷️ Empresas</span>
+            <span>✍️ Marcus</span>
+          </div>
+        </div>
+        <div class="article-content">
+          <figure class="post-cover"><img src="/assets/images/covers/automatizar-faturas-e-recibos-com-python-e-hermes-agent.svg" alt="Automatizar faturas e recibos com Python e Hermes Agent" width="1200" height="630" loading="eager"><figcaption>Ilustração editorial — MarctechJA</figcaption></figure>
+
+<p>Emitir faturas, gerar recibos de pagamento em formato PDF e enviá-los manualmente por e-mail a cada cliente é um dos processos administrativos que mais tempo consome em pequenas e grandes empresas. Quando o volume de vendas cresce, o trabalho repetitivo de copiar dados de compras, calcular impostos e anexar ficheiros torna-se propenso a erros humanos e atrasos operacionais.</p>
+
+<p>A combinação da linguagem Python com o <strong>Hermes Agent</strong> permite transformar todo este fluxo numa operação 100% autónoma. O Hermes Agent atua como a camada de inteligência capaz de interpretar dados brutos de vendas, validar a informação dos clientes e orquestrar a execução de scripts Python responsáveis por construir os documentos digitais e expedir as notificações financeiras.</p>
+
+<p>Neste guia prático, vai aprender a desenhar e implementar uma solução completa de automação de faturação, desde a estrutura de templates até ao envio por correio eletrónico, adaptável a lojas virtuais, prestadores de serviços e empresas de qualquer dimensão.</p>
+
+<h2>Como Funciona a Arquitetura da Automação</h2>
+
+<p>Para criar um sistema de emissão de faturas robusto e seguro, é recomendável dividir o trabalho entre o raciocínio situacional da inteligência artificial e a determinação determinística do código Python. O Hermes Agent não substitui o código de geração de PDFs; em vez disso, ele organiza a informação recebida (como dados de um formulário ou extrato de vendas), aciona os scripts corretos e gere exceções de forma autónoma.</p>
+
+<p>O fluxo de trabalho completo é composto por quatro etapas interligadas:</p>
+
+<ul>
+    <li><strong>Leitura e Validação de Dados:</strong> O agente recebe a informação da venda (cliente, NIF, itens comprados, valores e taxas de IVA).</li>
+    <li><strong>Geração do Documento PDF:</strong> Um script Python utiliza bibliotecas especializadas para preencher um modelo (template) visual com os dados validados.</li>
+    <li><strong>Envio de Notificação e Anexo:</strong> O sistema estabelece uma ligação segura via SMTP para remeter a fatura ou recibo diretamente para a caixa de correio do cliente.</li>
+    <li><strong>Registo e Organização:</strong> O ficheiro PDF gerado é arquivado numa estrutura de pastas organizada por ano, mês e número do documento.</li>
+</ul>
+
+<p>Para garantir a máxima integridade e conformidade dos dados financeiros, o Hermes Agent interage com o ambiente local através de <em>skills</em> personalizadas. Se ainda não configurou o seu ambiente de trabalho com esta ferramenta, pode consultar o nosso guia sobre <a href="/blog/hermes-agent-installation/">como instalar e configurar o Hermes Agent</a>.</p>
+
+<h2>Passo a Passo: Construir o Sistema de Automação de Faturas</h2>
+
+<p>Siga os passos detalhados abaixo para estruturar a sua aplicação em Python e a respetiva integração com o Hermes Agent.</p>
+
+<h3>Passo 1: Preparar o ambiente Python e as dependências necessárias</h3>
+
+<p>O primeiro passo consiste em instalar as bibliotecas Python que vão gerir a criação dos ficheiros PDF e o manuseamento de modelos de texto. Vamos utilizar a biblioteca <code>reportlab</code> para a geração programática de ficheiros PDF com layout profissional.</p>
+
+<p>Execute o seguinte comando no seu terminal para preparar o ambiente:</p>
+
+<pre><code>pip install reportlab pydantic python-dotenv</code></pre>
+
+<p>Após a instalação das dependências, crie um script Python chamado <code>faturacao_engine.py</code>. Este ficheiro conterá a função responsável por gerar a fatura em PDF a partir de um dicionário de dados.</p>
+
+<pre><code>import os
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from email.mime.application import MIMEApplication
+from reportlab.lib.pagesizes import letter
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle
+from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+from reportlab.lib import colors
+
+def gerar_pdf_fatura(dados_fatura: dict, ficheiro_saida: str) -&gt; str:
+    """Gera um ficheiro PDF de fatura profissional a partir de um dicionario de dados."""
+    doc = SimpleDocTemplate(ficheiro_saida, pagesize=letter)
+    elementos = []
+    estilos = getSampleStyleSheet()
+    
+    # Cabecalho da Empresa
+    estilo_titulo = ParagraphStyle('Titulo', parent=estilos['Heading1'], fontSize=20, textColor=colors.HexColor('#1E293B'))
+    elementos.append(Paragraph(f"FATURA #{dados_fatura['numero_fatura']}", estilo_titulo))
+    elementos.append(Spacer(1, 12))
+    
+    # Detalhes do Emitente e Cliente
+    info_texto = f"""
+    <b>Emitente:</b> {dados_fatura['empresa_nome']}<br/>
+    <b>NIF Emitente:</b> {dados_fatura['empresa_nif']}<br/><br/>
+    <b>Cliente:</b> {dados_fatura['cliente_nome']}<br/>
+    <b>NIF Cliente:</b> {dados_fatura['cliente_nif']}<br/>
+    <b>Email:</b> {dados_fatura['cliente_email']}<br/>
+    <b>Data:</b> {dados_fatura['data']}
+    """
+    elementos.append(Paragraph(info_texto, estilos['Normal']))
+    elementos.append(Spacer(1, 20))
+    
+    # Tabela de Itens
+    tabela_dados = [['Descricao', 'Qtd', 'Preco Unit.', 'Total']]
+    subtotal = 0.0
+    
+    for item in dados_fatura['itens']:
+        total_item = item['quantidade'] * item['preco_unitario']
+        subtotal += total_item
+        tabela_dados.append([
+            item['descricao'],
+            str(item['quantidade']),
+            f"{item['preco_unitario']:.2f} €",
+            f"{total_item:.2f} €"
+        ])
+    
+    taxa_iva = dados_fatura.get('taxa_iva', 0.23)
+    total_iva = subtotal * taxa_iva
+    total_final = subtotal + total_iva
+    
+    tabela_dados.append(['', '', 'Subtotal:', f"{subtotal:.2f} €"])
+    tabela_dados.append(['', '', f"IVA ({(taxa_iva*100):.0f}%):", f"{total_iva:.2f} €"])
+    tabela_dados.append(['', '', 'Total Final:', f"{total_final:.2f} €"])
+    
+    tabela = Table(tabela_dados, colWidths=[220, 60, 100, 100])
+    tabela.setStyle(TableStyle([
+        ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor('#F1F5F9')),
+        ('TEXTCOLOR', (0, 0), (-1, 0), colors.HexColor('#0F172A')),
+        ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
+        ('ALIGN', (1, 0), (-1, -1), 'RIGHT'),
+        ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+        ('BOTTOMPADDING', (0, 0), (-1, 0), 8),
+        ('GRID', (0, 0), (-1, -4), 0.5, colors.HexColor('#E2E8F0')),
+        ('FONTNAME', (2, -3), (-1, -1), 'Helvetica-Bold'),
+    ]))
+    
+    elementos.append(tabela)
+    doc.build(elementos)
+    return ficheiro_saida
+
+def enviar_fatura_email(dados_fatura: dict, caminho_pdf: str, smtp_config: dict) -&gt; bool:
+    """Envia o PDF gerado por e-mail para o cliente."""
+    msg = MIMEMultipart()
+    msg['From'] = smtp_config['usuario']
+    msg['To'] = dados_fatura['cliente_email']
+    msg['Subject'] = f"Fatura #{dados_fatura['numero_fatura']} - {dados_fatura['empresa_nome']}"
+    
+    corpo = f"""Estimado(a) {dados_fatura['cliente_nome']},
+
+Agradecemos a sua preferencia. Em anexo, encontra a fatura #{dados_fatura['numero_fatura']} referente aos servicos prestados.
+
+Com os melhores cumprimentos,
+{dados_fatura['empresa_nome']}
+"""
+    msg.attach(MIMEText(corpo, 'plain'))
+    
+    with open(caminho_pdf, 'rb') as f:
+        anexo = MIMEApplication(f.read(), _subtype='pdf')
+        anexo.add_header('Content-Disposition', 'attachment', filename=os.path.basename(caminho_pdf))
+        msg.attach(anexo)
+        
+    try:
+        servidor = smtplib.SMTP(smtp_config['servidor'], smtp_config['porta'])
+        servidor.starttls()
+        servidor.login(smtp_config['usuario'], smtp_config['senha'])
+        servidor.send_message(msg)
+        servidor.quit()
+        return True
+    except Exception as e:
+        print(f"Erro ao enviar email: {e}")
+        return False
+</code></pre>
+
+<p>O código acima define duas funções reutilizáveis: <code>gerar_pdf_fatura</code> trata da construção visual do ficheiro PDF com calculo automático de IVA e layout estruturado; <code>enviar_fatura_email</code> faz o envio seguro do ficheiro anexo através do protocolo SMTP. Para aprofundar a gestão automatizada de correio eletrónico, consulte também o nosso artigo sobre <a href="/blog/python-para-automacao-de-email-ler-filtrar-e-responder-com-ia/">automação de e-mail com Python e IA</a>.</p>
+
+<h3>Passo 2: Criar a Skill Personalizada no Hermes Agent</h3>
+
+<p>Com a infraestrutura de código Python pronta, é altura de expor estas capacidades ao Hermes Agent. Para isso, criamos um ficheiro <code>SKILL.md</code> na diretoria de competências do agente (geralmente em <code>~/.hermes/skills/emitir-fatura/SKILL.md</code>).</p>
+
+<p>As <em>skills</em> do Hermes Agent utilizam uma especificação em Markdown com um cabeçalho YAML contendo metadados essenciais para que a IA saiba quando e como invocar a ferramenta.</p>
+
+<pre><code>---
+name: emitir-fatura
+description: Processa a informacao de uma venda, gera a fatura respetiva em PDF e envia-a por e-mail para o cliente.
+author: MarcTechJA
+version: "1.0"
+platforms:
+  - macos
+  - linux
+  - windows
+metadata:
+  hermes:
+    tags: [faturacao, pdf, email, automacao, empresas]
+---
+
+# emitir-fatura
+
+Esta skill permite ao Hermes Agent emitir faturas e recibos em PDF e envia-los automaticamente aos clientes por correio eletronico.
+
+## When to Use
+
+Use esta skill quando o utilizador solicitar a emissao, criacao ou envio de uma fatura ou recibo para um cliente especifico, fornecendo os detalhes dos produtos ou servicos vendidos.
+
+## Instruções
+
+1. **Recolher e Validar Dados:** Verifique se tem a informacao completa:
+   - Nome e NIF do Cliente
+   - Email do Cliente
+   - Lista de itens (descricao, quantidade, preco unitario)
+   - Numero da fatura (ou gerar um automatico baseado na data)
+
+2. **Executar o Script Python:**
+   - Crie um ficheiro JSON temporario com os dados estruturados do pedido.
+   - Execute o script Python `faturacao_engine.py` para construir o PDF no diretorio `./faturas/`.
+
+3. **Confirmar o Envio:**
+   - Dispare a funcao de envio por e-mail.
+   - Guarde a fatura gerada na pasta de arquivo local `./faturas/emitidas/`.
+
+## Critérios de conclusão
+
+- Ficheiro PDF gerado com sucesso sem erros de sintaxe ou layout.
+- Confirmacao de envio da mensagem e anexo via SMTP.
+- Resumo claro apresentado ao utilizador no chat informando o total faturado e o destinatario.
+</code></pre>
+
+<p>Esta estrutura padronizada segue o formato oficial do ecossistema Hermes Agent, permitindo que o modelo de linguagem identifique os parâmetros necessários e os passos de execução sem falhas contextuais. Para saber mais sobre como projetar extensões personalizadas, veja o nosso guia sobre <a href="/blog/hermes-agent-skills/">criação de skills no Hermes Agent</a>.</p>
+
+<h3>Passo 3: Executar e Interagir com o Hermes Agent</h3>
+
+<p>Após guardar a nova <em>skill</em>, confirme que o Hermes Agent a reconhece listando as ferramentas disponíveis no terminal com o comando oficial:</p>
+
+<pre><code>hermes skills list</code></pre>
+
+<p>Para iniciar a automação e solicitar a emissão de uma fatura através de uma linguagem natural simples, utilize o comando interativo da CLI apontando para a <em>skill</em> criada:</p>
+
+<pre><code>hermes chat -s emitir-fatura</code></pre>
+
+<p>Na interface de conversa do agent, pode simplesmente inserir um pedido como este:</p>
+
+<pre><code>"Emite uma fatura para a empresa Inovacao Digital Lda, NIF 509876543, email contacto@inovacaodigital.pt. 
+Servicos prestados: 2 dias de Consultoria Tecnologica a 450 EUR/dia e 1 Licenca de Software a 150 EUR. 
+Aplica a taxa normal de IVA."</code></pre>
+
+<p>O Hermes Agent interpretará a instrução, estruturará os dados no formato interno e invocará o script Python para produzir e enviar a fatura em escassos segundos.</p>
+
+<h2>Caso Prático: Processamento em Lote para uma Loja Online</h2>
+
+<p>Para ilustrar a aplicabilidade em cenários de maior dimensão, consideremos uma loja de comércio eletrónico que gera no final do dia um ficheiro JSON com as vendas pendentes de faturação. Em vez de abrir cada encomenda manualmente, o agente pode processar uma lista inteira de vendas de forma sequencial.</p>
+
+<p>Suponha o seguinte ficheiro de entrada <code>vendas_dia.json</code>:</p>
+
+<pre><code>[
+  {
+    "numero_fatura": "2026-0891",
+    "empresa_nome": "TechStore Portugal",
+    "empresa_nif": "501234567",
+    "cliente_nome": "Carlos Mendes",
+    "cliente_nif": "210987654",
+    "cliente_email": "carlos.mendes@example.com",
+    "data": "2026-11-23",
+    "taxa_iva": 0.23,
+    "itens": [
+      {"descricao": "Teclado Mecanico Wireless", "quantidade": 1, "preco_unitario": 89.90},
+      {"descricao": "Rato Optico Ergonomico", "quantidade": 1, "preco_unitario": 45.00}
+    ]
+  },
+  {
+    "numero_fatura": "2026-0892",
+    "empresa_nome": "TechStore Portugal",
+    "empresa_nif": "501234567",
+    "cliente_nome": "Sofia Ribeiro",
+    "cliente_nif": "234567890",
+    "cliente_email": "sofia.ribeiro@example.com",
+    "data": "2026-11-23",
+    "taxa_iva": 0.23,
+    "itens": [
+      {"descricao": "Monitor 27 Polegadas 4K", "quantidade": 2, "preco_unitario": 320.00}
+    ]
+  }
+]</code></pre>
+
+<p>Ao dar o comando ao Hermes Agent para processar a lista de vendas diária, o sistema executa o loop em Python, gera os PDFs individualizados na diretoria de destino e procede ao envio por e-mail.</p>
+
+<p><strong>Resultado Esperado:</strong></p>
+<ul>
+    <li>Ficheiros <code>fatura_2026-0891.pdf</code> e <code>fatura_2026-0892.pdf</code> gerados na pasta de destino.</li>
+    <li>Dois e-mails enviados aos respetivos destinatários com os documentos devidamente formatados.</li>
+    <li>Registo de auditoria guardado no sistema indicando o sucesso da operação.</li>
+</ul>
+
+<p>A automatização de rotinas financeiras como esta melhora dramaticamente a produtividade de qualquer empresa. Se pretender aprofundar este tipo de relatórios e análises, leia sobre como construir <a href="/blog/relatorios-financeiros-automaticos-para-micro-e-grandes-empresas-com-python/">relatórios financeiros automáticos com Python</a>.</p>
+
+<h2>Cuidados, Limitações e Erros Comuns</h2>
+
+<p>Apesar de a automação trazer enorme eficiência às operações diárias, existem aspetos técnicos e legais essenciais que devem ser acautelados ao lidar com dados financeiros e de faturação.</p>
+
+<h3>1. Conformidade Fiscal e Certificação de Software</h3>
+
+<p>Em jurisdições como Portugal ou Espanha, a faturação a clientes exige frequentemente o uso de software devidamente certificado pelas autoridades tributárias (como a Autoridade Tributária e Aduaneira - AT), com a inclusão de assinaturas digitais ou códigos QR específicos (ex: QRCodes e chaves hash em faturas). O script Python aqui apresentado serve para a geração autónoma de recibos internos, proformas, orçamentos ou faturas num ambiente de simulação e suporte operacional. Caso a sua empresa seja obrigada a emitir faturas certificadas, o Hermes Agent deve ser integrado com a API do seu software de faturação certificado em vez de gerar o PDF diretamente de raiz.</p>
+
+<h3>2. Limitações de Envio via SMTP</h3>
+
+<p>Servidores de e-mail padrão (como o Gmail, Outlook ou servidores cPanel) impõem limites rigorosos quanto ao número de mensagens enviadas por hora ou por dia. Tentar enviar centenas de faturas num único bloco através de um e-mail pessoal pode resultar no bloqueio temporário da conta de correio ou na classificação das mensagens como <em>spam</em>. Para operações de grande escala, utilize serviços dedicados de e-mail transacional (como SendGrid, Mailgun ou Amazon SES).</p>
+
+<h3>3. Tratamento de Exceções e Proteção de Dados</h3>
+
+<p>Erros na sintaxe do endereço de e-mail do cliente ou falhas na ligação à rede podem interromper a execução do script. Garanta que o seu código Python implementa blocos de tratamento de exceções (<code>try/except</code>) e guarda num ficheiro de <em>log</em> todas as faturas que falharam o envio para posterior reprocessamento. Além disso, lembre-se de proteger a informação pessoal de clientes e chaves de e-mail, aplicando as <a href="/blog/seguranca-e-privacidade-na-automacao-boas-praticas-com-python-e-hermes-agent/">boas práticas de segurança e privacidade com o Hermes Agent</a>.</p>
+
+<h2>Conclusão</h2>
+
+<p>Automatizar a criação e o envio de faturas e recibos com o Python e o Hermes Agent transforma um processo burocrático demorado numa tarefa de fundo rápida, precisa e sem atritos. A capacidade do Hermes Agent para estruturar pedidos em linguagem natural combinada com a precisão dos scripts Python proporciona o equilíbrio ideal entre flexibilidade e fiabilidade operacional.</p>
+
+<p>O próximo passo para otimizar o seu negócio passa por expandir estas rotinas: pode conectar este fluxo à leitura automática de encomendas que entram por correio eletrónico ou integrá-lo diretamente com bases de dados e sistemas de CRM.</p>
+
+<p>Para quem deseja dominar o ecossistema do Hermes Agent em detalhe, explorando desde a configuração avançada de fornecedores de IA até à criação de equipas completas de agentes para a gestão empresarial, o <a href="/livro/">Guia Completo do Hermes Agent</a> oferece um roteiro prático e detalhado com dezenas de exemplos de código e estratégias de automação.</p>
+
+<div class="sources-section">
+    <h2>Fontes e leitura recomendada</h2>
+    <ul>
+        <li><a href="https://docs.python.org/3/library/email.html" target="_blank" rel="noopener">Documentação Oficial do Python — Módulo Email e smtplib</a></li>
+        <li><a href="https://hermes-agent.nousresearch.com" target="_blank" rel="noopener">Documentação Oficial do Hermes Agent</a></li>
+        <li><a href="https://python.org" target="_blank" rel="noopener">Python Software Foundation</a></li>
+    </ul>
+</div>
+        </div>
+        <div class="author-box">
+          <div class="author-avatar" aria-hidden="true">M</div>
+          <div class="author-info">
+            <p class="author-name">Marcus <span>· Autor</span></p>
+            <p class="author-bio">Desenvolvedor independente. Escrevo sobre automação com Python, agentes de IA e ferramentas como o Hermes Agent — com exemplos práticos e foco em resultados reais.</p>
+            <p class="author-links"><a href="/sobre/#autor">Sobre o autor</a> · <a href="https://github.com/Jorgeacus" rel="noopener">GitHub</a> · <a href="mailto:marctechja@gmail.com">Contacto</a></p>
+          </div>
+        </div>
+        <div class="comments-section">
+          <h2>Comentários</h2>
+          <script src="https://giscus.app/client.js"
+                  data-repo="Jorgeacus/marctechja-blog"
+                  data-repo-id="R_kgDOTnRVjw"
+                  data-category="General"
+                  data-category-id="DIC_kwDOTnRVj84DDt4R"
+                  data-mapping="pathname"
+                  data-strict="0"
+                  data-reactions-enabled="1"
+                  data-emit-metadata="0"
+                  data-input-position="bottom"
+                  data-theme="preferred_color_scheme"
+                  data-lang="pt"
+                  crossorigin="anonymous"
+                  async>
+          </script>
+          <noscript>Ativa o JavaScript para veres e deixares comentários.</noscript>
+        </div>
+      </div>
+      <aside class="sidebar">
+        <div class="sidebar-widget">
+          <h3>📘 Livro do Hermes Agent</h3>
+          <p>10 partes, 42 capítulos. PDF + EPUB.</p>
+          <a href="/livro/" class="btn btn-gold">Saber Mais</a>
+        </div>
+        <div class="sidebar-widget ad-placeholder">Anúncio Google AdSense</div>
+      </aside>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <a href="/" class="logo">Marc<span class="gold">tech</span>JA</a>
+          <p>Tecnologia, automação e IA para transformar a produtividade.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Navegação</h4>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/blog/">Blog</a></li>
+            <li><a href="/livro/">Livro</a></li>
+            <li><a href="/sobre/">Sobre</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="/politica-de-privacidade/">Privacidade</a></li>
+            <li><a href="/politica-de-cookies/">Cookies</a></li>
+            <li><a href="/termos/">Termos</a></li>
+            <li><a href="/contactos/">Contactos</a></li>
+            <li><a href="#" id="cookie-settings" onclick="window.MarctechJACookieConsent&&window.MarctechJACookieConsent.show();return false;">Definições de cookies</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contacto</h4>
+          <ul>
+            <li><a href="mailto:marctechja@gmail.com">marctechja@gmail.com</a></li>
+            <li><a href="https://github.com/Jorgeacus">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 MarctechJA. Todos os direitos reservados.</p>
+      </div>
+    </div>
+  </footer>
+  <script src="/assets/js/main.js"></script>
+  <script src="/assets/js/cookie-consent.js"></script>
+</body>
+</html>
